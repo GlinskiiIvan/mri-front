@@ -1,0 +1,76 @@
+:root {
+    /* primitive */
+    --danger-1: #F75B5B;
+    --danger-2: #D90B0B;
+    --ok-1: #117C46;
+    --warning-1: #985C0A;
+    --gray-1: #B8C2C2;
+    --gray-2: #9DA6A6;
+
+    /* text */
+    --text-main: #455050;
+    --text-second: var(--gray-2);
+    --text-tertiary: var(--gray-1);
+    --text-disabled: var(--gray-1);
+    --text-white: #FFFFFF;
+    --text-danger: var(--danger-2);
+    --text-ok: var(--ok-1);
+    --text-warning: var(--warning-1);
+
+    /* background */
+    --bg-main: #E6EFF0;
+    --bg-second: #EBF5F5;
+    --bg-tertiary: var(--gray-1);
+    --bg-disabled: #DBE6E6;
+    --bg-hover-acent-tint: #DAF2F2;
+    --bg-hover-acent: #1EAEB2;
+    --bg-hover-danger: #F73E3E;
+    --bg-danget-light: #FABBBB;
+    --bg-danger-dark: var(--danger-1);
+    --bg-hover-danger-tint: #F2EBEB;
+    --bg-ok-light: #ADF8D2;
+    --bg-warning-light: #F7D3A1;
+    --bg-white: #FFFFFF;
+
+    /* border */
+    --border--default: var(--gray-1);
+    --border--disabled: var(--gray-1);
+    --border--danger: var(--danger-1);
+    --border--ok: #45E595;
+    --border--warning: #F2A130;
+    --border--hover: var(--gray-2);
+    --border--hover-acent: #1EAEB2;
+    --border--hover-danger: var(--danger-2);
+    --border--hover-ok: var(--ok-1);
+    --border--hover-warning: var(--warning-1);
+
+    /* focus */
+    --focus-acent: #17DFE5;
+    --focus-danger: #E51717;
+    --focus-ok: #17E57E;
+    --focus-warning: #E58F17;
+
+    /* acent */
+    --acent: #21BFC4;
+
+    /* font-size */
+    --fs-xs: 12; 
+    --fs-sm: 14; 
+    --fs-md: 16; 
+    --fs-lg: 18; 
+    --fs-xl: 24; 
+
+    /* weight */
+    --w-regular: 400;
+    --w-medium: 500;
+    --w-semibold: 600;
+
+    /* gap */
+    --gap-2xs: 2;
+    --gap-xs: 4;
+    --gap-sm: 8;
+    --gap-md: 16;
+    --gap-lg: 24;
+    --gap-xl: 32;
+    --gap-2xl: 48;
+}

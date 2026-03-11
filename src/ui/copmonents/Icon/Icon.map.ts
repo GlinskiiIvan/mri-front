@@ -1,0 +1,23 @@
+export const IconMap = {
+  // UI
+  LOADING: 'svg-spinners:180-ring-with-bg',
+  ARROWDOWN: 'akar-icons:chevron-down',
+  CHECK: 'lucide:check',
+  INFO: 'ep:info-filled',
+  SEARCH: 'gg:search',
+  REMOVE: 'mingcute:delete-line',
+  ADD: 'fluent:add-24-filled',
+  EDIT: 'akar-icons:edit',
+  RELOAD: 'tabler:reload',
+  EMPTY: 'tabler:table-alias',
+  ERROR: 'tabler:table-down',
+  CLOSE: 'lets-icons:close-round',
+  LAYOUT: 'mynaui:layout',
+  TABLE: 'mynaui:table',
+  EYE: 'lucide:eye',
+  EYECLOSED: 'lucide:eye-off',
+  IMAGE: 'tabler:photo-plus',
+  MINUS: 'icon-park-outline:minus',
+  LINK: 'akar-icons:link-out',
+  FILTER: 'ci:filter'
+} as const;
