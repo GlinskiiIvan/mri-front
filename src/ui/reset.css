@@ -17,8 +17,7 @@ body {
 }
 
 body {
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
+  line-height: normal;
 }
 
 /* media elements */
