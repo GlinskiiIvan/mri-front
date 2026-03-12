@@ -8,7 +8,15 @@ const getIconByPath = (path: IconPath): string | undefined => {
         console.warn("Invalid icon path (not a string):", path);
         return undefined;
     }
-    return path.split('.').reduce((acc: any, key) => acc?.[key], IconMap);
+    // return path.split('.').reduce((acc: any, key) => acc?.[key], IconMap);
+    return path
+    .split(".")
+    .reduce<unknown>((acc, key) => {
+      if (acc && typeof acc === "object") {
+        return (acc as Record<string, unknown>)[key];
+      }
+      return undefined;
+    }, IconMap) as string | undefined;
 };
 
 export type IIconProps = {

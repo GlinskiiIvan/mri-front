@@ -28,7 +28,7 @@ function App() {
       </div>
       <p className={styles['read-the-docs']}>
         Click on the Vite and React logos to learn more
-        <Icon name='EYE' color='ok' size='24' />
+        <Icon name='IMAGE' color='success' size='40' />
       </p>
     </>
   )
