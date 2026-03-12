@@ -1,6 +1,6 @@
 .wrapper {
     border: 1px solid var(--border-primary);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
 
     display: flex;
     align-items: center;
@@ -11,7 +11,7 @@
     padding: var(--gap-sm);
 
     font-size: var(--fs-md);
-    line-height: 1;
+    line-height: var(--lh-sm);
     color: var(--text-primary);
 
     .sm {
