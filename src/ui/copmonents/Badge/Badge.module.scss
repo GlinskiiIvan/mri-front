@@ -1,0 +1,28 @@
+.wrapper {
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-xs);
+
+    margin: 0;
+    padding: var(--gap-sm);
+
+    font-size: var(--fs-md);
+    line-height: 1;
+    color: var(--text-primary);
+
+    .sm {
+
+    }
+
+    .md {
+
+    }
+
+    .lg {
+
+    }
+}
