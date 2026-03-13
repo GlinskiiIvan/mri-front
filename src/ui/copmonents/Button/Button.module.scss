@@ -1,0 +1,83 @@
+// объявляем карты цветов для каждого intent
+$button-intent-colors: (
+    normal: (
+        primary: (bg: var(--bg-accent), text: var(--text-inverse), border: var(--border-accent)),
+        secondary: (bg: transparent, text: var(--text-accent), border: var(--border-accent)),
+        ghost: (bg: transparent, text: var(--text-accent), border: transparent)
+    ),
+    destructive: (
+        primary: (bg: var(--bg-danger), text: var(--text-inverse), border: var(--border-danger)),
+        secondary: (bg: transparent, text: var(--text-danger), border: var(--border-danger)),
+        ghost: (bg: transparent, text: var(--text-danger), border: transparent)
+    )
+);
+
+$button-hover-colors: (
+    normal: (
+        primary: (bg: var(--bg-accent-strong), border: var(--border-accent-strong)),
+        secondary: (bg: var(--bg-accent-subtle), border: var(--border-accent-strong)),
+        ghost: (bg: var(--bg-accent-subtle), border: transparent)
+    ),
+    destructive: (
+        primary: (bg: var(--bg-danger-strong), border: var(--border-danger-strong)),
+        secondary: (bg: var(--bg-danger-subtle), border: var(--border-danger)),
+        ghost: (bg: var(--bg-danger-subtle), border: transparent)
+    )
+);
+
+$button-focus-colors: (
+    normal: (shadow: var(--box-shadow-normal)),
+    destructive: (shadow: var(--box-shadow-destructive))
+);
+
+@mixin button-styles($intent, $variant) {
+    $StaticColors: map-get(map-get($button-intent-colors, $intent), $variant);
+    $HoverColors: map-get(map-get($button-hover-colors, $intent), $variant);
+    $FocusColors: map-get($button-focus-colors, $intent);
+
+    background-color: map-get($StaticColors, bg);
+    color: map-get($StaticColors, text);
+    border: 1px solid map-get($StaticColors, border);
+
+    &:hover {
+        background-color: map-get($HoverColors, bg);
+        border: 1px solid map-get($HoverColors, border);
+    }
+
+    &:focus-visible {
+        // outline: 2px solid var(--focus-accent);
+        // outline-offset: 0px;
+        outline: none;
+        box-shadow: map-get($FocusColors, shadow);
+    }
+    
+}
+
+.wrapper {
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+
+    cursor: pointer;
+
+    min-height: 44px;
+    padding: 0 var(--space-lg);
+
+    border-radius: var(--radius-lg);
+
+    transition: transform 0.15s ease, box-shadow 0.3s ease, background-color 0.15s ease, border-color 0.15s ease;
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &.primary.normal { @include button-styles(normal, primary); }
+    &.secondary.normal { @include button-styles(normal, secondary); }
+    &.ghost.normal { @include button-styles(normal, ghost); }
+
+    &.primary.destructive { @include button-styles(destructive, primary); }
+    &.secondary.destructive { @include button-styles(destructive, secondary); }
+    &.ghost.destructive { @include button-styles(destructive, ghost); }
+}

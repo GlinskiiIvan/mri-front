@@ -128,6 +128,9 @@
     --focus-success: var(--success-500);
     --focus-warning: var(--warning-500);
 
+    --box-shadow-normal: 0 0 7px 2px var(--focus-accent);
+    --box-shadow-destructive: 0 0 7px 2px var(--focus-danger);
+
     /* =========================================================
                             TYPOGRAPHY
     ========================================================= */
