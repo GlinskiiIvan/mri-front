@@ -2,30 +2,36 @@ import React from 'react';
 import { clsx } from 'clsx';
 import Icon, { type IconPath } from '../Icon';
 import styles from './Badge.module.scss';
-
-type BadgeStatus = 'primary' | 'success' | 'warning' | 'danger' | 'accent';
-type BadgeSize = 'sm' | 'md' | 'lg';
+import type { ComponentSize, ComponentStatus } from '../types';
 
 interface BadgeProps extends React.ComponentProps<'div'> {
-    status: BadgeStatus;
-    size: BadgeSize;
+    status: ComponentStatus;
+    size: ComponentSize;
     text: string;
-    icon: IconPath;
+    icon?: IconPath;
+    action?: React.ReactElement<typeof Icon>;
 }
 
 const Badge: React.FC<BadgeProps> = ({
-    status, 
-    size,
+    status = 'primary', 
+    size = 'md',    
     text,
     icon,
+    action,
     className,
     ...props
 }) => {
-    const classes = clsx(className, styles.wrapper);
+    const classes = clsx(className, styles.wrapper, styles[size]);
+    const style = {
+        borderColor: `var(--border-${status})`,
+        fontSize: `var(--fs-${size})`
+    };
+
     return (
-        <div className={classes} style={{borderColor: `var(--border-${status})`}}>
-            <Icon name={icon} color='tertiary' size='16' />
+        <div className={classes} style={style} {...props}>
+            {icon && <Icon name={icon} color='tertiary' size='inherit' />}
             {text}   
+            {action && action}
         </div>
     );
 };

@@ -37,7 +37,7 @@ export const Icon: React.FC<IIconProps> = ({
   const style =
     size === "full"
       ? { width: "100%", height: "100%", color: `var(--text-${color})` }
-      : { fontSize: `${size}px`, color: `var(--text-${color})` };
+      : { fontSize: size === "inherit" ? "1em" : `${size}px`, color: `var(--text-${color})` };
 
   return resolvedIcon ? (
     <IconifyIcon

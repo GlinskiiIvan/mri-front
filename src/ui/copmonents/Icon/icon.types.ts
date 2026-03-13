@@ -14,6 +14,6 @@ type Paths<T> = T extends object
     }[keyof T]
   : never;
 
-export type IconSize = '16' | '20' | '24' | '40' | 'full';
+export type IconSize = '16' | '20' | '24' | '40' | 'full' | 'inherit';
 export type IconColor = 'danger' | 'warning' | 'success' | 'accent' | 'primary' | 'secondary' | 'tertiary' | 'disabled' | 'inverse';
 export type IconPath = Paths<typeof IconMap>;
