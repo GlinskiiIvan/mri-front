@@ -29,15 +29,26 @@ export type IIconProps = {
 export const Icon: React.FC<IIconProps> = ({
   name,
   size = "16",
-  color = "tertiary",
+  color,
   className = "",
 }) => {
   const resolvedIcon = getIconByPath(name);
 
-  const style =
+  // : {
+  //   width?: string;
+  //   height?: string;
+  //   fontSize?: string;
+  //   color?: string;
+  // } 
+
+  const style: React.CSSProperties =
     size === "full"
-      ? { width: "100%", height: "100%", color: `var(--text-${color})` }
-      : { fontSize: size === "inherit" ? "1em" : `${size}px`, color: `var(--text-${color})` };
+      ? { width: "100%", height: "100%"}
+      : { fontSize: size === "inherit" ? "1em" : `${size}px`};
+
+  if(color) {
+    style.color = `var(--text-${color})`;
+  }
 
   return resolvedIcon ? (
     <IconifyIcon

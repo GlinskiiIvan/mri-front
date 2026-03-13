@@ -1,7 +1,11 @@
 import styles from './App.module.css';
-import {Badge, Icon} from '../ui/copmonents';
+import {Badge, Icon, IconButton} from '../ui/copmonents';
 
 function App() {
+
+  const testClick = () => {
+    alert('Test click on component!');
+  };
 
   return (
     <>
@@ -53,11 +57,11 @@ function App() {
 
 
         <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' status='accent' action={<Icon name='EDIT' color='tertiary' size='inherit' />} />
-          <Badge text='Test badge lg' size='lg' status='accent' action={<Icon name='EDIT' color='tertiary' size='inherit' />} />
-          <Badge text='Test badge md' size='md' status='accent' action={<Icon name='EDIT' color='tertiary' size='inherit' />} />
-          <Badge text='Test badge sm' size='sm' status='accent' action={<Icon name='EDIT' color='tertiary' size='inherit' />} />
-          <Badge text='Test badge xs' size='xs' status='accent' action={<Icon name='EDIT' color='tertiary' size='inherit' />} />
+          <Badge text='Test badge xl' size='xl' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge lg' size='lg' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge md' size='md' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge sm' size='sm' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge xs' size='xs' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
         </div>
       </div>
     </>

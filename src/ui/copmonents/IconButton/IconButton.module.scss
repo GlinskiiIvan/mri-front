@@ -1,0 +1,36 @@
+.wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 0 0 0 transparent;
+    border-radius: var(--radius-xs);
+    border: none;
+    background: none;
+
+    cursor: pointer;
+
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+
+    svg {
+        color: var(--text-tertiary);
+        transition: color 0.15s ease;
+    }
+
+    &:hover {
+       svg {
+        color: var(--text-secondary);
+       }
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &:focus-visible {
+        // outline: 2px solid var(--focus-accent);
+        // outline-offset: 0px;
+        outline: none;
+        box-shadow: 0 0 7px 2px var(--focus-accent);
+    }
+}
