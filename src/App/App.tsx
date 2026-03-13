@@ -67,38 +67,38 @@ function App() {
 
       <div className='flex-col'>
         <div className='flex-row'>
-          <Button variant='primary' intent='normal'>Test button</Button>
-          <Button variant='secondary' intent='normal'>Test button</Button>
-          <Button variant='ghost' intent='normal'>Test button</Button>
+          <Button onClick={testClick} variant='primary' intent='normal'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='normal'>Test button</Button>
+          <Button onClick={testClick} variant='ghost' intent='normal'>Test button</Button>
         </div>
         <div className='flex-row'>
           <Button variant='primary' intent='destructive'>Test button</Button>
-          <Button variant='secondary' intent='destructive'>Test button</Button>
-          <Button variant='ghost' intent='destructive'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='destructive'>Test button</Button>
+          <Button onClick={testClick} variant='ghost' intent='destructive'>Test button</Button>
         </div>
         <div className='flex-row'>
-          <Button variant='primary' intent='normal' icon='LINK' />
-          <Button variant='secondary' intent='normal' icon='LINK' />
-          <Button variant='ghost' intent='normal' icon='LINK' />
+          <Button onClick={testClick} variant='primary' intent='normal' icon='LINK' />
+          <Button onClick={testClick} variant='secondary' intent='normal' icon='LINK' />
+          <Button onClick={testClick} variant='ghost' intent='normal' icon='LINK' />
         </div>
         <div className='flex-row'>
-          <Button variant='primary' intent='destructive' icon='LINK' />
-          <Button variant='secondary' intent='destructive' icon='LINK' />
-          <Button variant='ghost' intent='destructive' icon='LINK' />
+          <Button onClick={testClick} variant='primary' intent='destructive' icon='LINK' />
+          <Button onClick={testClick} variant='secondary' intent='destructive' icon='LINK' />
+          <Button onClick={testClick} variant='ghost' intent='destructive' icon='LINK' />
         </div>
         <div className='flex-row'>
-          <Button variant='secondary' intent='normal' size='xl' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='normal' size='lg' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='normal' size='md' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='normal' size='sm' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='normal' size='xs' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='normal' size='xl' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='normal' size='lg' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='normal' size='md' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='normal' size='sm' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='normal' size='xs' icon='IMAGE'>Test button</Button>
         </div>
         <div className='flex-row'>
-          <Button variant='secondary' intent='destructive' size='xl' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='destructive' size='lg' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='destructive' size='md' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='destructive' size='sm' icon='IMAGE'>Test button</Button>
-          <Button variant='secondary' intent='destructive' size='xs' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='destructive' size='xl' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='destructive' size='lg' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='destructive' size='md' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='destructive' size='sm' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClick} variant='secondary' intent='destructive' size='xs' icon='IMAGE'>Test button</Button>
         </div>
       </div>
     </div>

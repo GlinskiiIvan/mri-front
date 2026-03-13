@@ -59,18 +59,14 @@ $button-focus-colors: (
     justify-content: center;
     align-items: center;
     gap: var(--space-sm);
-
+    padding: var(--space-sm) var(--space-lg);
+    
     cursor: pointer;
-
-    min-height: 44px;
-    padding: 0 var(--space-lg);
-
     border-radius: var(--radius-lg);
-
     transition: transform 0.15s ease, box-shadow 0.3s ease, background-color 0.15s ease, border-color 0.15s ease;
 
     &:active {
-        transform: scale(0.95);
+        transform: scale(0.97);
     }
 
     &.primary.normal { @include button-styles(normal, primary); }
