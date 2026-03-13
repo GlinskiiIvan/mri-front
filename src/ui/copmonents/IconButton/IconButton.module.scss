@@ -10,11 +10,11 @@
 
     cursor: pointer;
 
-    transition: transform 0.1s ease, box-shadow 0.3s ease;
+    transition: transform var(--duration-normal) ease, box-shadow var(--duration-slow) ease;
 
     svg {
         color: var(--text-tertiary);
-        transition: color 0.15s ease;
+        transition: color var(--duration-normal) ease;
     }
 
     &:hover {
@@ -24,7 +24,7 @@
     }
 
     &:active {
-        transform: scale(0.95);
+        transform: scale(var(--press-scale-md));
     }
 
     &:focus-visible {

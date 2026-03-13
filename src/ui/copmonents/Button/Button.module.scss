@@ -37,11 +37,11 @@ $button-focus-colors: (
 
     background-color: map-get($StaticColors, bg);
     color: map-get($StaticColors, text);
-    border: 1px solid map-get($StaticColors, border);
+    border: var(--border-width-sm) solid map-get($StaticColors, border);
 
     &:hover {
         background-color: map-get($HoverColors, bg);
-        border: 1px solid map-get($HoverColors, border);
+        border: var(--border-width-sm) solid map-get($HoverColors, border);
     }
 
     &:focus-visible {
@@ -63,10 +63,10 @@ $button-focus-colors: (
     
     cursor: pointer;
     border-radius: var(--radius-lg);
-    transition: transform 0.15s ease, box-shadow 0.3s ease, background-color 0.15s ease, border-color 0.15s ease;
+    transition: transform var(--duration-normal) ease, box-shadow var(--duration-slow) ease, background-color var(--duration-normal) ease, border-color var(--duration-normal) ease;
 
     &:active {
-        transform: scale(0.97);
+        transform: scale(var(--press-scale-md));
     }
 
     &.primary.normal { @include button-styles(normal, primary); }
