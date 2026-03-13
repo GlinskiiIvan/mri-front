@@ -14,6 +14,11 @@ function App() {
         <Icon name='IMAGE' color='success' size='40' />
       </p>
 
+<Badge text='Test badge xl' size='xl' icon='INFO' status='primary' />
+          <Badge text='Test badge lg' size='lg' icon='INFO' status='primary' />
+          <Badge text='Test badge md' size='md' icon='INFO' status='primary' />
+          <Badge text='Test badge sm' size='sm' icon='INFO' status='primary' />
+          <Badge text='Test badge xs' size='xs' icon='INFO' status='primary' />
       <div className='flex-col'>
         <div className='flex-row'>
           <Badge text='Test badge xl' size='xl' icon='INFO' status='primary' />

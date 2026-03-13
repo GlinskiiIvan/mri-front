@@ -2,9 +2,9 @@
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-lg);
 
-    width: fit-content;
+    // width: fit-content;
 
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--space-xs);
