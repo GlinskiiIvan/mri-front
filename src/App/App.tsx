@@ -1,11 +1,13 @@
 import styles from './App.module.css';
-import {Badge, Button, Icon, IconButton, Label} from '../ui/copmonents';
+import {Badge, Button, Icon, IconButton, Label, MessageBox} from '../ui/copmonents';
 
 function App() {
 
   const testClick = () => {
     alert('Test click on component!');
   };
+
+  const testMessages = ['message 1', 'message 2', 'message 3'];
 
   return (
     <div className='flex-col'>
@@ -120,6 +122,24 @@ function App() {
           <Label color='warning'>Test label...</Label>
           <Label color='accent'>Test label...</Label>
         </div>
+      </div>
+
+      <div className='flex-col'>
+        <div className='flex-row'>
+          <MessageBox messages={testMessages} size='xl' />
+          <MessageBox messages={testMessages} size='lg' />
+          <MessageBox messages={testMessages} size='md' />
+          <MessageBox messages={testMessages} size='sm' />
+          <MessageBox messages={testMessages} size='xs' />
+        </div>
+        <div className='flex-row'>
+          <MessageBox messages={testMessages} status='default' />
+          <MessageBox messages={testMessages} status='info' />
+          <MessageBox messages={testMessages} status='success' />
+          <MessageBox messages={testMessages} status='warning' />
+          <MessageBox messages={testMessages} status='danger' />
+        </div>
+        <div className='flex-row'></div>
       </div>
     </div>
   )

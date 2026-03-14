@@ -1,0 +1,14 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    // gap: calc(var(--space-xs) - ((var(--fs) * var(--lh-md)) / 2));
+    gap: var(--space-xs);
+
+    max-width: 100%;
+
+    font-size: var(--fs);
+    line-height: var(--lh-md);
+    color: var(--text-color);
+}
