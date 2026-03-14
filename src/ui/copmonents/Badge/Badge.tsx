@@ -2,7 +2,12 @@ import React from 'react';
 import { clsx } from 'clsx';
 import Icon, { type IconPath } from '../Icon';
 import styles from './Badge.module.scss';
-import type { ComponentSize, ComponentStatus } from '../types';
+import { type ComponentSize, type ComponentStatus, ComponentStatusMap } from '../types';
+
+const BadgeStatus: Record<'default', string> & typeof ComponentStatusMap = {
+    ...ComponentStatusMap,
+    default: 'primary',
+};
 
 interface BadgeProps extends React.ComponentProps<'div'> {
     status: ComponentStatus;
@@ -13,7 +18,7 @@ interface BadgeProps extends React.ComponentProps<'div'> {
 }
 
 const Badge: React.FC<BadgeProps> = ({
-    status = 'primary', 
+    status = 'default', 
     size = 'md',    
     text,
     icon,
@@ -23,7 +28,7 @@ const Badge: React.FC<BadgeProps> = ({
 }) => {
     const classes = clsx(className, styles.wrapper, styles[size]);
     const style = {
-        borderColor: `var(--border-${status})`,
+        borderColor: `var(--border-${BadgeStatus[status]})`,
         fontSize: `var(--fs-${size})`
     };
 

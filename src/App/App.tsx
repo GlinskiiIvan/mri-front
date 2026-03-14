@@ -16,11 +16,11 @@ function App() {
 
       <div className='flex-col'>
         <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' icon='INFO' status='primary' />
-          <Badge text='Test badge lg' size='lg' icon='INFO' status='primary' />
-          <Badge text='Test badge md' size='md' icon='INFO' status='primary' />
-          <Badge text='Test badge sm' size='sm' icon='INFO' status='primary' />
-          <Badge text='Test badge xs' size='xs' icon='INFO' status='primary' />
+          <Badge text='Test badge xl' size='xl' icon='INFO' status='default' />
+          <Badge text='Test badge lg' size='lg' icon='INFO' status='default' />
+          <Badge text='Test badge md' size='md' icon='INFO' status='default' />
+          <Badge text='Test badge sm' size='sm' icon='INFO' status='default' />
+          <Badge text='Test badge xs' size='xs' icon='INFO' status='default' />
         </div>
 
         <div className='flex-row'>
@@ -48,20 +48,20 @@ function App() {
         </div>
 
         <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' icon='INFO' status='accent' />
-          <Badge text='Test badge lg' size='lg' icon='INFO' status='accent' />
-          <Badge text='Test badge md' size='md' icon='INFO' status='accent' />
-          <Badge text='Test badge sm' size='sm' icon='INFO' status='accent' />
-          <Badge text='Test badge xs' size='xs' icon='INFO' status='accent' />
+          <Badge text='Test badge xl' size='xl' icon='INFO' status='info' />
+          <Badge text='Test badge lg' size='lg' icon='INFO' status='info' />
+          <Badge text='Test badge md' size='md' icon='INFO' status='info' />
+          <Badge text='Test badge sm' size='sm' icon='INFO' status='info' />
+          <Badge text='Test badge xs' size='xs' icon='INFO' status='info' />
         </div>
 
 
         <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge lg' size='lg' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge md' size='md' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge sm' size='sm' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge xs' size='xs' status='accent' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge xl' size='xl' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge lg' size='lg' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge md' size='md' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge sm' size='sm' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge xs' size='xs' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
         </div>
       </div>
 

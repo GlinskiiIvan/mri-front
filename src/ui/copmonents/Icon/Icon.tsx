@@ -1,7 +1,8 @@
 import React from "react";
 import { Icon as IconifyIcon } from "@iconify/react";
 import { IconMap } from "./Icon.map";
-import type { IconColor, IconPath, IconSize } from "./icon.types";
+import type { IconPath, IconSize } from "./icon.types";
+import type { TextColors } from "../types";
 
 const getIconByPath = (path: IconPath): string | undefined => {
     if (typeof path !== "string") {
@@ -22,7 +23,7 @@ const getIconByPath = (path: IconPath): string | undefined => {
 export type IIconProps = {
   name: IconPath;
   size?: IconSize;
-  color?: IconColor;
+  color?: TextColors;
   className?: string;
 };
 
