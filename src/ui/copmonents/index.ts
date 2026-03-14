@@ -6,3 +6,4 @@ export type { IIconProps, IconSize, IconColor, IconPath } from './Icon';
 export {default as IconButton} from './IconButton'
 export {default as Badge} from './Badge'
 export {default as Button} from './Button'
+export {default as Label} from './Label'

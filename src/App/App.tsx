@@ -1,5 +1,5 @@
 import styles from './App.module.css';
-import {Badge, Button, Icon, IconButton} from '../ui/copmonents';
+import {Badge, Button, Icon, IconButton, Label} from '../ui/copmonents';
 
 function App() {
 
@@ -99,6 +99,26 @@ function App() {
           <Button onClick={testClick} variant='secondary' intent='destructive' size='md' icon='IMAGE'>Test button</Button>
           <Button onClick={testClick} variant='secondary' intent='destructive' size='sm' icon='IMAGE'>Test button</Button>
           <Button onClick={testClick} variant='secondary' intent='destructive' size='xs' icon='IMAGE'>Test button</Button>
+        </div>
+      </div>
+
+      <div className='flex-col'>
+        <div className='flex-row'>
+          <Label size='xl'>Test label...</Label>
+          <Label size='lg'>Test label...</Label>
+          <Label size='md'>Test label...</Label>
+          <Label size='sm'>Test label...</Label>
+          <Label size='xs'>Test label...</Label>
+        </div>
+        <div className='flex-row'>
+          <Label color='primary'>Test label...</Label>
+          <Label color='secondary'>Test label...</Label>
+          <Label color='tertiary'>Test label...</Label>
+          <Label color='disabled'>Test label...</Label>
+          <Label color='danger'>Test label...</Label>
+          <Label color='success'>Test label...</Label>
+          <Label color='warning'>Test label...</Label>
+          <Label color='accent'>Test label...</Label>
         </div>
       </div>
     </div>
