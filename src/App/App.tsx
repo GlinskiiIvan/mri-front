@@ -1,5 +1,6 @@
+import React from 'react';
 import styles from './App.module.css';
-import {Badge, Button, Icon, IconButton, Label, MessageBox} from '../ui/copmonents';
+import {Badge, Button, CheckBox, Icon, IconButton, Label, MessageBox} from '../ui/copmonents';
 
 function App() {
 
@@ -8,6 +9,8 @@ function App() {
   };
 
   const testMessages = ['message 1', 'message 2', 'message 3'];
+
+  const [checked, setChecked] = React.useState(false);
 
   return (
     <div className='flex-col'>
@@ -140,6 +143,12 @@ function App() {
           <MessageBox messages={testMessages} status='danger' />
         </div>
         <div className='flex-row'></div>
+      </div>
+
+      <div className='flex-col'>
+        <div className='flex-row'>
+          <CheckBox label='Test check-box' messages={testMessages} value={checked} changeValue={setChecked} />
+        </div>
       </div>
     </div>
   )

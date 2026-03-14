@@ -3,7 +3,7 @@ import styles from './Label.module.scss';
 import type { ComponentSize, CSSVars, TextColors } from '../types';
 import clsx from 'clsx';
 
-interface LabelProps extends React.ComponentProps<'label'> {
+interface LabelProps extends React.ComponentProps<'span'> {
     size?: ComponentSize;
     color?: TextColors;
 }
@@ -25,9 +25,9 @@ const Label: React.FC<LabelProps> = ({
     };
 
     return (        
-        <label className={classes} style={inlineStyle} {...props}>
+        <span className={classes} style={inlineStyle} {...props}>
             {children}
-        </label>
+        </span>
     );
 };
 
