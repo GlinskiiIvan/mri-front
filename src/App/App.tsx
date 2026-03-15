@@ -165,6 +165,11 @@ function App() {
           <CheckBox label='Test check-box disabled' validation={{status: 'default', messages: testMessages}} value={false} changeValue={setChecked} disabled />
           <CheckBox label='Test check-box disabled' validation={{status: 'default', messages: testMessages}} value={true} changeValue={setChecked} disabled />
         </div>
+        <div className='flex-row'>
+          <CheckBox label='Test check-box' value={checked} changeValue={setChecked} />
+          <CheckBox label='Test check-box disabled' value={false} changeValue={setChecked} disabled />
+          <CheckBox label='Test check-box disabled' value={true} changeValue={setChecked} disabled />
+        </div>
       </div>
     </div>
   )
