@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Button, CheckBox, Icon, IconButton, Label, MessageBox} from '../ui/copmonents';
+import {Badge, Button, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox} from '../ui/copmonents';
 
 function App() {
 
@@ -143,6 +143,20 @@ function App() {
           <MessageBox messages={testMessages} status='danger' />
         </div>
         <div className='flex-row'></div>
+      </div>
+
+      <div className='flex-col'>
+        <div className='flex-row'>
+          <FieldLayout label={{text: 'Test label', position: 'top'}} status='default' messages={testMessages}>
+            <span>test</span> 
+          </FieldLayout>
+          <FieldLayout label={{text: 'Test label', position: 'right'}} status='default' messages={testMessages}>
+            <span>test</span> 
+          </FieldLayout>
+          <FieldLayout status='default' messages={testMessages}>
+            <span>test no label</span> 
+          </FieldLayout>
+        </div>
       </div>
 
       <div className='flex-col'>
