@@ -1,14 +1,13 @@
 import React from 'react';
 import styles from './CheckBox.module.scss';
 import clsx from 'clsx';
-import type { ComponentStatus, CSSVars } from '../types';
+import type { CSSVars, ValidationInfo } from '../types';
 import Icon from '../Icon';
 import FieldLayout from '../FieldLayout';
 
 interface CheckBoxProps extends React.ComponentProps<'div'> {
     label: string;
-    status?: ComponentStatus;
-    messages?: string[];
+    validation?: ValidationInfo;
     value: boolean;
     changeValue: React.Dispatch<React.SetStateAction<boolean>>;
     disabled?: boolean;
@@ -16,8 +15,7 @@ interface CheckBoxProps extends React.ComponentProps<'div'> {
 
 const CheckBox: React.FC<CheckBoxProps> = ({
     label,
-    status = 'default',
-    messages = [],
+    validation,
     value,
     changeValue,
     className,
@@ -45,7 +43,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
             className={classes} style={inlineStyle}
             label={{text: label, position: 'right'}} 
             htmlFor={inputId} disabled={disabled} 
-            status={status} messages={messages}>
+            validation={validation}>
             <input
                 id={inputId}
                 type="checkbox"

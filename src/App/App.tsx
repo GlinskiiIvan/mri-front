@@ -129,31 +129,31 @@ function App() {
 
       <div className='flex-col'>
         <div className='flex-row'>
-          <MessageBox messages={testMessages} size='xl' />
-          <MessageBox messages={testMessages} size='lg' />
-          <MessageBox messages={testMessages} size='md' />
-          <MessageBox messages={testMessages} size='sm' />
-          <MessageBox messages={testMessages} size='xs' />
+          <MessageBox validation={{status: 'default', messages: testMessages}} size='xl' />
+          <MessageBox validation={{status: 'default', messages: testMessages}} size='lg' />
+          <MessageBox validation={{status: 'default', messages: testMessages}} size='md' />
+          <MessageBox validation={{status: 'default', messages: testMessages}} size='sm' />
+          <MessageBox validation={{status: 'default', messages: testMessages}} size='xs' />
         </div>
         <div className='flex-row'>
-          <MessageBox messages={testMessages} status='default' />
-          <MessageBox messages={testMessages} status='info' />
-          <MessageBox messages={testMessages} status='success' />
-          <MessageBox messages={testMessages} status='warning' />
-          <MessageBox messages={testMessages} status='danger' />
+          <MessageBox validation={{status: 'default', messages: testMessages}} />
+          <MessageBox validation={{status: 'default', messages: testMessages}} />
+          <MessageBox validation={{status: 'default', messages: testMessages}} />
+          <MessageBox validation={{status: 'default', messages: testMessages}} />
+          <MessageBox validation={{status: 'default', messages: testMessages}} />
         </div>
         <div className='flex-row'></div>
       </div>
 
       <div className='flex-col'>
         <div className='flex-row'>
-          <FieldLayout label={{text: 'Test label', position: 'top'}} status='default' messages={testMessages}>
+          <FieldLayout label={{text: 'Test label', position: 'top'}} validation={{status: 'default', messages: testMessages}}>
             <span>test</span> 
           </FieldLayout>
-          <FieldLayout label={{text: 'Test label', position: 'right'}} status='default' messages={testMessages}>
+          <FieldLayout label={{text: 'Test label', position: 'right'}} validation={{status: 'default', messages: testMessages}}>
             <span>test</span> 
           </FieldLayout>
-          <FieldLayout status='default' messages={testMessages}>
+          <FieldLayout validation={{status: 'default', messages: testMessages}}>
             <span>test no label</span> 
           </FieldLayout>
         </div>
@@ -161,9 +161,9 @@ function App() {
 
       <div className='flex-col'>
         <div className='flex-row'>
-          <CheckBox label='Test check-box' messages={testMessages} value={checked} changeValue={setChecked} />
-          <CheckBox label='Test check-box disabled' messages={testMessages} value={false} changeValue={setChecked} disabled />
-          <CheckBox label='Test check-box disabled' messages={testMessages} value={true} changeValue={setChecked} disabled />
+          <CheckBox label='Test check-box' validation={{status: 'default', messages: testMessages}} value={checked} changeValue={setChecked} />
+          <CheckBox label='Test check-box disabled' validation={{status: 'default', messages: testMessages}} value={false} changeValue={setChecked} disabled />
+          <CheckBox label='Test check-box disabled' validation={{status: 'default', messages: testMessages}} value={true} changeValue={setChecked} disabled />
         </div>
       </div>
     </div>

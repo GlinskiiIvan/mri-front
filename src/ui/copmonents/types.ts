@@ -5,10 +5,15 @@ export type ComponentStatus = 'default' | 'success' | 'warning' | 'danger' | 'in
 export type ComponentSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export const ComponentStatusMap: Record<Exclude<ComponentStatus, 'default'>, string> = {
-    info: 'accent',
-    success: 'success',
-    warning: 'warning',
-    danger: 'danger'
+  info: 'accent',
+  success: 'success',
+  warning: 'warning',
+  danger: 'danger'
+}
+
+export type ValidationInfo = {
+  status?: ComponentStatus;
+  messages?: string[];
 }
 
 export type CSSVars = React.CSSProperties & {

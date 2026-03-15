@@ -1,13 +1,12 @@
 import React from 'react';
 import styles from './FieldLayout.module.scss';
-import type { ComponentStatus, CSSVars } from '../types';
+import type { CSSVars, ValidationInfo } from '../types';
 import clsx from 'clsx';
 import Label from '../Label';
 import MessageBox from '../MessageBox';
 
 interface FieldLayoutProps extends React.ComponentProps<'div'> {
-    status?: ComponentStatus;
-    messages?: string[];
+    validation?: ValidationInfo;
     disabled?: boolean;
     htmlFor?: string;
     label?: {
@@ -18,8 +17,7 @@ interface FieldLayoutProps extends React.ComponentProps<'div'> {
 
 const FieldLayout: React.FC<FieldLayoutProps> = ({
     label,
-    status = 'default',
-    messages = [],
+    validation,
     className,
     style,
     disabled = false,
@@ -47,7 +45,7 @@ const FieldLayout: React.FC<FieldLayoutProps> = ({
                 {children}
                 {(isRight) && LabelText()}
             </label>
-            <MessageBox status={status} messages={messages} className={styles.msgBox} />
+            <MessageBox validation={validation} className={styles.msgBox} />
         </div>
     );
 };
