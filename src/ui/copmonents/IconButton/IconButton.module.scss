@@ -33,4 +33,10 @@
         outline: none;
         box-shadow: var(--box-shadow-normal);
     }
+
+    &:disabled {
+        svg {
+            color: var(--text-disabled);
+        }
+    }
 }

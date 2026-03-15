@@ -1,16 +1,21 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Button, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox} from '../ui/copmonents';
+import {Badge, Button, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, TextField} from '../ui/copmonents';
+
+const testMessages = ['message 1', 'message 2', 'message 3'];
 
 function App() {
 
-  const testClick = () => {
+  const [checked, setChecked] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+
+  const testClickHandler = () => {
     alert('Test click on component!');
   };
 
-  const testMessages = ['message 1', 'message 2', 'message 3'];
-
-  const [checked, setChecked] = React.useState(false);
+  const testClearTextFieldHandler = () => {
+    setEmail('');
+  };
 
   return (
     <div className='flex-col'>
@@ -62,48 +67,48 @@ function App() {
 
 
         <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge lg' size='lg' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge md' size='md' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge sm' size='sm' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
-          <Badge text='Test badge xs' size='xs' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClick} />} />
+          <Badge text='Test badge xl' size='xl' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
+          <Badge text='Test badge lg' size='lg' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
+          <Badge text='Test badge md' size='md' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
+          <Badge text='Test badge sm' size='sm' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
+          <Badge text='Test badge xs' size='xs' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
         </div>
       </div>
 
       <div className='flex-col'>
         <div className='flex-row'>
-          <Button onClick={testClick} variant='primary' intent='normal'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='normal'>Test button</Button>
-          <Button onClick={testClick} variant='ghost' intent='normal'>Test button</Button>
+          <Button onClick={testClickHandler} variant='primary' intent='normal'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='normal'>Test button</Button>
+          <Button onClick={testClickHandler} variant='ghost' intent='normal'>Test button</Button>
         </div>
         <div className='flex-row'>
           <Button variant='primary' intent='destructive'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='destructive'>Test button</Button>
-          <Button onClick={testClick} variant='ghost' intent='destructive'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='destructive'>Test button</Button>
+          <Button onClick={testClickHandler} variant='ghost' intent='destructive'>Test button</Button>
         </div>
         <div className='flex-row'>
-          <Button onClick={testClick} variant='primary' intent='normal' icon='LINK' />
-          <Button onClick={testClick} variant='secondary' intent='normal' icon='LINK' />
-          <Button onClick={testClick} variant='ghost' intent='normal' icon='LINK' />
+          <Button onClick={testClickHandler} variant='primary' intent='normal' icon='LINK' />
+          <Button onClick={testClickHandler} variant='secondary' intent='normal' icon='LINK' />
+          <Button onClick={testClickHandler} variant='ghost' intent='normal' icon='LINK' />
         </div>
         <div className='flex-row'>
-          <Button onClick={testClick} variant='primary' intent='destructive' icon='LINK' />
-          <Button onClick={testClick} variant='secondary' intent='destructive' icon='LINK' />
-          <Button onClick={testClick} variant='ghost' intent='destructive' icon='LINK' />
+          <Button onClick={testClickHandler} variant='primary' intent='destructive' icon='LINK' />
+          <Button onClick={testClickHandler} variant='secondary' intent='destructive' icon='LINK' />
+          <Button onClick={testClickHandler} variant='ghost' intent='destructive' icon='LINK' />
         </div>
         <div className='flex-row'>
-          <Button onClick={testClick} variant='secondary' intent='normal' size='xl' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='normal' size='lg' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='normal' size='md' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='normal' size='sm' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='normal' size='xs' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='xl' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='lg' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='md' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='sm' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='xs' icon='IMAGE'>Test button</Button>
         </div>
         <div className='flex-row'>
-          <Button onClick={testClick} variant='secondary' intent='destructive' size='xl' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='destructive' size='lg' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='destructive' size='md' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='destructive' size='sm' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClick} variant='secondary' intent='destructive' size='xs' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='xl' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='lg' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='md' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='sm' icon='IMAGE'>Test button</Button>
+          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='xs' icon='IMAGE'>Test button</Button>
         </div>
       </div>
 
@@ -142,7 +147,6 @@ function App() {
           <MessageBox validation={{status: 'default', messages: testMessages}} />
           <MessageBox validation={{status: 'default', messages: testMessages}} />
         </div>
-        <div className='flex-row'></div>
       </div>
 
       <div className='flex-col'>
@@ -170,6 +174,71 @@ function App() {
           <CheckBox label='Test check-box disabled' value={false} changeValue={setChecked} disabled />
           <CheckBox label='Test check-box disabled' value={true} changeValue={setChecked} disabled />
         </div>
+      </div>
+
+      <div className='flex-col'>
+        <div className='flex-row'>
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            validation={{status: 'default', messages: testMessages}} 
+            value={email} onChangeValue={setEmail}
+            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            validation={{status: 'default', messages: testMessages}} 
+            value={email} onChangeValue={setEmail}
+            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            validation={{status: 'default', messages: testMessages}} 
+            value={email} onChangeValue={setEmail}
+            decorativeIcon='INFO' />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            validation={{status: 'default', messages: testMessages}} 
+            value={email} onChangeValue={setEmail} />
+        </div>
+        <div className='flex-row'>
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail}
+            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail}
+            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail}
+            decorativeIcon='INFO' />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} />
+        </div>
+        <div className='flex-row'>
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} disabled={true}
+            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} disabled={true}
+            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} disabled={true}
+            decorativeIcon='INFO' />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} disabled={true} />
+        </div>
+        <TextField 
+            style={{maxWidth: '500px'}}
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} disabled={true} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} disabled={true} />
       </div>
     </div>
   )

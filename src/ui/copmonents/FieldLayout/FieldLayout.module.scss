@@ -22,12 +22,17 @@ $label-position: (
     justify-content: center;
     gap: var(--space-xs);
 
+    width: 100%;
+    max-width: 100%;
+
     .msgBox {
         padding-left: 16px;
     }
 
     .label {
         display: flex;
+        width: 100%;
+        max-width: 100%;
         gap: var(--space-sm);
 
         cursor: pointer;
