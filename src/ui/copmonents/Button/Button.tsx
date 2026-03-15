@@ -20,9 +20,10 @@ const Button: React.FC<ButtonProps> = ({
     className,
     style,
     children,
+    disabled,
     ...props
 }) => {
-    const classes = clsx(className, styles.wrapper, styles[variant], styles[intent]);
+    const classes = clsx(className, styles.wrapper, styles[variant], styles[intent], disabled ? styles.disabled : styles.default);
 
     const inlineStyle: React.CSSProperties = {
         fontSize: `var(--fs-${size})`,
@@ -30,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     return (
-        <button className={classes} style={inlineStyle} {...props}>
+        <button className={classes} style={inlineStyle} disabled={disabled} {...props}>
             {icon && <Icon name={icon} size='inherit' />}
             {children && children}
         </button>

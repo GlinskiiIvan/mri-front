@@ -82,9 +82,19 @@ function App() {
           <Button onClick={testClickHandler} variant='ghost' intent='normal'>Test button</Button>
         </div>
         <div className='flex-row'>
-          <Button variant='primary' intent='destructive'>Test button</Button>
+          <Button disabled onClick={testClickHandler} variant='primary' intent='normal'>Test button</Button>
+          <Button disabled onClick={testClickHandler} variant='secondary' intent='normal'>Test button</Button>
+          <Button disabled onClick={testClickHandler} variant='ghost' intent='normal'>Test button</Button>
+        </div>
+        <div className='flex-row'>
+          <Button onClick={testClickHandler} variant='primary' intent='destructive'>Test button</Button>
           <Button onClick={testClickHandler} variant='secondary' intent='destructive'>Test button</Button>
           <Button onClick={testClickHandler} variant='ghost' intent='destructive'>Test button</Button>
+        </div>
+        <div className='flex-row'>
+          <Button disabled onClick={testClickHandler} variant='primary' intent='destructive'>Test button</Button>
+          <Button disabled onClick={testClickHandler} variant='secondary' intent='destructive'>Test button</Button>
+          <Button disabled onClick={testClickHandler} variant='ghost' intent='destructive'>Test button</Button>
         </div>
         <div className='flex-row'>
           <Button onClick={testClickHandler} variant='primary' intent='normal' icon='LINK' />
