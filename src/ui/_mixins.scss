@@ -1,0 +1,18 @@
+@mixin focus-state(
+  $shadow: var(--box-shadow-normal),
+  $border: var(--border-accent),
+) {
+  outline: none;
+  box-shadow: $shadow;
+  border-color: $border;
+}
+
+@mixin disabled-state(
+  $background: var(--bg-disabled),
+  $border: var(--border-disabled),
+  $color: var(--text-disabled),
+) {
+  background-color: $background;
+  border-color: $border;
+  color: $color;
+}

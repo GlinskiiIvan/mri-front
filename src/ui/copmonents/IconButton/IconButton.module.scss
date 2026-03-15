@@ -1,16 +1,21 @@
+@use '@/ui/mixins.scss' as *;
+
 .wrapper {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    box-shadow: 0 0 0 0 transparent;
-    border-radius: var(--radius-xs);
-    border: none;
-    background: none;
+    box-shadow: 0 0 7px 2px transparent;
+    border: var(--border-width-sm) solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
 
     cursor: pointer;
 
-    transition: transform var(--duration-normal) ease, box-shadow var(--duration-slow) ease;
+    transition: 
+        transform var(--duration-normal) ease,
+        border-color var(--duration-normal) ease,
+        box-shadow var(--duration-slow) ease;
 
     svg {
         color: var(--text-tertiary);
@@ -28,10 +33,7 @@
     }
 
     &:focus-visible {
-        // outline: 2px solid var(--focus-accent);
-        // outline-offset: 0px;
-        outline: none;
-        box-shadow: var(--box-shadow-normal);
+        @include focus-state();
     }
 
     &:disabled {

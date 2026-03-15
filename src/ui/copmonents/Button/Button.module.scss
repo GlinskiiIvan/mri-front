@@ -45,8 +45,6 @@ $button-focus-colors: (
     }
 
     &:focus-visible {
-        // outline: 2px solid var(--focus-accent);
-        // outline-offset: 0px;
         outline: none;
         box-shadow: map-get($FocusColors, shadow);
     }
@@ -63,7 +61,11 @@ $button-focus-colors: (
     
     cursor: pointer;
     border-radius: var(--radius-lg);
-    transition: transform var(--duration-normal) ease, box-shadow var(--duration-slow) ease, background-color var(--duration-normal) ease, border-color var(--duration-normal) ease;
+    transition: 
+        transform var(--duration-normal) ease, 
+        box-shadow var(--duration-slow) ease, 
+        background-color var(--duration-normal) ease, 
+        border-color var(--duration-normal) ease;
 
     &:active {
         transform: scale(var(--press-scale-md));

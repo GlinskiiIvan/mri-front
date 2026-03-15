@@ -1,3 +1,5 @@
+@use '@/ui/mixins.scss' as *;
+
 .wrapper {
     label {
         &:hover {
@@ -25,7 +27,10 @@
             border-radius: var(--radius-sm);
             background-color: transparent;
 
-            transition: border-color var(--duration-normal) ease, background-color var(--duration-slow) ease, box-shadow var(--duration-slow) ease;
+            transition: 
+                border-color var(--duration-normal) ease, 
+                background-color var(--duration-slow) ease, 
+                box-shadow var(--duration-slow) ease;
 
             .check {
                 font-size: var(--fs-xs);
@@ -50,14 +55,11 @@
             }
             
             &:focus-visible + .square {
-                outline: none;
-                box-shadow: var(--box-shadow-normal);
-                border-color: var(--border-accent);
+                @include focus-state();
             }
 
             &:disabled + .square {
-                border-color: var(--border-disabled);
-                background-color: var(--bg-disabled);
+                @include disabled-state();
             }
         }
     }
