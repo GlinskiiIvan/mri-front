@@ -1,21 +1,5 @@
 .wrapper {
-    display: flex;
-    align-items: start;
-    flex-direction: column;
-    gap: var(--space-xs);
-
-    .msg {
-        padding-left: 16px;
-    }
-
-    .main {
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        gap: var(--space-sm);
-
-        cursor: pointer;
-
+    label {
         &:hover {
             .square {
                 border-color: var(--border-strong);

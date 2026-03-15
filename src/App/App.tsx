@@ -162,6 +162,8 @@ function App() {
       <div className='flex-col'>
         <div className='flex-row'>
           <CheckBox label='Test check-box' messages={testMessages} value={checked} changeValue={setChecked} />
+          <CheckBox label='Test check-box disabled' messages={testMessages} value={false} changeValue={setChecked} disabled />
+          <CheckBox label='Test check-box disabled' messages={testMessages} value={true} changeValue={setChecked} disabled />
         </div>
       </div>
     </div>

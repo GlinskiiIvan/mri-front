@@ -3,8 +3,7 @@ import styles from './CheckBox.module.scss';
 import clsx from 'clsx';
 import type { ComponentStatus, CSSVars } from '../types';
 import Icon from '../Icon';
-import Label from '../Label';
-import MessageBox from '../MessageBox';
+import FieldLayout from '../FieldLayout';
 
 interface CheckBoxProps extends React.ComponentProps<'div'> {
     label: string;
@@ -32,7 +31,6 @@ const CheckBox: React.FC<CheckBoxProps> = ({
 
     const inlineStyle: CSSVars = {
         ...style,
-        ...(disabled && {pointerEvents: 'none'})
     };
 
     const changeValueHandler = () => {
@@ -42,22 +40,23 @@ const CheckBox: React.FC<CheckBoxProps> = ({
     const inputId = React.useId();
 
     return (
-        <div className={classes} style={inlineStyle} {...props}>
-            <label htmlFor={inputId} className={styles.main}>
-                <input
-                    id={inputId}
-                    type="checkbox"
-                    checked={value}
-                    onChange={changeValueHandler}
-                    disabled={disabled}
-                    className={styles.input} />
-                <span className={classesSquare}>
-                    <Icon name='CHECK' className={styles.check} color={disabled ? 'disabled' : 'inverse'} size='inherit' />
-                </span>
-                <Label>{label}</Label>
-            </label>
-            <MessageBox status={status} messages={messages} />
-        </div>
+        <FieldLayout 
+            {...props}
+            className={classes} style={inlineStyle}
+            label={{text: label, position: 'right'}} 
+            htmlFor={inputId} disabled={disabled} 
+            status={status} messages={messages}>
+            <input
+                id={inputId}
+                type="checkbox"
+                checked={value}
+                onChange={changeValueHandler}
+                disabled={disabled}
+                className={styles.input} />
+            <span className={classesSquare}>
+                <Icon name='CHECK' className={styles.check} color={disabled ? 'disabled' : 'inverse'} size='inherit' />
+            </span>
+        </FieldLayout>
     );
 };
 
