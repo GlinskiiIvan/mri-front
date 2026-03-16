@@ -7,28 +7,26 @@ import type { IconPath } from '../Icon';
 import clsx from 'clsx';
 import Icon from '../Icon';
 
-interface SelectProps<T, V = T> extends React.ComponentProps<'div'> {
+interface SelectProps<T> extends React.ComponentProps<'div'> {
     label: string;
     placeholder?: string;
     validation?: ValidationInfo;
     disabled?: boolean;
 
     options: T[];
-    value: V | undefined;
-    onChangeValue: (value: V | undefined) => void;
+    value: T | undefined;
+    onChangeValue: (value: T | undefined) => void;
 
     getKey?: (item: T) => React.Key;
     getValue?: (item: T) => React.ReactNode;
-    getReturnValue?: (item: T) => V;
 
     decorativeIcon?: IconPath;
 }
 
-const Select = <T, V = T>({
+const Select = <T,>({
     options = [],
     getKey,
     getValue,
-    getReturnValue,
     value,
     placeholder = '',
     onChangeValue,
@@ -41,7 +39,7 @@ const Select = <T, V = T>({
     decorativeIcon,
     className,
     ...props
-}: SelectProps<T, V>) => {
+}: SelectProps<T>) => {
 
     const [isOpen, setIsOpen] = React.useState(false);
     
@@ -59,14 +57,10 @@ const Select = <T, V = T>({
     }
 
     const onChangeValueHandler = (item: T) => {
-        const returnValue = getReturnValue
-            ? getReturnValue(item)
-            : (item as unknown as V);
-
-        if(value === returnValue) {
+        if(value === item) {
             onChangeValue(undefined);
         } else {
-            onChangeValue(returnValue);
+            onChangeValue(item);
         }
         setIsOpen(false);
     }
