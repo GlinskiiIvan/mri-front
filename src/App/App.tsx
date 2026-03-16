@@ -1,13 +1,19 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Button, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, TextField} from '../ui/copmonents';
+import {Badge, Button, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Select, TextField} from '../ui/copmonents';
+
+interface Option {id: number, name: string};
 
 const testMessages = ['message 1', 'message 2', 'message 3'];
+const testOptions: Option[] = [{id: 1, name: 'Option 1'}, {id: 2, name: 'Option 2'}, {id: 3, name: 'Option 3'}, {id: 4, name: 'Option 4'},];
+const testOptions2: string[] = ['Option2 1', 'Option2 2', 'Option2 3', 'Option2 4'];
 
 function App() {
 
   const [checked, setChecked] = React.useState(false);
   const [email, setEmail] = React.useState('');
+  const [option, setOption] = React.useState<Option>();
+  const [option2, setOption2] = React.useState<string>();
 
   const testClickHandler = () => {
     alert('Test click on component!');
@@ -269,6 +275,23 @@ function App() {
           <TextField 
             label='Test text field email' placeholder='Enter email...'
             value={email} onChangeValue={setEmail} disabled={true} />
+      </div>
+
+      <div className='flex-col ' style={{width: '700px'}}>
+        <div className='flex-row' style={{width: '100%'}}>
+          <Select
+            label='Test select' options={testOptions} 
+            getKey={(T) => T.id} getValue={(T) => T.name}
+            value={option} onChangeValue={setOption} 
+            placeholder='Select value...' decorativeIcon='FILTER'
+            validation={{status: 'default', messages: []}} />
+
+          <Select
+            label='Test select' options={testOptions2} 
+            value={option2} onChangeValue={setOption2} 
+            placeholder='Select value...' decorativeIcon='FILTER'
+            validation={{status: 'default', messages: []}} />
+        </div>
       </div>
     </div>
   )

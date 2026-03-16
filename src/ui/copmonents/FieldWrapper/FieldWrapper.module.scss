@@ -104,6 +104,10 @@ $status-colors: (
     color: var(--text-tertiary);
     font-size: var(--fs-md);
 
+    svg {
+        color: var(--text-tertiary);
+    }
+
     transition: 
         color var(--duration-normal) ease,
         border-color var(--duration-normal) ease,
