@@ -5,6 +5,7 @@ import type { CSSVars, ValidationInfo } from '../types';
 import Icon, { type IconPath } from '../Icon';
 import clsx from 'clsx';
 import IconButton from '../IconButton';
+import FieldWrapper from '../FieldWrapper';
 
 interface ActionIcon {
     name: IconPath;
@@ -71,7 +72,7 @@ const TextField: React.FC<TextFieldProps> = ({
             label={{text: label, position: 'top'}} 
             validation={validation} disabled={disabled}
             htmlFor={inputId} {...props} >
-            <div className={classesWrapper}>
+            <FieldWrapper validation={validation} className={classesWrapper} >
                 {decorativeIcon && <Icon name={decorativeIcon} />}
                 <input 
                     ref={inputRef}
@@ -83,7 +84,7 @@ const TextField: React.FC<TextFieldProps> = ({
                                     className={actionIconClasses} disabled={disabled}
                                     name={actionIcon.name} onClick={() => onClickActionHandler(actionIcon.onClick)}
                                     tabIndex={!actionIcon.visible ? -1 : 0} />}
-            </div>
+            </FieldWrapper>
         </FieldLayout>
     );
 };

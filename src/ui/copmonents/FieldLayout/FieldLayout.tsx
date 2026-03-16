@@ -26,7 +26,7 @@ const FieldLayout: React.FC<FieldLayoutProps> = ({
     ...props
 }) => {
     const classes = clsx(className, styles.wrapper);
-    const classesLabel = clsx(styles.label, label && styles[label.position]);
+    const classesLabel = clsx('form-field', styles.label, label && styles[label.position]);
 
     const inlineStyle: CSSVars = {
         ...style,
