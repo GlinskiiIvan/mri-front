@@ -4,10 +4,11 @@ import type { IconPath } from '../Icon';
 import clsx from 'clsx';
 import Icon from '../Icon';
 
-interface BlockProps extends React.ComponentProps<'div'> {
+export interface BlockProps extends React.ComponentProps<'div'> {
     title?: string;
     decorativeIcon?: IconPath;
     actions?: React.ReactNode;
+    footer?: React.ReactNode;
 }
 
 const Block: React.FC<BlockProps> = ({
@@ -16,6 +17,7 @@ const Block: React.FC<BlockProps> = ({
     actions,
     className,
     children,
+    footer,
     ...props
 }) => {
     const classesWrapper = clsx(className, styles.wrapper);
@@ -28,12 +30,13 @@ const Block: React.FC<BlockProps> = ({
                         {decorativeIcon && <Icon name={decorativeIcon} size='inherit' />}
                         {title && <h6>{title}</h6>}
                     </div>
-                    {actions && actions}
+                    {actions && (<div className={styles.actions}>{actions}</div>)}
                 </div>
             )}
             <div className={styles.body}>
                 {children}
             </div>
+            {footer && (<div className={styles.footer}>{footer}</div>)}
         </div>
     );
 };

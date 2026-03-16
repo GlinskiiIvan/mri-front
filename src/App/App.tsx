@@ -1,12 +1,21 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Button, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Select, TextField} from '../ui/copmonents';
+import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Select, TextField} from '../ui/copmonents';
 
 interface Option {id: number, name: string};
 
 const testMessages = ['message 1', 'message 2', 'message 3'];
 const testOptions: Option[] = [{id: 1, name: 'Option 1'}, {id: 2, name: 'Option 2'}, {id: 3, name: 'Option 3'}, {id: 4, name: 'Option 4'},];
 const testOptions2: string[] = ['Option2 1', 'Option2 2', 'Option2 3', 'Option2 4'];
+
+const cardInfoOptions = [
+  {key: 'Patient name', value: 'John Doe'}, 
+  {key: 'Patient ID', value: '63048393'},
+  {key: 'Gender', value: 'Male'},
+  {key: 'Age', value: '32 years'},
+  {key: 'Date of birth', value: '12 Mar 1994'},
+  {key: 'Status', value: <Badge text='Normal' size='sm' status='success' />},
+];
 
 function App() {
 
@@ -293,6 +302,51 @@ function App() {
             validation={{status: 'default', messages: []}} />
         </div>
       </div>
+
+      <Block
+        style={{maxWidth: '500px'}} 
+        title='Результаты обследования' decorativeIcon='INFO'
+        footer={
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
+            <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
+            <Button variant='primary' icon='ADD'>Обследование</Button>
+          </div>
+        } >
+        <div style={{display: 'flex', gap: '32px'}}>
+          <CardInfo oprions={cardInfoOptions} />
+        </div>
+      </Block>
+
+      <Block
+        style={{maxWidth: '1000px'}} 
+        title='Результаты обследования' decorativeIcon='INFO'
+        footer={
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
+            <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
+            <Button variant='primary' icon='ADD'>Обследование</Button>
+          </div>
+        } >
+        <div style={{display: 'flex', gap: '32px'}}>
+          <CardInfo oprions={cardInfoOptions} />
+          <CardInfo oprions={cardInfoOptions} />
+        </div>
+      </Block>
+
+      <Block 
+        title='Результаты обследования' decorativeIcon='INFO'
+        footer={
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
+            <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
+            <Button variant='primary' icon='ADD'>Обследование</Button>
+          </div>
+        } >
+        <div style={{display: 'flex', gap: '32px'}}>
+          <CardInfo oprions={cardInfoOptions} />
+          <CardInfo oprions={cardInfoOptions} />
+          <CardInfo oprions={cardInfoOptions} />
+        </div>
+      </Block>
+
     </div>
   )
 }

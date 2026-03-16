@@ -2,6 +2,7 @@ export type {ComponentStatus, ComponentSize} from './types';
 
 export {default as Icon} from './Icon'
 export type { IIconProps, IconSize, IconColor, IconPath } from './Icon';
+export type {BlockProps} from './Block';
 
 export {default as IconButton} from './IconButton'
 export {default as Badge} from './Badge'
@@ -14,3 +15,4 @@ export {default as CheckBox} from './CheckBox'
 export {default as TextField} from './TextField'
 export {default as Select} from './Select'
 export {default as Block} from './Block'
+export {default as CardInfo} from './CardInfo'

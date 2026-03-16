@@ -8,8 +8,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-xl);
-    width: fit-content;
-    height: fit-content;
+    
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
 
@@ -18,6 +18,8 @@
         align-items: center;
         justify-content: space-between;
         gap: var(--space-lg);
+
+        width: 100%;
 
         .title {
             display: flex;
