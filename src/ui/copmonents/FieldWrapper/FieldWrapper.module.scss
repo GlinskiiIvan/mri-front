@@ -115,6 +115,16 @@ $status-colors: (
     &.warning { @include wrapper-styles(warning); }
     &.danger { @include wrapper-styles(danger); }
     &.info { @include wrapper-styles(info); }
+
+    &:hover {
+        color: var(--text-secondary);
+
+        &.default { @include wrapper-hover-styles(default); }
+        &.success { @include wrapper-hover-styles(success); }
+        &.warning { @include wrapper-hover-styles(warning); }
+        &.danger { @include wrapper-hover-styles(danger); }
+        &.info { @include wrapper-hover-styles(info); }
+    }
 }
 
 :global(.form-field:hover) {
