@@ -31,7 +31,10 @@ const TextField: React.FC<TextFieldProps> = ({
     onChangeValue,
     disabled = false,
     label,
-    validation,
+    validation = {
+        status: 'default',
+        messages: []
+    },
     decorativeIcon,
     actionIcon,
     className,
@@ -43,7 +46,8 @@ const TextField: React.FC<TextFieldProps> = ({
 
     const isActionIcon = typeof actionIcon === 'object' && actionIcon !== null && 'name' in actionIcon;
 
-    const classes = clsx(className, styles.fieldLayot);
+    const classesLayout = clsx(className, styles.fieldLayot);
+    const classesWrapper = clsx(styles.wrapper, validation?.status && styles[validation.status]);
     const actionIconClasses = clsx(styles.actionIcon, {[styles.visible]: isActionIcon && actionIcon.visible});
 
     const inlineStyle: CSSVars = {
@@ -54,9 +58,7 @@ const TextField: React.FC<TextFieldProps> = ({
         onChangeValue(e.target.value);
     }
 
-    const onClickActionHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, action: () => void) => {
-        // e.preventDefault();
-        // e.stopPropagation();
+    const onClickActionHandler = (action: () => void) => {
         action();
         setTimeout(() => {
             inputRef.current?.focus();
@@ -65,11 +67,11 @@ const TextField: React.FC<TextFieldProps> = ({
 
     return (
         <FieldLayout 
-            className={classes} style={inlineStyle}
+            className={classesLayout} style={inlineStyle}
             label={{text: label, position: 'top'}} 
             validation={validation} disabled={disabled}
             htmlFor={inputId} {...props} >
-            <div className={styles.wrapper}>
+            <div className={classesWrapper}>
                 {decorativeIcon && <Icon name={decorativeIcon} />}
                 <input 
                     ref={inputRef}
@@ -79,7 +81,7 @@ const TextField: React.FC<TextFieldProps> = ({
                 {React.isValidElement(actionIcon) && actionIcon}
                 {isActionIcon && <IconButton 
                                     className={actionIconClasses} disabled={disabled}
-                                    name={actionIcon.name} onClick={(e) => onClickActionHandler(e, actionIcon.onClick)}
+                                    name={actionIcon.name} onClick={() => onClickActionHandler(actionIcon.onClick)}
                                     tabIndex={!actionIcon.visible ? -1 : 0} />}
             </div>
         </FieldLayout>

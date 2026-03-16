@@ -135,6 +135,10 @@
     /* ---------------- SHADOW ---------------- */
 
     --box-shadow-normal: 0 0 7px 2px var(--focus-accent);
+    --box-shadow-success: 0 0 7px 2px var(--focus-success);
+    --box-shadow-warning: 0 0 7px 2px var(--focus-warning);
+    --box-shadow-danger: 0 0 7px 2px var(--focus-danger);
+    --box-shadow-accent: 0 0 7px 2px var(--focus-accent);
     --box-shadow-destructive: 0 0 7px 2px var(--focus-danger);
 
     /* =========================================================

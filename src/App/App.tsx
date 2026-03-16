@@ -152,10 +152,10 @@ function App() {
         </div>
         <div className='flex-row'>
           <MessageBox validation={{status: 'default', messages: testMessages}} />
-          <MessageBox validation={{status: 'default', messages: testMessages}} />
-          <MessageBox validation={{status: 'default', messages: testMessages}} />
-          <MessageBox validation={{status: 'default', messages: testMessages}} />
-          <MessageBox validation={{status: 'default', messages: testMessages}} />
+          <MessageBox validation={{status: 'success', messages: testMessages}} />
+          <MessageBox validation={{status: 'warning', messages: testMessages}} />
+          <MessageBox validation={{status: 'danger', messages: testMessages}} />
+          <MessageBox validation={{status: 'info', messages: testMessages}} />
         </div>
       </div>
 
@@ -224,6 +224,26 @@ function App() {
           <TextField 
             label='Test text field email' placeholder='Enter email...'
             value={email} onChangeValue={setEmail} />
+        </div>
+        <div className='flex-row'>
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} validation={{status: 'default', messages: testMessages}}
+            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} validation={{status: 'success', messages: testMessages}}
+            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} validation={{status: 'warning', messages: testMessages}}
+            decorativeIcon='INFO' />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} validation={{status: 'danger', messages: testMessages}} />
+          <TextField 
+            label='Test text field email' placeholder='Enter email...'
+            value={email} onChangeValue={setEmail} validation={{status: 'info', messages: testMessages}} />
         </div>
         <div className='flex-row'>
           <TextField 
