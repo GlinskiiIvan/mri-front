@@ -3,6 +3,7 @@ export type {ComponentStatus, ComponentSize} from './types';
 export {default as Icon} from './Icon'
 export type { IconProps, IconSize, IconPath } from './Icon';
 export type {BlockProps} from './Block';
+export type {ColumnTable, SortedColumn, Sorting} from './Table';
 
 export {default as IconButton} from './IconButton'
 export {default as Badge} from './Badge'
@@ -17,3 +18,4 @@ export {default as Select} from './Select'
 export {default as Block} from './Block'
 export {default as CardInfo} from './CardInfo'
 export {default as Modal} from './Modal'
+export {default as Table, THead, TBody} from './Table'

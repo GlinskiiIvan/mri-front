@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Modal, Select, TextField} from '../ui/copmonents';
+import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Modal, Select, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
 
 interface Option {id: number, name: string};
 
@@ -17,6 +17,63 @@ const cardInfoOptions = [
   {key: 'Status', value: <Badge text='Normal' size='sm' status='success' />},
 ];
 
+const companies = [
+  {
+      COMPANIES: 'Chakra Vision UI Version',
+      MEMBERS: 'Ryan Tompson',
+      BUDGET: '$14,000',
+      COMPLETION: '60',
+  },
+  {
+      COMPANIES: 'Add Progress Track',
+      MEMBERS: 'Alexander Smith',
+      BUDGET: '$3,000',
+      COMPLETION: '10',
+  },
+  {
+      COMPANIES: 'Fix Platform Errors',
+      MEMBERS: 'Jessica Doe',
+      BUDGET: 'Not set',
+      COMPLETION: '100',
+  },
+  {
+      COMPANIES: 'Launch our Mobile App',
+      MEMBERS: 'Romina Hadid',
+      BUDGET: '$20,500',
+      COMPLETION: '100',
+  },
+  {
+      COMPANIES: 'Add the New Pricing Page',
+      MEMBERS: 'Alexander Smith',
+      BUDGET: '$500',
+      COMPLETION: '25',
+  },
+  {
+      COMPANIES: 'Redesign New Online Shop',
+      MEMBERS: 'Ryan Tompson',
+      BUDGET: '$2,000',
+      COMPLETION: '40',
+  }
+]
+const entries = companies.map(item => ({
+  ...item,
+  BUDGET: <Badge text={String(item.BUDGET)} status={'success'} size={'sm'} />,
+}))
+
+const columns: ColumnTable<typeof entries[number]>[] = [
+  {key: 'COMPANIES', label: 'Companies', sortable: true}, 
+  {key: 'MEMBERS', label: 'Members', sortable: false}, 
+  {key: 'BUDGET', label: 'Budget', sortable: true}, 
+  {key: 'COMPLETION', label: 'Completion', sortable: true},
+];
+
+const columnsFixed: ColumnTable<typeof entries[number]>[] = [
+  {key: 'COMPANIES', label: 'Companies', sortable: true, width: '300px'}, 
+  {key: 'MEMBERS', label: 'Members', sortable: false, width: '200px'}, 
+  {key: 'BUDGET', label: 'Budget', sortable: true, width: '200px'}, 
+  {key: 'COMPLETION', label: 'Completion', sortable: true, width: '200px'},
+];
+
 function App() {
 
   const [checked, setChecked] = React.useState(false);
@@ -25,6 +82,7 @@ function App() {
   const [option2, setOption2] = React.useState<string>();
   const [modal, setVisibleModal] = React.useState(false);
   const [modal2, setVisibleModal2] = React.useState(false);
+  const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof entries[number]>>();
 
   const testClickHandler = () => {
     alert('Test click on component!');
@@ -365,6 +423,20 @@ function App() {
       <Modal title='Test modal 2' visible={modal2} setVisible={setVisibleModal2}>
         test modal 2
       </Modal>
+
+      <Block title='Test table'style={{width: '600px'}}>
+        <Table fixedColumnWidth maxHeight={400}>
+          <THead columns={columnsFixed} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
+          <TBody columns={columnsFixed} entries={[...entries, ...entries, ...entries, ...entries]} />
+        </Table>
+      </Block>
+
+      <Block title='Test table'>
+        <Table maxHeight={400}>
+          <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
+          <TBody columns={columns} entries={[...entries, ...entries, ...entries, ...entries]} />
+        </Table>
+      </Block>
 
     </div>
   )
