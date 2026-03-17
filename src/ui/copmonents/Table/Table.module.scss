@@ -25,6 +25,14 @@
                 font-weight: var(--fw-medium);
                 color: var(--text-secondary);
 
+                &:hover {
+                  .order {
+                    &:before,&:after {
+                      background-color: var(--border-strong);
+                    }
+                  }
+                }
+
                 &.sortable {
                   cursor: pointer;
                 }
@@ -54,12 +62,15 @@
     position: relative;
     display: block;
     width: 1.5rem;
+
     &:before,&:after {
       display: block;
       height: 1px;
       width: 50%;
-      background: var(--border-primary);
-      transition: all .3s ease-in-out;
+      background-color: var(--border-primary);
+      transition: 
+        transform var(--duration-slow) linear,
+        background-color var(--duration-slow) ease;
       opacity: 1;
     }
     &:before,&:after {
