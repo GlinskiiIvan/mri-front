@@ -1,25 +1,23 @@
 import React from 'react';
-import type { IconPath, IconSize } from '../Icon';
+import type { IconProps } from '../Icon';
 import clsx from 'clsx';
 import Icon from '../Icon';
 import styles from './IconButton.module.scss';
 
 interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  name: IconPath;
-  size?: IconSize;
+    icon: IconProps;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
-    name,
-    size = '16',
+    icon,
     className,
     ...props
 }) => {
-    const classes = clsx(className, styles.wrapper);
+    const classes = clsx(styles.wrapper, className);
 
     return (
-        <button className={classes} {...props}>
-            <Icon name={name} size={size} />
+        <button type='button' className={classes} {...props}>
+            <Icon {...icon} />
         </button>
     );
 };

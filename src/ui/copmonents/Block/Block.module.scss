@@ -11,7 +11,7 @@
     
     width: 100%;
     max-width: 100%;
-    max-height: 100%;
+    // max-height: 100%;
 
     .header {
         display: flex;
@@ -34,5 +34,10 @@
                 color: inherit;
             }
         }
+    }
+
+    .body {
+        flex: 1 1 auto;
+        overflow: auto;
     }
 }

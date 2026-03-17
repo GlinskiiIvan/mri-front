@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Select, TextField} from '../ui/copmonents';
+import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Modal, Select, TextField} from '../ui/copmonents';
 
 interface Option {id: number, name: string};
 
@@ -23,6 +23,8 @@ function App() {
   const [email, setEmail] = React.useState('');
   const [option, setOption] = React.useState<Option>();
   const [option2, setOption2] = React.useState<string>();
+  const [modal, setVisibleModal] = React.useState(false);
+  const [modal2, setVisibleModal2] = React.useState(false);
 
   const testClickHandler = () => {
     alert('Test click on component!');
@@ -82,11 +84,11 @@ function App() {
 
 
         <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
-          <Badge text='Test badge lg' size='lg' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
-          <Badge text='Test badge md' size='md' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
-          <Badge text='Test badge sm' size='sm' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
-          <Badge text='Test badge xs' size='xs' status='info' action={<IconButton name='EDIT' size='inherit' onClick={testClickHandler} />} />
+          <Badge text='Test badge xl' size='xl' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
+          <Badge text='Test badge lg' size='lg' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
+          <Badge text='Test badge md' size='md' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
+          <Badge text='Test badge sm' size='sm' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
+          <Badge text='Test badge xs' size='xs' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
         </div>
       </div>
 
@@ -337,7 +339,7 @@ function App() {
         footer={
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
             <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
-            <Button variant='primary' icon='ADD'>Обследование</Button>
+            <Button variant='primary' icon='ADD' onClick={() => setVisibleModal(true)}>Обследование</Button>
           </div>
         } >
         <div style={{display: 'flex', gap: '32px'}}>
@@ -346,6 +348,23 @@ function App() {
           <CardInfo oprions={cardInfoOptions} />
         </div>
       </Block>
+
+      <Modal  
+        visible={modal} setVisible={setVisibleModal} 
+        title='Test modal' footer={
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
+            <Button variant='primary' icon='ADD' onClick={() => setVisibleModal2(true)}>Обследование</Button>
+          </div>
+        }>
+        <CardInfo oprions={cardInfoOptions} />
+        <CardInfo oprions={cardInfoOptions} />
+        <CardInfo oprions={cardInfoOptions} />
+        <CardInfo oprions={cardInfoOptions} />
+      </Modal>
+
+      <Modal title='Test modal 2' visible={modal2} setVisible={setVisibleModal2}>
+        test modal 2
+      </Modal>
 
     </div>
   )

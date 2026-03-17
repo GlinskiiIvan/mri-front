@@ -20,16 +20,16 @@ const getIconByPath = (path: IconPath): string | undefined => {
     }, IconMap) as string | undefined;
 };
 
-export type IIconProps = {
+export type IconProps = {
   name: IconPath;
   size?: IconSize;
   color?: TextColors;
   className?: string;
 };
 
-export const Icon: React.FC<IIconProps> = ({
+export const Icon: React.FC<IconProps> = ({
   name,
-  size = "16",
+  size = "inherit",
   color,
   className = "",
 }) => {
