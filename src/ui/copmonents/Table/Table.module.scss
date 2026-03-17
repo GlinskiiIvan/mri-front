@@ -44,6 +44,14 @@
             }
         }
     }
+    tbody {
+      tr {
+        transition: background-color var(--duration-normal) ease;
+        &:hover {
+          background-color: var(--bg-accent-subtle);
+        }
+      }
+    }
     th, td {
         font-size: var(--fs-md);
         text-align: left;
