@@ -83,30 +83,42 @@ export const THead = <T,>({
 }
 
 // TBody
-interface TBodyProps<T> {
-    // readonly entries: T[];
-    readonly data: T[];
-    readonly columns: ColumnTable<T>[];
-    readonly rowKey: keyof T;
+type RowSelect<T> = {
     readonly select?: {
         readonly selectedRow: T | undefined;
         readonly onChange: (row: T | undefined) => void;
     }
-}
+    readonly rowClick?: undefined;
+};
+
+type RowClick<T> = {
+    readonly select?: undefined
+    readonly rowClick?: (row: T) => void;
+};
+
+type TBodyProps<T> = {
+    readonly data: T[];
+    readonly columns: ColumnTable<T>[];
+    readonly rowKey: keyof T;
+    
+} & (RowSelect<T> | RowClick<T>);
 export const TBody = <T extends Record<string, unknown>,>({
     columns,
     data,
     rowKey,
-    select
+    select,
+    rowClick
 }: TBodyProps<T>) => {
     
     const isSelectable = select !== undefined;
+    const isClickable = rowClick !== undefined;
+    const isInteractive = isSelectable || isClickable; 
 
-    const tabIndex = isSelectable ? 0 : undefined;
-    const role = isSelectable ? 'button' : 'row';
+    const tabIndex = isInteractive ? 0 : undefined;
+    const role = isInteractive ? 'button' : 'row';
 
     const styleTr: CSSVars = {
-        '--cursor-tr': isSelectable ? 'pointer' : 'default',
+        '--cursor-tr': isInteractive ? 'pointer' : 'default',
     }
 
     const isEqual = (row: T) => {
@@ -118,18 +130,21 @@ export const TBody = <T extends Record<string, unknown>,>({
     }
 
     const onClickHandler = (row: T) => {
-        if(!isSelectable) return;
+        if(!isInteractive) return;
 
-        if(isEqual(row)) {
-            select.onChange(undefined);
-        } else {
-            select.onChange(row);
+        if(isSelectable) {
+            if(isEqual(row)) {
+                select.onChange(undefined);
+            } else {
+                select.onChange(row);
+            }
+        }
+        if(isClickable) {
+            rowClick(row);
         }
     }
 
     const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTableRowElement>, row: T) => {
-        if(!isSelectable) return;
-
         if(e.key === 'Enter' || e.key === ' ') {
             onClickHandler(row);
         }
@@ -139,8 +154,8 @@ export const TBody = <T extends Record<string, unknown>,>({
         <tbody>
             {data.map((row) => (
                 <tr
-                    className={clsx({[styles.selected]: isEqual(row)})} style={styleTr}
                     key={String(row[rowKey])} tabIndex={tabIndex} role={role}
+                    className={clsx({[styles.selected]: isEqual(row)})} style={styleTr}
                     onClick={() => onClickHandler(row)} 
                     onKeyDown={(e) => onKeyDownHandler(e, row)}>
                     {columns.map(column => (

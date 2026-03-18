@@ -430,7 +430,7 @@ function App() {
       <Block title='Test table'style={{width: '600px'}}>
         <Table fixedColumnWidth maxHeight={400}>
           <THead columns={columnsFixed} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
-          <TBody rowKey='id' columns={columnsFixed} data={[...companies, ...companies, ...companies, ...companies]} />
+          <TBody rowKey='id' rowClick={(row) => alert(`row: ${row.MEMBERS}`)} columns={columnsFixed} data={[...companies, ...companies, ...companies, ...companies]} />
         </Table>
       </Block>
 
@@ -438,6 +438,13 @@ function App() {
         <Table maxHeight={400}>
           <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
           <TBody rowKey='id' columns={columns} data={companies} select={{selectedRow, onChange: setSelectedRow}} />
+        </Table>
+      </Block>
+
+      <Block title='Test table'>
+        <Table maxHeight={400}>
+          <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
+          <TBody rowKey='id' columns={columns} data={companies} />
         </Table>
       </Block>
 
