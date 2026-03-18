@@ -19,58 +19,60 @@ const cardInfoOptions = [
 
 const companies = [
   {
+      id: 1,
       COMPANIES: 'Chakra Vision UI Version',
       MEMBERS: 'Ryan Tompson',
-      BUDGET: '$14,000',
+      BUDGET: {test: 23, many: '$14,000'},
       COMPLETION: '60',
   },
   {
+      id: 2,
       COMPANIES: 'Add Progress Track',
       MEMBERS: 'Alexander Smith',
-      BUDGET: '$3,000',
+      BUDGET: {test: 23, many: '$3,000'},
       COMPLETION: '10',
   },
   {
+      id: 3,
       COMPANIES: 'Fix Platform Errors',
       MEMBERS: 'Jessica Doe',
-      BUDGET: 'Not set',
+      BUDGET: {test: 23, many: 'Not set'},
       COMPLETION: '100',
   },
   {
+      id: 4,
       COMPANIES: 'Launch our Mobile App',
       MEMBERS: 'Romina Hadid',
-      BUDGET: '$20,500',
+      BUDGET: {test: 23, many: '$20,500'},
       COMPLETION: '100',
   },
   {
+      id: 5,
       COMPANIES: 'Add the New Pricing Page',
       MEMBERS: 'Alexander Smith',
-      BUDGET: '$500',
+      BUDGET: {test: 23, many: '$500'},
       COMPLETION: '25',
   },
   {
+      id: 6,
       COMPANIES: 'Redesign New Online Shop',
       MEMBERS: 'Ryan Tompson',
-      BUDGET: '$2,000',
+      BUDGET: {test: 23, many: '$2,000'},
       COMPLETION: '40',
   }
 ]
-const entries = companies.map(item => ({
-  ...item,
-  BUDGET: <Badge text={String(item.BUDGET)} status={'success'} size={'sm'} />,
-}))
 
-const columns: ColumnTable<typeof entries[number]>[] = [
+const columns: ColumnTable<typeof companies[number]>[] = [
   {key: 'COMPANIES', label: 'Companies', sortable: true}, 
   {key: 'MEMBERS', label: 'Members', sortable: false}, 
-  {key: 'BUDGET', label: 'Budget', sortable: true}, 
+  {key: 'BUDGET', label: 'Budget', sortable: true, render: (item) => (<Badge text={String(item.BUDGET.many)} status={'success'} size={'sm'} />)}, 
   {key: 'COMPLETION', label: 'Completion', sortable: true},
 ];
 
-const columnsFixed: ColumnTable<typeof entries[number]>[] = [
+const columnsFixed: ColumnTable<typeof companies[number]>[] = [
   {key: 'COMPANIES', label: 'Companies', sortable: true, width: '300px'}, 
   {key: 'MEMBERS', label: 'Members', sortable: false, width: '200px'}, 
-  {key: 'BUDGET', label: 'Budget', sortable: true, width: '200px'}, 
+  {key: 'BUDGET', label: 'Budget', sortable: true, width: '200px', render: (item) => (<Badge text={String(item.BUDGET.many)} status={'success'} size={'sm'} />)}, 
   {key: 'COMPLETION', label: 'Completion', sortable: true, width: '200px'},
 ];
 
@@ -82,7 +84,8 @@ function App() {
   const [option2, setOption2] = React.useState<string>();
   const [modal, setVisibleModal] = React.useState(false);
   const [modal2, setVisibleModal2] = React.useState(false);
-  const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof entries[number]>>();
+  const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof companies[number]>>();
+  const [selectedRow, setSelectedRow] = React.useState<typeof companies[number]>();
 
   const testClickHandler = () => {
     alert('Test click on component!');
@@ -427,14 +430,14 @@ function App() {
       <Block title='Test table'style={{width: '600px'}}>
         <Table fixedColumnWidth maxHeight={400}>
           <THead columns={columnsFixed} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
-          <TBody columns={columnsFixed} entries={[...entries, ...entries, ...entries, ...entries]} />
+          <TBody rowKey='id' columns={columnsFixed} data={[...companies, ...companies, ...companies, ...companies]} />
         </Table>
       </Block>
 
       <Block title='Test table'>
         <Table maxHeight={400}>
           <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
-          <TBody columns={columns} entries={[...entries, ...entries, ...entries, ...entries]} />
+          <TBody rowKey='id' columns={columns} data={companies} select={{selectedRow, onChange: setSelectedRow}} />
         </Table>
       </Block>
 

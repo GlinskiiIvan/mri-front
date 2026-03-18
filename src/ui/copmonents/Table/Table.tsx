@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './Table.module.scss';
 import clsx from 'clsx';
+import type { CSSVars } from '../types';
 
 //Shared
-export interface ColumnTable<T> {
-    readonly key: keyof T; 
+export interface ColumnTable<T, K extends keyof T = keyof T> {
+    readonly key: K; 
     readonly label: string;
     readonly width?: 'auto' | string;
     readonly sortable: boolean;
+    readonly render?: (value: T) => React.ReactNode;
 }
 
 export interface SortedColumn<T> {
@@ -73,7 +75,7 @@ export const THead = <T,>({
         <thead>
             <tr>
                 {columns.map(column => (
-                    <Th column={column} sorting={sorting} />
+                    <Th key={String(column.key)} column={column} sorting={sorting} />
                 ))}
             </tr>
         </thead>
@@ -82,20 +84,72 @@ export const THead = <T,>({
 
 // TBody
 interface TBodyProps<T> {
-    readonly entries: T[];
+    // readonly entries: T[];
+    readonly data: T[];
     readonly columns: ColumnTable<T>[];
+    readonly rowKey: keyof T;
+    readonly select?: {
+        readonly selectedRow: T | undefined;
+        readonly onChange: (row: T | undefined) => void;
+    }
 }
-export const TBody = <T extends Record<string, React.ReactNode>,>({
+export const TBody = <T extends Record<string, unknown>,>({
     columns,
-    entries
+    data,
+    rowKey,
+    select
 }: TBodyProps<T>) => {
+    
+    const isSelectable = select !== undefined;
+
+    const tabIndex = isSelectable ? 0 : undefined;
+    const role = isSelectable ? 'button' : 'row';
+
+    const styleTr: CSSVars = {
+        '--cursor-tr': isSelectable ? 'pointer' : 'default',
+    }
+
+    const isEqual = (row: T) => {
+        if(!isSelectable) return;
+        const selectedRow = select.selectedRow;
+        if(!selectedRow) return;
+
+        return row[rowKey] === selectedRow[rowKey];
+    }
+
+    const onClickHandler = (row: T) => {
+        if(!isSelectable) return;
+
+        if(isEqual(row)) {
+            select.onChange(undefined);
+        } else {
+            select.onChange(row);
+        }
+    }
+
+    const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTableRowElement>, row: T) => {
+        if(!isSelectable) return;
+
+        if(e.key === 'Enter' || e.key === ' ') {
+            onClickHandler(row);
+        }
+    }
 
     return (
         <tbody>
-            {entries.map((entry, i) => (
-                <tr key={i}>
+            {data.map((row) => (
+                <tr
+                    className={clsx({[styles.selected]: isEqual(row)})} style={styleTr}
+                    key={String(row[rowKey])} tabIndex={tabIndex} role={role}
+                    onClick={() => onClickHandler(row)} 
+                    onKeyDown={(e) => onKeyDownHandler(e, row)}>
                     {columns.map(column => (
-                        <td key={String(column.key)}>{entry[column.key]}</td>
+                        <td key={String(column.key)}>
+                            {column?.render 
+                                ? column.render(row)
+                                : row[column.key] as React.ReactNode
+                            }
+                        </td>
                     ))}
                 </tr>
             ))}
