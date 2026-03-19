@@ -52,6 +52,10 @@ $button-focus-colors: (
     color: map-get($StaticColors, text);
     border: var(--border-width-sm) solid map-get($StaticColors, border);
 
+    .icon {
+        color: map-get($StaticColors, text);
+    }
+
     &:hover {
         background-color: map-get($HoverColors, bg);
         border: var(--border-width-sm) solid map-get($HoverColors, border);
@@ -69,13 +73,12 @@ $button-focus-colors: (
 }
 
 .wrapper {
-
     display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: var(--space-sm);
     padding: var(--space-sm) var(--space-lg);
-    
+    font-size: var(--fs-button--fs-button);
     cursor: pointer;
     border-radius: var(--radius-lg);
     transition: 
