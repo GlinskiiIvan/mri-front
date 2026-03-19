@@ -27,7 +27,7 @@ const Stack: React.FC<StackProps> = ({
         '--flex-direction-stack': direction,
         '--justify-content-stack': justify,
         '--align-items-stack': align,
-        '--gap-stack': `var(--space-${gap})`,
+        '--gap-stack': gap === 'none' ? '0' : `var(--space-${gap})`,
         ...style,
     };
     
