@@ -9,7 +9,7 @@ interface PageProps {
     readonly title: string;
     readonly description?: string;
     readonly decorativeIcon?: IconPath;
-    readonly children?: React.ReactNode;
+    readonly children: React.ReactNode;
 };
 
 const Page: React.FC<PageProps> = ({
