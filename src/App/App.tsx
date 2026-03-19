@@ -145,11 +145,11 @@ function App() {
 
 
         <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
-          <Badge text='Test badge lg' size='lg' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
-          <Badge text='Test badge md' size='md' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
-          <Badge text='Test badge sm' size='sm' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
-          <Badge text='Test badge xs' size='xs' status='info' action={<IconButton icon={{name: 'EDIT', size: 'inherit'}} onClick={testClickHandler} />} />
+          <Badge text='Test badge xl' size='xl' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
+          <Badge text='Test badge lg' size='lg' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
+          <Badge text='Test badge md' size='md' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
+          <Badge text='Test badge sm' size='sm' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
+          <Badge text='Test badge xs' size='xs' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
         </div>
       </div>
 

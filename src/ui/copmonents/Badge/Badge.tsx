@@ -2,19 +2,26 @@ import React from 'react';
 import { clsx } from 'clsx';
 import Icon, { type IconPath } from '../Icon';
 import styles from './Badge.module.scss';
-import { type ComponentSize, type ComponentStatus, ComponentStatusMap } from '../types';
+import { type ComponentSize, type ComponentStatus, ComponentStatusMap, type CSSVars } from '../types';
+import IconButton from '../IconButton';
+import Stack from '../Stack';
 
 const BadgeStatus: Record<'default', string> & typeof ComponentStatusMap = {
     ...ComponentStatusMap,
     default: 'primary',
 };
 
+interface BadgeAction {
+    icon: IconPath;
+    onClick: () => void;
+}
+
 interface BadgeProps extends React.ComponentProps<'div'> {
     status: ComponentStatus;
     size: ComponentSize;
-    text: string;
+    text?: string;
     icon?: IconPath;
-    action?: React.ReactElement<typeof Icon>;
+    action?: BadgeAction;
 }
 
 const Badge: React.FC<BadgeProps> = ({
@@ -24,20 +31,27 @@ const Badge: React.FC<BadgeProps> = ({
     icon,
     action,
     className,
+    style,
+    children,
     ...props
 }) => {
-    const classes = clsx(className, styles.wrapper, styles[size]);
-    const style = {
-        borderColor: `var(--border-${BadgeStatus[status]})`,
-        fontSize: `var(--fs-${size})`
+    const classes = clsx(styles.wrapper, className);
+
+    const inlineStyle: CSSVars = {
+        '--border-color-badge': `var(--border-${BadgeStatus[status]})`,
+        '--fs-badge': `var(--fs-${size})`,
+        ...style
     };
 
     return (
-        <div className={classes} style={style} {...props}>
-            {icon && <Icon name={icon} color='tertiary' size='inherit' />}
-            {text}   
-            {action && action}
-        </div>
+        <Stack 
+            className={classes} style={inlineStyle} {...props}
+            direction='row' gap='xs'
+            justify='center' align='center' >
+            {icon && <Icon name={icon} color='tertiary' />}
+            {text ?? children}   
+            {action && (<IconButton icon={{name: action.icon}} onClick={action.onClick} />)}
+        </Stack>
     );
 };
 
