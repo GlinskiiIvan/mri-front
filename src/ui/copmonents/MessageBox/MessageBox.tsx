@@ -3,6 +3,7 @@ import styles from './MessageBox.module.scss';
 import { type ComponentSize, ComponentStatusMap, type CSSVars, type ValidationInfo } from '../types';
 import clsx from 'clsx';
 import { v4 as uuidv4 } from 'uuid';
+import Stack from '../Stack';
 
 const MessageBoxStatus: Record<'default', string> & typeof ComponentStatusMap = {
     ...ComponentStatusMap,
@@ -33,11 +34,14 @@ const MessageBox: React.FC<MessageBoxProps> = ({
     }
 
     return (
-        <div className={classes} style={inlineStyle} {...props}>
+        <Stack 
+            className={classes} style={inlineStyle} {...props}
+            direction='column' gap='sm'
+            justify='flex-start' align='flex-start' >
             {(validation && validation.messages) && validation.messages.map((m: string) => (
                 <span key={uuidv4()}>{m}</span>
             ))}
-        </div>
+        </Stack>
     );
 };
 
