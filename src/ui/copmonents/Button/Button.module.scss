@@ -52,10 +52,6 @@ $button-focus-colors: (
     color: map-get($StaticColors, text);
     border: var(--border-width-sm) solid map-get($StaticColors, border);
 
-    .icon {
-        color: map-get($StaticColors, text);
-    }
-
     &:hover {
         background-color: map-get($HoverColors, bg);
         border: var(--border-width-sm) solid map-get($HoverColors, border);

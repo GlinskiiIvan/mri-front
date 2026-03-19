@@ -3,8 +3,8 @@ import styles from './Icon.module.scss';
 
 import { Icon as IconifyIcon } from "@iconify/react";
 import { IconMap } from "./Icon.map";
-import type { IconPath, IconSize } from "./icon.types";
-import type { CSSVars, TextColors } from "../types";
+import type { IconColor, IconPath, IconSize } from "./icon.types";
+import type { CSSVars } from "../types";
 import clsx from "clsx";
 
 const getIconByPath = (path: IconPath): string | undefined => {
@@ -25,7 +25,7 @@ const getIconByPath = (path: IconPath): string | undefined => {
 export interface IconProps {
   name: IconPath;
   size?: IconSize;
-  color?: TextColors;
+  color?: IconColor;
   style?: React.CSSProperties;
   className?: string;
 };
@@ -33,7 +33,7 @@ export interface IconProps {
 export const Icon: React.FC<IconProps> = ({
   name,
   size = "inherit",
-  color = 'primary',
+  color = 'inherit',
   style,
   className,
 }) => {
@@ -43,7 +43,7 @@ export const Icon: React.FC<IconProps> = ({
 
   const inlineStyle: CSSVars = {
     ...style,
-    '--color-icon': `var(--text-${color})`,
+    '--color-icon': color === 'inherit' ? 'inherit' : `var(--text-${color})`,
     '--fs-icon': size === 'inherit' ? 'inherit' : `var(--fs-${size})`,
   }
 
