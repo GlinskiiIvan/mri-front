@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Modal, Select, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
 
 interface Option {id: number, name: string};
 
@@ -369,6 +369,13 @@ function App() {
       <Block
         style={{maxWidth: '500px'}} 
         title='Результаты обследования' decorativeIcon='INFO'
+        actions={
+          <Stack direction='row' gap='xs' justify='center' align='center'>
+            <IconButton icon={{name: 'ADD', color: 'tertiary', size: 'lg'}} />
+            <IconButton icon={{name: 'EDIT', color: 'tertiary', size: 'lg'}} />
+            <IconButton icon={{name: 'RELOAD', color: 'tertiary', size: 'lg'}} />
+          </Stack>
+        }
         footer={
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
             <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
@@ -383,6 +390,13 @@ function App() {
       <Block
         style={{maxWidth: '1000px', width: '100%'}} 
         title='Результаты обследования' decorativeIcon='INFO'
+        actions={
+          <Stack direction='row' gap='xs' justify='center' align='center'>
+            <IconButton icon={{name: 'ADD', color: 'tertiary', size: 'inherit'}} />
+            <IconButton icon={{name: 'EDIT', color: 'tertiary', size: 'lg'}} />
+            <IconButton icon={{name: 'RELOAD', color: 'tertiary', size: 'lg'}} />
+          </Stack>
+        }
         footer={
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
             <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>

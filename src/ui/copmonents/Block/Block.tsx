@@ -3,6 +3,7 @@ import styles from './Block.module.scss';
 import type { IconPath } from '../Icon';
 import clsx from 'clsx';
 import Icon from '../Icon';
+import Stack from '../Stack';
 
 export interface BlockProps extends React.ComponentProps<'div'> {
     title?: string;
@@ -23,21 +24,28 @@ const Block: React.FC<BlockProps> = ({
     const classesWrapper = clsx(className, styles.wrapper);
 
     return (
-        <div className={classesWrapper} {...props}>
+        <Stack 
+            className={classesWrapper} {...props}
+            direction='column' gap='xl'
+            justify='center' align='stretch' >
             {(title || decorativeIcon || actions) && (
-                <div className={styles.header}>
-                    <div className={styles.title}>
-                        {decorativeIcon && <Icon name={decorativeIcon} size='inherit' />}
+                <Stack 
+                    className={styles.header}
+                    direction='row' gap='lg'
+                    justify='space-between' align='center' >
+                    <Stack 
+                        className={styles.title} 
+                        direction='row' gap='sm'
+                        justify='flex-start' align='center' >
+                        {decorativeIcon && <Icon name={decorativeIcon} size='inherit' color='primary' />}
                         {title && <h6>{title}</h6>}
-                    </div>
+                    </Stack>
                     {actions && (<div className={styles.actions}>{actions}</div>)}
-                </div>
+                </Stack>
             )}
-            <div className={styles.body}>
-                {children}
-            </div>
-            {footer && (<div className={styles.footer}>{footer}</div>)}
-        </div>
+            {children}
+            {footer && (footer)}
+        </Stack>
     );
 };
 
