@@ -1,16 +1,16 @@
 import React from 'react';
-import styles from './CardInfo.module.scss';
+import styles from './InfoList.module.scss';
 
-export interface CardInfoOption extends React.ComponentProps<'ul'> {
+export interface InfoListOption {
     key: string;
     value: React.ReactNode;
 }
 
-interface CardInfoProps {
-    oprions: CardInfoOption[];
+interface InfoListProps extends React.ComponentProps<'ul'> {
+    oprions: InfoListOption[];
 }
 
-const CardInfo: React.FC<CardInfoProps> = ({
+const InfoList: React.FC<InfoListProps> = ({
     oprions,
     ...props
 }) => {
@@ -27,4 +27,4 @@ const CardInfo: React.FC<CardInfoProps> = ({
     );
 };
 
-export default CardInfo;
+export default InfoList;

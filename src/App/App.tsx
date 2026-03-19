@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.css';
-import {Badge, Block, Button, CardInfo, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+import {Badge, Block, Button, InfoList, CheckBox, FieldLayout, Icon, IconButton, Label, MessageBox, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
 
 interface Option {id: number, name: string};
 
@@ -384,7 +384,7 @@ function App() {
           </div>
         } >
         <div style={{display: 'flex', gap: '32px'}}>
-          <CardInfo oprions={cardInfoOptions} />
+          <InfoList oprions={cardInfoOptions} />
         </div>
       </Block>
 
@@ -404,10 +404,10 @@ function App() {
             <Button variant='primary' icon='ADD'>Обследование</Button>
           </div>
         } >
-        <div style={{display: 'flex', gap: '32px'}}>
-          <CardInfo oprions={cardInfoOptions} />
-          <CardInfo oprions={cardInfoOptions} />
-        </div>
+        <Stack direction='row' gap='md' justify='stretch' align='center'>
+          <InfoList oprions={cardInfoOptions} />
+          <InfoList oprions={cardInfoOptions} />
+        </Stack>
       </Block>
 
       <Block 
@@ -420,9 +420,9 @@ function App() {
           </div>
         } >
         <div style={{display: 'flex', gap: '32px'}}>
-          <CardInfo oprions={cardInfoOptions} />
-          <CardInfo oprions={cardInfoOptions} />
-          <CardInfo oprions={cardInfoOptions} />
+          <InfoList oprions={cardInfoOptions} />
+          <InfoList oprions={cardInfoOptions} />
+          <InfoList oprions={cardInfoOptions} />
         </div>
       </Block>
 
@@ -433,10 +433,10 @@ function App() {
             <Button variant='primary' icon='ADD' onClick={() => setVisibleModal2(true)}>Обследование</Button>
           </div>
         }>
-        <CardInfo oprions={cardInfoOptions} />
-        <CardInfo oprions={cardInfoOptions} />
-        <CardInfo oprions={cardInfoOptions} />
-        <CardInfo oprions={cardInfoOptions} />
+        <InfoList oprions={cardInfoOptions} />
+        <InfoList oprions={cardInfoOptions} />
+        <InfoList oprions={cardInfoOptions} />
+        <InfoList oprions={cardInfoOptions} />
       </Modal>
 
       <Modal title='Test modal 2' visible={modal2} setVisible={setVisibleModal2}>

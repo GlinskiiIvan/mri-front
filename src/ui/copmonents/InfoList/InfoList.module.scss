@@ -8,7 +8,7 @@
 
     .option {
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         gap: var(--space-md);
 
         width: 100%;
@@ -35,8 +35,8 @@
 
         .divider {
             flex: 1;
+            align-self: flex-end;
             min-width: var(--space-xl);
-            height: 100%;
             border-bottom: 1px dotted var(--border-primary);
         }
     }
