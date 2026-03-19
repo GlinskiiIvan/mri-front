@@ -381,7 +381,7 @@ function App() {
       </Block>
 
       <Block
-        style={{maxWidth: '1000px'}} 
+        style={{maxWidth: '1000px', width: '100%'}} 
         title='Результаты обследования' decorativeIcon='INFO'
         footer={
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
@@ -396,6 +396,7 @@ function App() {
       </Block>
 
       <Block 
+        style={{width: '100%'}}
         title='Результаты обследования' decorativeIcon='INFO'
         footer={
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
@@ -434,14 +435,14 @@ function App() {
         </Table>
       </Block>
 
-      <Block title='Test table'>
+      <Block title='Test table' style={{width: '100%'}}>
         <Table maxHeight={400}>
           <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
           <TBody rowKey='id' columns={columns} data={companies} select={{selectedRow, onChange: setSelectedRow}} />
         </Table>
       </Block>
 
-      <Block title='Test table'>
+      <Block title='Test table' style={{width: '100%'}}>
         <Table maxHeight={400}>
           <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
           <TBody rowKey='id' columns={columns} data={companies} />
