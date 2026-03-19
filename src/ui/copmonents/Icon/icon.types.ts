@@ -1,3 +1,4 @@
+import type { ComponentSize } from "../types";
 import type { IconMap } from "./Icon.map";
 
 type Join<K, P> = K extends string
@@ -14,6 +15,5 @@ type Paths<T> = T extends object
     }[keyof T]
   : never;
 
-export type IconSize = '16' | '20' | '24' | '40' | 'full' | 'inherit';
-// export type IconColor = 'danger' | 'warning' | 'success' | 'accent' | 'primary' | 'secondary' | 'tertiary' | 'disabled' | 'inverse';
+export type IconSize = ComponentSize | 'inherit';
 export type IconPath = Paths<typeof IconMap>;

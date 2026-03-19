@@ -99,7 +99,7 @@ function App() {
     <div className='flex-col'>
       <p className={styles['read-the-docs']}>
         Click on the Vite and React logos to learn more
-        <Icon name='IMAGE' color='success' size='40' />
+        <Icon name='IMAGE' color='success' size='xl' />
       </p>
 
       <div className='flex-col'>
