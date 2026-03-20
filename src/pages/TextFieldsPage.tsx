@@ -68,23 +68,28 @@ const TextFieldsPage: React.FC = () => {
                 </Stack>
                 <Stack direction='row' gap='md' justify='flex-start' align='center'>
                     <TextField
-                        label='Test text field' placeholder='Enter value...' 
+                        label='Test text field' placeholder='Enter value...'
+                        decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!value}} 
                         validation={{status: 'default', messages: testMessages}}
                         value={value} onChangeValue={setValue} />
                     <TextField
-                        label='Test text field' placeholder='Enter value...' 
+                        label='Test text field' placeholder='Enter value...'
+                        decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!value}} 
                         validation={{status: 'info', messages: testMessages}}
                         value={value} onChangeValue={setValue} />
                     <TextField
-                        label='Test text field' placeholder='Enter value...' 
+                        label='Test text field' placeholder='Enter value...'
+                        decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!value}} 
                         validation={{status: 'success', messages: testMessages}}
                         value={value} onChangeValue={setValue} />
                     <TextField
-                        label='Test text field' placeholder='Enter value...' 
+                        label='Test text field' placeholder='Enter value...'
+                        decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!value}} 
                         validation={{status: 'warning', messages: testMessages}}
                         value={value} onChangeValue={setValue} />
                     <TextField
-                        label='Test text field' placeholder='Enter value...' 
+                        label='Test text field' placeholder='Enter value...'
+                        decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!value}} 
                         validation={{status: 'danger', messages: testMessages}}
                         value={value} onChangeValue={setValue} />
                 </Stack>
