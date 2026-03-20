@@ -123,6 +123,10 @@ $status-colors: (
         &.danger { @include wrapper-hover-styles(danger); }
         &.info { @include wrapper-hover-styles(info); }
     }
+
+    &.disabled {
+        @include disabled-state();
+    }
 }
 
 :global(.form-field:hover) {
@@ -134,5 +138,9 @@ $status-colors: (
         &.warning { @include wrapper-hover-styles(warning); }
         &.danger { @include wrapper-hover-styles(danger); }
         &.info { @include wrapper-hover-styles(info); }
+
+        &.disabled {
+            @include disabled-state();
+        }
     }
 }

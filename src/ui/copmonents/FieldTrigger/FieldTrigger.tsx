@@ -6,15 +6,17 @@ import Stack from '../Stack';
 
 interface FieldTriggerProps extends React.ComponentProps<'div'> {
     status?: ComponentStatus;
+    disabled?: boolean;
 }
 
 const FieldTrigger: React.FC<FieldTriggerProps> = ({
     status,
     className,
     children,
+    disabled = false,
     ...props
 }) => {
-    const classesWrapper = clsx(className, styles.wrapper, status ? styles[status] : styles.default);
+    const classesWrapper = clsx(className, styles.wrapper, status ? styles[status] : styles.default, disabled && styles.disabled);
 
     return (
         <Stack 

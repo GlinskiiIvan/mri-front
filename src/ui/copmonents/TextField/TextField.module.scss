@@ -5,8 +5,6 @@
         .wrapper {            
             .input {
                 width: 100%;
-                max-width: 100%;
-
                 pointer-events: auto;
                 z-index: 1;
 
@@ -19,10 +17,6 @@
                 &:disabled {
                     color: var(--text-disabled);
                 }
-            }
-
-            &:has(.input:disabled) {
-                @include disabled-state();
             }
 
             .actionIcon {

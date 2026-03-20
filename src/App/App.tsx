@@ -1,6 +1,6 @@
 import React from 'react';
 // import styles from './App.module.css';
-import {Badge, Block, Button, InfoList, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+import {Badge, Block, Button, InfoList, Modal, Select, Stack, Table, TBody, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
 import BadgesPage from '../pages/BadgesPage';
 import ButtonsPage from '../pages/ButtonsPage';
 import InfoListsPage from '../pages/InfoListsPage';
@@ -9,10 +9,10 @@ import MessageBoxesPage from '../pages/MessageBoxesPage';
 import FormFieldsPage from '../pages/FormFieldsPage';
 import FieldTriggersPage from '../pages/FieldTriggersPage';
 import CheckBoxesPage from '../pages/CheckBoxesPage';
+import TextFieldsPage from '../pages/TextFieldsPage';
 
 interface Option {id: number, name: string};
 
-const testMessages = ['message 1', 'message 2', 'message 3'];
 const testOptions: Option[] = [{id: 1, name: 'Option 1'}, {id: 2, name: 'Option 2'}, {id: 3, name: 'Option 3'}, {id: 4, name: 'Option 4'},];
 const testOptions2: string[] = ['Option2 1', 'Option2 2', 'Option2 3', 'Option2 4'];
 
@@ -86,17 +86,12 @@ const columnsFixed: ColumnTable<typeof companies[number]>[] = [
 
 function App() {
 
-  const [email, setEmail] = React.useState('');
   const [option, setOption] = React.useState<Option>();
   const [option2, setOption2] = React.useState<string>();
   const [modal, setVisibleModal] = React.useState(false);
   const [modal2, setVisibleModal2] = React.useState(false);
   const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof companies[number]>>();
   const [selectedRow, setSelectedRow] = React.useState<typeof companies[number]>();
-
-  const testClearTextFieldHandler = () => {
-    setEmail('');
-  };
 
   return (
     <Stack direction='column' gap='xl' justify='center' align='center'>
@@ -108,91 +103,7 @@ function App() {
         <FormFieldsPage />
         <FieldTriggersPage />
         <CheckBoxesPage />
-
-      <div className='flex-col'>
-        <div className='flex-row'>
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            validation={{status: 'default', messages: testMessages}} 
-            value={email} onChangeValue={setEmail}
-            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            validation={{status: 'default', messages: testMessages}} 
-            value={email} onChangeValue={setEmail}
-            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            validation={{status: 'default', messages: testMessages}} 
-            value={email} onChangeValue={setEmail}
-            decorativeIcon='INFO' />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            validation={{status: 'default', messages: testMessages}} 
-            value={email} onChangeValue={setEmail} />
-        </div>
-        <div className='flex-row'>
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail}
-            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail}
-            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail}
-            decorativeIcon='INFO' />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} />
-        </div>
-        <div className='flex-row'>
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} validation={{status: 'default', messages: testMessages}}
-            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} validation={{status: 'success', messages: testMessages}}
-            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: !!email}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} validation={{status: 'warning', messages: testMessages}}
-            decorativeIcon='INFO' />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} validation={{status: 'danger', messages: testMessages}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} validation={{status: 'info', messages: testMessages}} />
-        </div>
-        <div className='flex-row'>
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} disabled={true}
-            decorativeIcon='INFO' actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} disabled={true}
-            actionIcon={{name: 'REMOVE', onClick: testClearTextFieldHandler, visible: true}} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} disabled={true}
-            decorativeIcon='INFO' />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} disabled={true} />
-        </div>
-        <TextField 
-          style={{maxWidth: '500px'}}
-          label='Test text field email' placeholder='Enter email...'
-          value={email} onChangeValue={setEmail} disabled={true} />
-        <TextField 
-          label='Test text field email' placeholder='Enter email...'
-          value={email} onChangeValue={setEmail} disabled={true} />
-      </div>
+        <TextFieldsPage />
 
       <div className='flex-col ' style={{width: '700px'}}>
         <div className='flex-row' style={{width: '100%'}}>

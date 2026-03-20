@@ -21,6 +21,7 @@
   $border: var(--border-disabled),
   $color: var(--text-disabled),
 ) {
+  pointer-events: none;
   background-color: $background;
   border-color: $border;
   color: $color;
