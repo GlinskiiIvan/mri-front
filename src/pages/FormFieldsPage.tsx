@@ -8,7 +8,7 @@ const pageProps = {
 
 const testMessages = ['message 1', 'message 2', 'message 3'];
 
-const FielsLayoutsPage: React.FC = () => {
+const FormFieldsPage: React.FC = () => {
 
     return (
         <Page 
@@ -47,4 +47,4 @@ const FielsLayoutsPage: React.FC = () => {
     );
 };
 
-export default FielsLayoutsPage;
+export default FormFieldsPage;

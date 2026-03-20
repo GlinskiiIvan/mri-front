@@ -1,0 +1,1 @@
+export {testClickHandler, patientInfoList, testMessages} from './examples';

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Block, Button, Page, Stack } from '../ui/copmonents';
+import { testClickHandler } from '../utils';
 
 const pageProps = {
     title: 'Демонстрация вариантов кнопки' ,
@@ -7,10 +8,6 @@ const pageProps = {
 }
 
 const ButtonsPage: React.FC = () => {
-    const testClickHandler = () => {
-        alert('Test click on component!');
-    };
-
     return (
         <Page 
             title={pageProps.title}

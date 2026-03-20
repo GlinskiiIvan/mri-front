@@ -5,7 +5,7 @@ import type { CSSVars, ValidationInfo } from '../types';
 import Icon, { type IconPath } from '../Icon';
 import clsx from 'clsx';
 import IconButton from '../IconButton';
-import FieldWrapper from '../FieldWrapper';
+import FieldWrapper from '../FieldTrigger';
 
 interface ActionIcon {
     name: IconPath;

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Block, MessageBox, Page, Stack } from '../ui/copmonents';
+import { testMessages } from '../utils';
 
 const pageProps = {
     title: 'Демонстрация вариантов блока сообщений' ,
     description: 'На этой странице представлены различные варианты лейблов, размеры и цвета' ,
 }
 
-const testMessages = ['message 1', 'message 2', 'message 3'];
 
 const MessageBoxesPage: React.FC = () => {
 

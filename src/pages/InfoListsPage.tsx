@@ -1,19 +1,13 @@
 import React from 'react';
-import { Badge, Block, Button, IconButton, InfoList, Page, Stack } from '../ui/copmonents';
+import { Block, Button, IconButton, InfoList, Page, Stack } from '../ui/copmonents';
+import { patientInfoList } from '../utils';
 
 const pageProps = {
     title: 'Демонстрация вариантов списка информации' ,
     description: 'На этой странице представлены различные варианты списка информации' ,
 }
 
-const cardInfoOptions = [
-  {key: 'Patient name', value: 'John Doe'}, 
-  {key: 'Patient ID', value: '63048393'},
-  {key: 'Gender', value: 'Male'},
-  {key: 'Age', value: '32 years'},
-  {key: 'Date of birth', value: '12 Mar 1994'},
-  {key: 'Status', value: <Badge text='Normal' size='sm' status='success' />},
-];
+
 
 const InfoListsPage: React.FC = () => {
 
@@ -37,7 +31,7 @@ const InfoListsPage: React.FC = () => {
                         <Button variant='primary' icon='ADD'>Обследование</Button>
                     </Stack>
                 } >
-                <InfoList oprions={cardInfoOptions} />
+                <InfoList oprions={patientInfoList} />
             </Block>
 
             <Block
@@ -58,8 +52,8 @@ const InfoListsPage: React.FC = () => {
                     </Stack>
                 } >
                 <Stack direction='row' gap='md' justify='stretch' align='center'>
-                    <InfoList oprions={cardInfoOptions} />
-                    <InfoList oprions={cardInfoOptions} />
+                    <InfoList oprions={patientInfoList} />
+                    <InfoList oprions={patientInfoList} />
                 </Stack>
             </Block>
 
@@ -80,9 +74,9 @@ const InfoListsPage: React.FC = () => {
                     </Stack>
                 } >
                 <Stack direction='row' gap='md' justify='stretch' align='center'>
-                    <InfoList oprions={cardInfoOptions} />
-                    <InfoList oprions={cardInfoOptions} />
-                    <InfoList oprions={cardInfoOptions} />
+                    <InfoList oprions={patientInfoList} />
+                    <InfoList oprions={patientInfoList} />
+                    <InfoList oprions={patientInfoList} />
                 </Stack>
             </Block>
         </Page>

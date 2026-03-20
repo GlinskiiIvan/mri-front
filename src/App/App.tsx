@@ -6,7 +6,8 @@ import ButtonsPage from '../pages/ButtonsPage';
 import InfoListsPage from '../pages/InfoListsPage';
 import LabelsPage from '../pages/LabelsPage';
 import MessageBoxesPage from '../pages/MessageBoxesPage';
-import FielsLayoutsPage from '../pages/FielsLayoutsPage';
+import FormFieldsPage from '../pages/FormFieldsPage';
+import FieldTriggersPage from '../pages/FieldTriggersPage';
 
 interface Option {id: number, name: string};
 
@@ -104,7 +105,8 @@ function App() {
         <InfoListsPage />
         <LabelsPage />
         <MessageBoxesPage />
-        <FielsLayoutsPage />
+        <FormFieldsPage />
+        <FieldTriggersPage />
 
       <div className='flex-col'>
         <div className='flex-row'>

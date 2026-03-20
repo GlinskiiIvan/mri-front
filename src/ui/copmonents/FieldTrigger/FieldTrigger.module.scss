@@ -87,14 +87,8 @@ $status-colors: (
 };
 
 .wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: pointer;
     
-    width: 100%;
-    max-width: 100%;
-
-    gap: var(--space-sm);
     padding: var(--space-sm) var(--space-md);
 
     background-color: transparent;

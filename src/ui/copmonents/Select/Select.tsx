@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Select.module.scss';
 import FormField from '../FormField';
-import FieldWrapper from '../FieldWrapper';
+import FieldWrapper from '../FieldTrigger';
 import type { ValidationInfo } from '../types';
 import type { IconPath } from '../Icon';
 import clsx from 'clsx';
