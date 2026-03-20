@@ -1,6 +1,6 @@
 import React from 'react';
 // import styles from './App.module.css';
-import {Badge, Block, Button, InfoList, CheckBox, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+import {Badge, Block, Button, InfoList, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
 import BadgesPage from '../pages/BadgesPage';
 import ButtonsPage from '../pages/ButtonsPage';
 import InfoListsPage from '../pages/InfoListsPage';
@@ -8,6 +8,7 @@ import LabelsPage from '../pages/LabelsPage';
 import MessageBoxesPage from '../pages/MessageBoxesPage';
 import FormFieldsPage from '../pages/FormFieldsPage';
 import FieldTriggersPage from '../pages/FieldTriggersPage';
+import CheckBoxesPage from '../pages/CheckBoxesPage';
 
 interface Option {id: number, name: string};
 
@@ -85,7 +86,6 @@ const columnsFixed: ColumnTable<typeof companies[number]>[] = [
 
 function App() {
 
-  const [checked, setChecked] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [option, setOption] = React.useState<Option>();
   const [option2, setOption2] = React.useState<string>();
@@ -107,19 +107,7 @@ function App() {
         <MessageBoxesPage />
         <FormFieldsPage />
         <FieldTriggersPage />
-
-      <div className='flex-col'>
-        <div className='flex-row'>
-          <CheckBox label='Test check-box' validation={{status: 'default', messages: testMessages}} value={checked} changeValue={setChecked} />
-          <CheckBox label='Test check-box disabled' validation={{status: 'default', messages: testMessages}} value={false} changeValue={setChecked} disabled />
-          <CheckBox label='Test check-box disabled' validation={{status: 'default', messages: testMessages}} value={true} changeValue={setChecked} disabled />
-        </div>
-        <div className='flex-row'>
-          <CheckBox label='Test check-box' value={checked} changeValue={setChecked} />
-          <CheckBox label='Test check-box disabled' value={false} changeValue={setChecked} disabled />
-          <CheckBox label='Test check-box disabled' value={true} changeValue={setChecked} disabled />
-        </div>
-      </div>
+        <CheckBoxesPage />
 
       <div className='flex-col'>
         <div className='flex-row'>

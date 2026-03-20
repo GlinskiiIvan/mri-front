@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './CheckBox.module.scss';
 import clsx from 'clsx';
-import type { CSSVars, ValidationInfo } from '../types';
+import type { ValidationInfo } from '../types';
 import Icon from '../Icon';
 import FormField from '../FormField';
 
 interface CheckBoxProps extends React.ComponentProps<'div'> {
-    label: string;
+    label?: string;
     validation?: ValidationInfo;
     value: boolean;
     changeValue: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,17 +19,12 @@ const CheckBox: React.FC<CheckBoxProps> = ({
     value,
     changeValue,
     className,
-    style,
     disabled = false,
     ...props
 }) => {
 
     const classes = clsx(className, styles.wrapper);
     const classesSquare = clsx(styles.square);
-
-    const inlineStyle: CSSVars = {
-        ...style,
-    };
 
     const changeValueHandler = () => {
         changeValue(prev => !prev);
@@ -40,8 +35,8 @@ const CheckBox: React.FC<CheckBoxProps> = ({
     return (
         <FormField 
             {...props}
-            className={classes} style={inlineStyle}
-            label={{text: label, direction: 'row-reverse'}} 
+            className={classes}
+            label={label ? {text: label, direction: 'row-reverse'} : undefined} 
             htmlFor={inputId} disabled={disabled} 
             validation={validation}>
             <input
