@@ -30,7 +30,7 @@ const Stack: React.FC<StackProps> = ({
         '--justify-content-stack': justify,
         '--align-items-stack': align,
         '--gap-stack': gap === 'none' ? '0' : `var(--space-${gap})`,
-        '--width-stack': fitContent ? 'fit-content' : '100%',
+        '--width-stack': fitContent ? 'fit-content' : 'auto',
         ...style,
     };
     

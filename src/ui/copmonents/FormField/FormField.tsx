@@ -27,7 +27,7 @@ const FormField: React.FC<FormFieldProps> = ({
     ...props
 }) => {
     const classes = clsx(styles.wrapper, className);
-    const classesLabel = clsx('form-field', styles.label, label && styles[label.direction]);
+    const classesLabel = clsx('form-field', styles.label, label ? styles[label.direction] : 'column');
 
     const inlineStyle: CSSVars = {
         ...style,

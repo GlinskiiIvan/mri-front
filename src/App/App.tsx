@@ -1,6 +1,12 @@
 import React from 'react';
-import styles from './App.module.css';
-import {Badge, Block, Button, InfoList, CheckBox, FormField, Icon, IconButton, Label, MessageBox, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+// import styles from './App.module.css';
+import {Badge, Block, Button, InfoList, CheckBox, Modal, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+import BadgesPage from '../pages/BadgesPage';
+import ButtonsPage from '../pages/ButtonsPage';
+import InfoListsPage from '../pages/InfoListsPage';
+import LabelsPage from '../pages/LabelsPage';
+import MessageBoxesPage from '../pages/MessageBoxesPage';
+import FielsLayoutsPage from '../pages/FielsLayoutsPage';
 
 interface Option {id: number, name: string};
 
@@ -87,170 +93,18 @@ function App() {
   const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof companies[number]>>();
   const [selectedRow, setSelectedRow] = React.useState<typeof companies[number]>();
 
-  const testClickHandler = () => {
-    alert('Test click on component!');
-  };
-
   const testClearTextFieldHandler = () => {
     setEmail('');
   };
 
   return (
-    <div className='flex-col'>
-      <p className={styles['read-the-docs']}>
-        Click on the Vite and React logos to learn more
-        <Icon name='IMAGE' size='xl' />
-      </p>
-      <Icon name='IMAGE' size='xl' />
-
-      <div className='flex-col'>
-        <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' icon='INFO' status='default' />
-          <Badge text='Test badge lg' size='lg' icon='INFO' status='default' />
-          <Badge text='Test badge md' size='md' icon='INFO' status='default' />
-          <Badge text='Test badge sm' size='sm' icon='INFO' status='default' />
-          <Badge text='Test badge xs' size='xs' icon='INFO' status='default' />
-        </div>
-
-        <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' icon='INFO' status='danger' />
-          <Badge text='Test badge lg' size='lg' icon='INFO' status='danger' />
-          <Badge text='Test badge md' size='md' icon='INFO' status='danger' />
-          <Badge text='Test badge sm' size='sm' icon='INFO' status='danger' />
-          <Badge text='Test badge xs' size='xs' icon='INFO' status='danger' />
-        </div>
-
-        <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' icon='INFO' status='success' />
-          <Badge text='Test badge lg' size='lg' icon='INFO' status='success' />
-          <Badge text='Test badge md' size='md' icon='INFO' status='success' />
-          <Badge text='Test badge sm' size='sm' icon='INFO' status='success' />
-          <Badge text='Test badge xs' size='xs' icon='INFO' status='success' />
-        </div>
-
-        <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' icon='INFO' status='warning' />
-          <Badge text='Test badge lg' size='lg' icon='INFO' status='warning' />
-          <Badge text='Test badge md' size='md' icon='INFO' status='warning' />
-          <Badge text='Test badge sm' size='sm' icon='INFO' status='warning' />
-          <Badge text='Test badge xs' size='xs' icon='INFO' status='warning' />
-        </div>
-
-        <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' icon='INFO' status='info' />
-          <Badge text='Test badge lg' size='lg' icon='INFO' status='info' />
-          <Badge text='Test badge md' size='md' icon='INFO' status='info' />
-          <Badge text='Test badge sm' size='sm' icon='INFO' status='info' />
-          <Badge text='Test badge xs' size='xs' icon='INFO' status='info' />
-        </div>
-
-
-        <div className='flex-row'>
-          <Badge text='Test badge xl' size='xl' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
-          <Badge text='Test badge lg' size='lg' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
-          <Badge text='Test badge md' size='md' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
-          <Badge text='Test badge sm' size='sm' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
-          <Badge text='Test badge xs' size='xs' status='info' action={{icon: 'EDIT', onClick: testClickHandler}} />
-        </div>
-      </div>
-
-      <div className='flex-col'>
-        <div className='flex-row'>
-          <Button onClick={testClickHandler} variant='primary' intent='normal'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='normal'>Test button</Button>
-          <Button onClick={testClickHandler} variant='ghost' intent='normal'>Test button</Button>
-        </div>
-        <div className='flex-row'>
-          <Button disabled onClick={testClickHandler} variant='primary' intent='normal'>Test button</Button>
-          <Button disabled onClick={testClickHandler} variant='secondary' intent='normal'>Test button</Button>
-          <Button disabled onClick={testClickHandler} variant='ghost' intent='normal'>Test button</Button>
-        </div>
-        <div className='flex-row'>
-          <Button onClick={testClickHandler} variant='primary' intent='destructive'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='destructive'>Test button</Button>
-          <Button onClick={testClickHandler} variant='ghost' intent='destructive'>Test button</Button>
-        </div>
-        <div className='flex-row'>
-          <Button disabled onClick={testClickHandler} variant='primary' intent='destructive'>Test button</Button>
-          <Button disabled onClick={testClickHandler} variant='secondary' intent='destructive'>Test button</Button>
-          <Button disabled onClick={testClickHandler} variant='ghost' intent='destructive'>Test button</Button>
-        </div>
-        <div className='flex-row'>
-          <Button onClick={testClickHandler} variant='primary' intent='normal' icon='LINK' />
-          <Button onClick={testClickHandler} variant='secondary' intent='normal' icon='LINK' />
-          <Button onClick={testClickHandler} variant='ghost' intent='normal' icon='LINK' />
-        </div>
-        <div className='flex-row'>
-          <Button onClick={testClickHandler} variant='primary' intent='destructive' icon='LINK' />
-          <Button onClick={testClickHandler} variant='secondary' intent='destructive' icon='LINK' />
-          <Button onClick={testClickHandler} variant='ghost' intent='destructive' icon='LINK' />
-        </div>
-        <div className='flex-row'>
-          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='xl' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='lg' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='md' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='sm' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='normal' size='xs' icon='IMAGE'>Test button</Button>
-        </div>
-        <div className='flex-row'>
-          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='xl' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='lg' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='md' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='sm' icon='IMAGE'>Test button</Button>
-          <Button onClick={testClickHandler} variant='secondary' intent='destructive' size='xs' icon='IMAGE'>Test button</Button>
-        </div>
-      </div>
-
-      <div className='flex-col'>
-        <div className='flex-row'>
-          <Label size='xl'>Test label...</Label>
-          <Label size='lg'>Test label...</Label>
-          <Label size='md'>Test label...</Label>
-          <Label size='sm'>Test label...</Label>
-          <Label size='xs'>Test label...</Label>
-        </div>
-        <div className='flex-row'>
-          <Label color='primary'>Test label...</Label>
-          <Label color='secondary'>Test label...</Label>
-          <Label color='tertiary'>Test label...</Label>
-          <Label color='disabled'>Test label...</Label>
-          <Label color='danger'>Test label...</Label>
-          <Label color='success'>Test label...</Label>
-          <Label color='warning'>Test label...</Label>
-          <Label color='accent'>Test label...</Label>
-        </div>
-      </div>
-
-      <div className='flex-col'>
-        <div className='flex-row'>
-          <MessageBox validation={{status: 'default', messages: testMessages}} size='xl' />
-          <MessageBox validation={{status: 'default', messages: testMessages}} size='lg' />
-          <MessageBox validation={{status: 'default', messages: testMessages}} size='md' />
-          <MessageBox validation={{status: 'default', messages: testMessages}} size='sm' />
-          <MessageBox validation={{status: 'default', messages: testMessages}} size='xs' />
-        </div>
-        <div className='flex-row'>
-          <MessageBox validation={{status: 'default', messages: testMessages}} />
-          <MessageBox validation={{status: 'success', messages: testMessages}} />
-          <MessageBox validation={{status: 'warning', messages: testMessages}} />
-          <MessageBox validation={{status: 'danger', messages: testMessages}} />
-          <MessageBox validation={{status: 'info', messages: testMessages}} />
-        </div>
-      </div>
-
-      <div className='flex-col'>
-        <div className='flex-row'>
-          <FormField label={{text: 'Test label', direction: 'column'}} validation={{status: 'default', messages: testMessages}}>
-            <span>test</span> 
-          </FormField>
-          <FormField label={{text: 'Test label', direction: 'row-reverse'}} validation={{status: 'default', messages: testMessages}}>
-            <span>test</span> 
-          </FormField>
-          <FormField validation={{status: 'default', messages: testMessages}}>
-            <span>test no label</span> 
-          </FormField>
-        </div>
-      </div>
+    <Stack direction='column' gap='xl' justify='center' align='center'>
+        <BadgesPage />
+        <ButtonsPage />
+        <InfoListsPage />
+        <LabelsPage />
+        <MessageBoxesPage />
+        <FielsLayoutsPage />
 
       <div className='flex-col'>
         <div className='flex-row'>
@@ -367,63 +221,6 @@ function App() {
         </div>
       </div>
 
-      <Block
-        style={{maxWidth: '500px'}} 
-        title='Результаты обследования' decorativeIcon='INFO'
-        actions={
-          <Stack direction='row' gap='xs' justify='center' align='center'>
-            <IconButton icon={{name: 'ADD', color: 'tertiary', size: 'lg'}} />
-            <IconButton icon={{name: 'EDIT', color: 'tertiary', size: 'lg'}} />
-            <IconButton icon={{name: 'RELOAD', color: 'tertiary', size: 'lg'}} />
-          </Stack>
-        }
-        footer={
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
-            <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
-            <Button variant='primary' icon='ADD'>Обследование</Button>
-          </div>
-        } >
-        <InfoList oprions={cardInfoOptions} />
-      </Block>
-
-      <Block
-        style={{maxWidth: '1000px', width: '100%'}} 
-        title='Результаты обследования' decorativeIcon='INFO'
-        actions={
-          <Stack direction='row' gap='xs' justify='center' align='center'>
-            <IconButton icon={{name: 'ADD', color: 'tertiary', size: 'inherit'}} />
-            <IconButton icon={{name: 'EDIT', color: 'tertiary', size: 'lg'}} />
-            <IconButton icon={{name: 'RELOAD', color: 'tertiary', size: 'lg'}} />
-          </Stack>
-        }
-        footer={
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
-            <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
-            <Button variant='primary' icon='ADD'>Обследование</Button>
-          </div>
-        } >
-        <Stack direction='row' gap='md' justify='stretch' align='center'>
-          <InfoList oprions={cardInfoOptions} />
-          <InfoList oprions={cardInfoOptions} />
-        </Stack>
-      </Block>
-
-      <Block 
-        fullWidth
-        title='Результаты обследования' decorativeIcon='INFO'
-        footer={
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
-            <Button variant='secondary' icon='EDIT'>Перейти к пациенту</Button>
-            <Button variant='primary' icon='ADD' onClick={() => setVisibleModal(true)}>Обследование</Button>
-          </div>
-        } >
-        <div style={{display: 'flex', gap: '32px'}}>
-          <InfoList oprions={cardInfoOptions} />
-          <InfoList oprions={cardInfoOptions} />
-          <InfoList oprions={cardInfoOptions} />
-        </div>
-      </Block>
-
       <Modal  
         visible={modal} setVisible={setVisibleModal} 
         title='Test modal' footer={
@@ -462,7 +259,7 @@ function App() {
         </Table>
       </Block>
 
-    </div>
+    </Stack>
   )
 }
 
