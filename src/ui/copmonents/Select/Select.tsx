@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Select.module.scss';
-import FieldLayout from '../FieldLayout';
+import FormField from '../FormField';
 import FieldWrapper from '../FieldWrapper';
 import type { ValidationInfo } from '../types';
 import type { IconPath } from '../Icon';
@@ -66,9 +66,9 @@ const Select = <T,>({
     }
 
     return (
-        <FieldLayout 
+        <FormField 
             {...props} className={classesLayout}
-            label={{text: label, position: 'top'}} 
+            label={{text: label, direction: 'column'}} 
             validation={validation} disabled={disabled} >
             <FieldWrapper validation={validation} className={classesWrapper} >
                 {decorativeIcon && <Icon name={decorativeIcon} />}
@@ -107,7 +107,7 @@ const Select = <T,>({
                     )
                 })}
             </ul>
-        </FieldLayout>
+        </FormField>
     );
 };
 

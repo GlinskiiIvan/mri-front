@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './TextField.module.scss';
-import FieldLayout from '../FieldLayout';
+import FormField from '../FormField';
 import type { CSSVars, ValidationInfo } from '../types';
 import Icon, { type IconPath } from '../Icon';
 import clsx from 'clsx';
@@ -67,9 +67,9 @@ const TextField: React.FC<TextFieldProps> = ({
     }
 
     return (
-        <FieldLayout 
+        <FormField 
             className={classesLayout} style={inlineStyle}
-            label={{text: label, position: 'top'}} 
+            label={{text: label, direction: 'column'}} 
             validation={validation} disabled={disabled}
             htmlFor={inputId} {...props} >
             <FieldWrapper validation={validation} className={classesWrapper} >
@@ -85,7 +85,7 @@ const TextField: React.FC<TextFieldProps> = ({
                                     name={actionIcon.name} onClick={() => onClickActionHandler(actionIcon.onClick)}
                                     tabIndex={!actionIcon.visible ? -1 : 0} />}
             </FieldWrapper>
-        </FieldLayout>
+        </FormField>
     );
 };
 

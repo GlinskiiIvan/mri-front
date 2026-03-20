@@ -3,7 +3,7 @@ import styles from './CheckBox.module.scss';
 import clsx from 'clsx';
 import type { CSSVars, ValidationInfo } from '../types';
 import Icon from '../Icon';
-import FieldLayout from '../FieldLayout';
+import FormField from '../FormField';
 
 interface CheckBoxProps extends React.ComponentProps<'div'> {
     label: string;
@@ -38,10 +38,10 @@ const CheckBox: React.FC<CheckBoxProps> = ({
     const inputId = React.useId();
 
     return (
-        <FieldLayout 
+        <FormField 
             {...props}
             className={classes} style={inlineStyle}
-            label={{text: label, position: 'right'}} 
+            label={{text: label, direction: 'row-reverse'}} 
             htmlFor={inputId} disabled={disabled} 
             validation={validation}>
             <input
@@ -54,7 +54,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
             <span className={classesSquare}>
                 <Icon name='CHECK' className={styles.check} color={disabled ? 'disabled' : 'inverse'} size='inherit' />
             </span>
-        </FieldLayout>
+        </FormField>
     );
 };
 

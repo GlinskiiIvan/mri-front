@@ -1,21 +1,22 @@
 import React from 'react';
-import styles from './FieldLayout.module.scss';
+import styles from './FormField.module.scss';
 import type { CSSVars, ValidationInfo } from '../types';
 import clsx from 'clsx';
 import Label from '../Label';
 import MessageBox from '../MessageBox';
+import Stack from '../Stack';
 
-interface FieldLayoutProps extends React.ComponentProps<'div'> {
+interface FormFieldProps extends React.ComponentProps<'div'> {
     validation?: ValidationInfo;
     disabled?: boolean;
     htmlFor?: string;
     label?: {
         text: string;
-        position: 'top' | 'right';
+        direction: 'column' | 'row' | 'column-reverse' | 'row-reverse';
     }
 }
 
-const FieldLayout: React.FC<FieldLayoutProps> = ({
+const FormField: React.FC<FormFieldProps> = ({
     label,
     validation,
     className,
@@ -25,29 +26,26 @@ const FieldLayout: React.FC<FieldLayoutProps> = ({
     children,
     ...props
 }) => {
-    const classes = clsx(className, styles.wrapper);
-    const classesLabel = clsx('form-field', styles.label, label && styles[label.position]);
+    const classes = clsx(styles.wrapper, className);
+    const classesLabel = clsx('form-field', styles.label, label && styles[label.direction]);
 
     const inlineStyle: CSSVars = {
         ...style,
         ...(disabled && {pointerEvents: 'none'})
     };
 
-    const isTop = label && (label.position === 'top');
-    const isRight = label && (label.position === 'right');
-
-    const LabelText = () => (<Label className={styles.labelText}>{label?.text}</Label>);
-
     return (
-        <div className={classes} style={inlineStyle} {...props}>
+        <Stack 
+            className={classes} style={inlineStyle} {...props}
+            direction='column' gap='xs'
+            justify='flex-start' align='stretch' >
             <label htmlFor={htmlFor} className={classesLabel}>
-                {(isTop) && LabelText()}
+                {label && <Label className={styles.labelText}>{label?.text}</Label>}
                 {children}
-                {(isRight) && LabelText()}
             </label>
             <MessageBox validation={validation} className={styles.msgBox} />
-        </div>
+        </Stack>
     );
 };
 
-export default FieldLayout;
+export default FormField;
