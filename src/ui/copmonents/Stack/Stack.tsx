@@ -8,6 +8,7 @@ interface StackProps extends React.ComponentProps<'div'> {
     justify?: React.CSSProperties['justifyContent'];
     align?: React.CSSProperties['alignItems'];
     gap?: SpaceSize;
+    fitContent?: boolean;
 }
 
 const Stack: React.FC<StackProps> = ({
@@ -15,6 +16,7 @@ const Stack: React.FC<StackProps> = ({
     justify = 'flex-start',
     align = 'center',
     gap = 'md',
+    fitContent = false,
     className,
     style,
     children,
@@ -28,6 +30,7 @@ const Stack: React.FC<StackProps> = ({
         '--justify-content-stack': justify,
         '--align-items-stack': align,
         '--gap-stack': gap === 'none' ? '0' : `var(--space-${gap})`,
+        '--width-stack': fitContent ? 'fit-content' : '100%',
         ...style,
     };
     

@@ -46,7 +46,7 @@ const Badge: React.FC<BadgeProps> = ({
     return (
         <Stack 
             className={classes} style={inlineStyle} {...props}
-            direction='row' gap='xs'
+            fitContent direction='row' gap='xs'
             justify='center' align='center' >
             {icon && <Icon name={icon} color='tertiary' />}
             {text ?? children}   

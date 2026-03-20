@@ -18,14 +18,9 @@ $label-position: (
 }
 
 .wrapper {
-    width: 100%;
-    max-width: 100%;
-
     .label {
         display: flex;
         gap: var(--space-sm);
-
-        max-width: 100%;
 
         cursor: pointer;
 

@@ -18,5 +18,5 @@ export type ValidationInfo = {
 }
 
 export type CSSVars = React.CSSProperties & {
-  [key: `--${string}`]: string;
+  [key: `--${string}`]: string | number | undefined;
 };

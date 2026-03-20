@@ -240,10 +240,10 @@ function App() {
 
       <div className='flex-col'>
         <div className='flex-row'>
-          <FormField label={{text: 'Test label', position: 'top'}} validation={{status: 'default', messages: testMessages}}>
+          <FormField label={{text: 'Test label', direction: 'column'}} validation={{status: 'default', messages: testMessages}}>
             <span>test</span> 
           </FormField>
-          <FormField label={{text: 'Test label', position: 'right'}} validation={{status: 'default', messages: testMessages}}>
+          <FormField label={{text: 'Test label', direction: 'row-reverse'}} validation={{status: 'default', messages: testMessages}}>
             <span>test</span> 
           </FormField>
           <FormField validation={{status: 'default', messages: testMessages}}>
@@ -342,12 +342,12 @@ function App() {
             value={email} onChangeValue={setEmail} disabled={true} />
         </div>
         <TextField 
-            style={{maxWidth: '500px'}}
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} disabled={true} />
-          <TextField 
-            label='Test text field email' placeholder='Enter email...'
-            value={email} onChangeValue={setEmail} disabled={true} />
+          style={{maxWidth: '500px'}}
+          label='Test text field email' placeholder='Enter email...'
+          value={email} onChangeValue={setEmail} disabled={true} />
+        <TextField 
+          label='Test text field email' placeholder='Enter email...'
+          value={email} onChangeValue={setEmail} disabled={true} />
       </div>
 
       <div className='flex-col ' style={{width: '700px'}}>
@@ -383,9 +383,7 @@ function App() {
             <Button variant='primary' icon='ADD'>Обследование</Button>
           </div>
         } >
-        <div style={{display: 'flex', gap: '32px'}}>
-          <InfoList oprions={cardInfoOptions} />
-        </div>
+        <InfoList oprions={cardInfoOptions} />
       </Block>
 
       <Block
@@ -411,7 +409,7 @@ function App() {
       </Block>
 
       <Block 
-        style={{width: '100%'}}
+        fullWidth
         title='Результаты обследования' decorativeIcon='INFO'
         footer={
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
@@ -450,14 +448,14 @@ function App() {
         </Table>
       </Block>
 
-      <Block title='Test table' style={{width: '100%'}}>
+      <Block title='Test table' fullWidth>
         <Table maxHeight={400}>
           <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
           <TBody rowKey='id' columns={columns} data={companies} select={{selectedRow, onChange: setSelectedRow}} />
         </Table>
       </Block>
 
-      <Block title='Test table' style={{width: '100%'}}>
+      <Block title='Test table' fullWidth>
         <Table maxHeight={400}>
           <THead columns={columns} sorting={{sortedColumn, onchangeSortedColumn: setSortedColumn}} />
           <TBody rowKey='id' columns={columns} data={companies} />
