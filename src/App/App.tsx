@@ -1,6 +1,6 @@
 import React from 'react';
 // import styles from './App.module.css';
-import {Badge, Block, Button, InfoList, Modal, Select, Stack, Table, TBody, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+import {Badge, Block, Button, InfoList, Modal, Stack, Table, TBody, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
 import BadgesPage from '../pages/BadgesPage';
 import ButtonsPage from '../pages/ButtonsPage';
 import InfoListsPage from '../pages/InfoListsPage';
@@ -10,11 +10,7 @@ import FormFieldsPage from '../pages/FormFieldsPage';
 import FieldTriggersPage from '../pages/FieldTriggersPage';
 import CheckBoxesPage from '../pages/CheckBoxesPage';
 import TextFieldsPage from '../pages/TextFieldsPage';
-
-interface Option {id: number, name: string};
-
-const testOptions: Option[] = [{id: 1, name: 'Option 1'}, {id: 2, name: 'Option 2'}, {id: 3, name: 'Option 3'}, {id: 4, name: 'Option 4'},];
-const testOptions2: string[] = ['Option2 1', 'Option2 2', 'Option2 3', 'Option2 4'];
+import SelectsPage from '../pages/SelectsPage';
 
 const cardInfoOptions = [
   {key: 'Patient name', value: 'John Doe'}, 
@@ -85,9 +81,6 @@ const columnsFixed: ColumnTable<typeof companies[number]>[] = [
 ];
 
 function App() {
-
-  const [option, setOption] = React.useState<Option>();
-  const [option2, setOption2] = React.useState<string>();
   const [modal, setVisibleModal] = React.useState(false);
   const [modal2, setVisibleModal2] = React.useState(false);
   const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof companies[number]>>();
@@ -104,23 +97,7 @@ function App() {
         <FieldTriggersPage />
         <CheckBoxesPage />
         <TextFieldsPage />
-
-      <div className='flex-col ' style={{width: '700px'}}>
-        <div className='flex-row' style={{width: '100%'}}>
-          <Select
-            label='Test select' options={testOptions} 
-            getKey={(T) => T.id} getValue={(T) => T.name}
-            value={option} onChangeValue={setOption} 
-            placeholder='Select value...' decorativeIcon='FILTER'
-            validation={{status: 'default', messages: []}} />
-
-          <Select
-            label='Test select' options={testOptions2} 
-            value={option2} onChangeValue={setOption2} 
-            placeholder='Select value...' decorativeIcon='FILTER'
-            validation={{status: 'default', messages: []}} />
-        </div>
-      </div>
+        <SelectsPage />
 
       <Modal  
         visible={modal} setVisible={setVisibleModal} 
