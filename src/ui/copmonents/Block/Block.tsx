@@ -41,15 +41,16 @@ const Block: React.FC<BlockProps> = ({
                 <Stack 
                     className={styles.header}
                     direction='row' gap='lg'
-                    justify='space-between' align='center' >
+                    justify='space-between' align='flex-start' >
                     <Stack 
+                        fitContent
                         className={styles.title} 
                         direction='row' gap='sm'
                         justify='flex-start' align='center' >
                         {decorativeIcon && <Icon name={decorativeIcon} size='inherit' color='primary' />}
                         {title && <h6>{title}</h6>}
                     </Stack>
-                    {actions && (<div className={styles.actions}>{actions}</div>)}
+                    {actions && (actions)}
                 </Stack>
             )}
             {children}
