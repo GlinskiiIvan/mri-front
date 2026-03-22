@@ -70,8 +70,8 @@ const Modal: React.FC<ModalProps> = ({
 
     return createPortal(
         <div ref={wrapperRef} className={classesWrapper}>
-            <Block className={styles.modal} {...props} 
-                actions={<IconButton icon={{name: 'CLOSE', size: '24'}} onClick={onCloseHandler } />} >
+            <Block fullWidth className={styles.modal} {...props} 
+                actions={<IconButton icon={{name: 'CLOSE', size: 'xl'}} onClick={onCloseHandler } />} >
                 <div className={styles.body}>
                     {children}
                 </div>

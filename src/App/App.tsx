@@ -1,6 +1,6 @@
 import React from 'react';
 // import styles from './App.module.css';
-import {Badge, Block, Button, InfoList, Modal, Stack, Table, TBody, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
+import {Badge, Block, Modal, Stack, Table, TBody, THead, type ColumnTable, type SortedColumn} from '../ui/copmonents';
 import BadgesPage from '../pages/BadgesPage';
 import ButtonsPage from '../pages/ButtonsPage';
 import InfoListsPage from '../pages/InfoListsPage';
@@ -11,15 +11,7 @@ import FieldTriggersPage from '../pages/FieldTriggersPage';
 import CheckBoxesPage from '../pages/CheckBoxesPage';
 import TextFieldsPage from '../pages/TextFieldsPage';
 import SelectsPage from '../pages/SelectsPage';
-
-const cardInfoOptions = [
-  {key: 'Patient name', value: 'John Doe'}, 
-  {key: 'Patient ID', value: '63048393'},
-  {key: 'Gender', value: 'Male'},
-  {key: 'Age', value: '32 years'},
-  {key: 'Date of birth', value: '12 Mar 1994'},
-  {key: 'Status', value: <Badge text='Normal' size='sm' status='success' />},
-];
+import ModalsPage from '../pages/ModalsPage';
 
 const companies = [
   {
@@ -81,7 +73,6 @@ const columnsFixed: ColumnTable<typeof companies[number]>[] = [
 ];
 
 function App() {
-  const [modal, setVisibleModal] = React.useState(false);
   const [modal2, setVisibleModal2] = React.useState(false);
   const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof companies[number]>>();
   const [selectedRow, setSelectedRow] = React.useState<typeof companies[number]>();
@@ -98,19 +89,9 @@ function App() {
         <CheckBoxesPage />
         <TextFieldsPage />
         <SelectsPage />
+        <ModalsPage />
 
-      <Modal  
-        visible={modal} setVisible={setVisibleModal} 
-        title='Test modal' footer={
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px'}}>
-            <Button variant='primary' icon='ADD' onClick={() => setVisibleModal2(true)}>Обследование</Button>
-          </div>
-        }>
-        <InfoList oprions={cardInfoOptions} />
-        <InfoList oprions={cardInfoOptions} />
-        <InfoList oprions={cardInfoOptions} />
-        <InfoList oprions={cardInfoOptions} />
-      </Modal>
+
 
       <Modal title='Test modal 2' visible={modal2} setVisible={setVisibleModal2}>
         test modal 2
