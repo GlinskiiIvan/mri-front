@@ -1,20 +1,7 @@
 import React from 'react';
 
 import {Stack} from '../ui/copmonents';
-import BadgesPage from '../pages/BadgesPage';
-import ButtonsPage from '../pages/ButtonsPage';
-import InfoListsPage from '../pages/InfoListsPage';
-import LabelsPage from '../pages/LabelsPage';
-import MessageBoxesPage from '../pages/MessageBoxesPage';
-import FormFieldsPage from '../pages/FormFieldsPage';
-import FieldTriggersPage from '../pages/FieldTriggersPage';
-import CheckBoxesPage from '../pages/CheckBoxesPage';
-import TextFieldsPage from '../pages/TextFieldsPage';
-import SelectsPage from '../pages/SelectsPage';
-import ModalsPage from '../pages/ModalsPage';
-import TablesPage from '../pages/TablesPage';
-
-
+import { BadgesPage, ButtonsPage, CheckBoxesPage, FieldTriggersPage, FormFieldsPage, InfoListsPage, LabelsPage, MessageBoxesPage, ModalsPage, SelectsPage, TablesPage, TextFieldsPage } from '../pages/examples';
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Block, Page, Stack } from '../ui/copmonents';
-import FieldTrigger from '../ui/copmonents/FieldTrigger';
+import { Block, Page, Stack } from '../../ui/copmonents';
+import FieldTrigger from '../../ui/copmonents/FieldTrigger';
 
 const pageProps = {
     title: 'Демонстрация вариантов триггера формы' ,

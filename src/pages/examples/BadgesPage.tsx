@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Block, Page, Stack } from '../ui/copmonents';
+import { Badge, Block, Page, Stack } from '../../ui/copmonents';
 
 const pageProps = {
     title: 'Демонстрация вариантов бейджа' ,

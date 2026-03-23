@@ -1,6 +1,6 @@
 import React from 'react';
-import { Block, Button, Page, Stack } from '../ui/copmonents';
-import { testClickHandler } from '../utils';
+import { Block, Button, Page, Stack } from '../../ui/copmonents';
+import { testClickHandler } from '../../utils';
 
 const pageProps = {
     title: 'Демонстрация вариантов кнопки' ,

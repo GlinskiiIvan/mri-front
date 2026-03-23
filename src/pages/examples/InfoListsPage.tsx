@@ -1,6 +1,6 @@
 import React from 'react';
-import { Block, Button, IconButton, InfoList, Page, Stack } from '../ui/copmonents';
-import { patientInfoList } from '../utils';
+import { Block, Button, IconButton, InfoList, Page, Stack } from '../../ui/copmonents';
+import { patientInfoList } from '../../utils';
 
 const pageProps = {
     title: 'Демонстрация вариантов списка информации' ,

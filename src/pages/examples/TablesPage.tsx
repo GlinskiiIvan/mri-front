@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Block, IconButton, Page, Stack, Table, TBody, THead, type ColumnTable, type SortedColumn } from '../ui/copmonents';
+import { Badge, Block, IconButton, Page, Stack, Table, TBody, THead, type ColumnTable, type SortedColumn } from '../../ui/copmonents';
 
 const pageProps = {
     title: 'Демонстрация вариантов таблицы' ,

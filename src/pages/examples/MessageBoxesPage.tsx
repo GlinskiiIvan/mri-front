@@ -1,6 +1,6 @@
 import React from 'react';
-import { Block, MessageBox, Page, Stack } from '../ui/copmonents';
-import { testMessages } from '../utils';
+import { Block, MessageBox, Page, Stack } from '../../ui/copmonents';
+import { testMessages } from '../../utils';
 
 const pageProps = {
     title: 'Демонстрация вариантов блока сообщений' ,

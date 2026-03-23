@@ -1,6 +1,6 @@
 import React from 'react';
-import { Block, CheckBox, Page, Stack } from '../ui/copmonents';
-import { testMessages } from '../utils';
+import { Block, CheckBox, Page, Stack } from '../../ui/copmonents';
+import { testMessages } from '../../utils';
 // import { testMessages } from '../utils';
 
 const pageProps = {

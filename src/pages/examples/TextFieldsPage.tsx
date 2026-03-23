@@ -1,6 +1,6 @@
 import React from 'react';
-import { Block, Page, Stack, TextField } from '../ui/copmonents';
-import { testMessages } from '../utils';
+import { Block, Page, Stack, TextField } from '../../ui/copmonents';
+import { testMessages } from '../../utils';
 
 const pageProps = {
     title: 'Демонстрация вариантов текстового инпута' ,

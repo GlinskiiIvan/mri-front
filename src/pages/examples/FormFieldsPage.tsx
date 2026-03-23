@@ -1,5 +1,5 @@
 import React from 'react';
-import { Block, FormField, Page, Stack } from '../ui/copmonents';
+import { Block, FormField, Page, Stack } from '../../ui/copmonents';
 
 const pageProps = {
     title: 'Демонстрация вариантов слоя полей' ,
