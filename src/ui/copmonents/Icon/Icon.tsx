@@ -44,7 +44,7 @@ export const Icon: React.FC<IconProps> = ({
   const inlineStyle: CSSVars = {
     ...style,
     '--color-icon': color === 'inherit' ? 'inherit' : `var(--text-${color})`,
-    '--fs-icon': size === 'inherit' ? 'inherit' : `var(--fs-${size})`,
+    '--fs-icon': size === 'inherit' ? '1em' : `var(--fs-${size})`,
   }
 
   return resolvedIcon ? (
