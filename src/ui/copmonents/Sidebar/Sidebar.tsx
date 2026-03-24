@@ -144,8 +144,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                                                     </div>
                                                 )}
                                                 <p className={styles.hide}>{el.label}</p>
-                                                {el.tooltip && (<span className={styles.tooltip}>{el.tooltip}</span>)}
                                             </a>
+                                            {el.tooltip && (<span className={styles.tooltip}>{el.tooltip}</span>)}
                                         </li>
                                     )
                                 })}
