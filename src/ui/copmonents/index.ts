@@ -4,6 +4,7 @@ export {default as Icon} from './Icon'
 export type { IconProps, IconSize, IconPath } from './Icon';
 export type {BlockProps} from './Block';
 export type {ColumnTable, SortedColumn, Sorting} from './Table';
+export type {SidebarOrg, SidebarProfile, SidebarLinks, SidebarSections, SidebarProps} from './Sidebar';
 
 export {default as IconButton} from './IconButton'
 export {default as Badge} from './Badge'

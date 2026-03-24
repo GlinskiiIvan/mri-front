@@ -1,5 +1,7 @@
+@use '@/ui/mixins.scss' as *;
+
 // $tab_height: 3.124rem;
-$tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
+$tab_height: calc(var(--fs-sm) + var(--space-sm) * 2);
 
 .wrapper {
     display: flex;
@@ -9,6 +11,9 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
     gap: var(--space-xl);
 
     background: var(--bg-secondary);
+    border-right: var(--border-width-sm) solid var(--border-primary);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+
     width: 15.625rem;
     position: sticky;
     top: 0;
@@ -74,7 +79,7 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
             align-items: center;
 
             position: absolute;
-            right: 0;
+            right: calc(var(--space-sm) - var(--space-sm)*2);
 
             transform: translateX(calc(115%));
 
@@ -93,10 +98,16 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
                 transition: rotate var(--duration-slow) linear;
             }
         }
-        h3 {
+        .logoLink {
+            width: 100%;
+        }
+
+        .companyName {
             color: var(--text-primary);
             font-size: var(--fs-lg);
             font-weight: var(--fw-medium);
+
+            width: 100%;
         }
         .logo {
             width: 3.125rem;
@@ -104,14 +115,21 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
         }
     }
     .content {
-        // overflow-y: auto;
-        // overflow-x: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
         // margin-bottom: var(--gap-large);
         &::-webkit-scrollbar {
             display: none;
         }
         ul {
             position: relative;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: var(--space-md);
+
             .activeTab {
                 position: absolute;
                 top: 0.625rem;
@@ -124,12 +142,13 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
             }
             li {
                 position: relative;
-                padding: var(--space-sm);
+                
                 a {
                     display: flex;
                     align-items: center;
                     justify-content: flex-start;
                     gap: var(--space-sm);
+                    padding: var(--space-sm);
 
                     height: $tab_height;
                     border-radius: var(--radius-lg);
@@ -137,11 +156,14 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
                     font-size: var(--fs-sm);
                     font-weight: var(--fw-medium);
                     line-height: var(--lh-sm);
-                    color: var(--text-primary);
+                    color: var(--text-secondary);
 
-                    transition: all var(--duration-slow) ease;
+                    transition: 
+                        background-color var(--duration-slow) ease,
+                        color var(--duration-normal) ease;
 
-                    &:hover, &.active, &:focus {
+                    &.active {
+                        color: var(--text-primary);
                         .iconWrapper {
                             background-color: var(--bg-accent);
                             svg {
@@ -152,6 +174,11 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
 
                     &:hover {
                         background-color: var(--bg-accent-subtle);
+                        color: var(--text-primary);
+                    }
+
+                    &:focus {
+                        @include focus-inset-state();
                     }
 
                     .iconWrapper {
@@ -175,8 +202,6 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
         }
         .split {
             position: relative;
-            height: 4.375rem;
-            line-height: 4.375rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -184,12 +209,13 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
                 color: var(--text-secondary);
                 font-size: var(--fs-sm);
                 font-weight: var(--fw-medium);
+                line-height: var(--lh-sm);
                 text-transform: uppercase;
                 
             }
             span {
-                width: 1.875rem;
-                height: 0.1875rem;
+                width: 100%;
+                height: 2px;
                 background-color: var(--border-primary);
                 border-radius: 0.1875rem;
             }
@@ -217,36 +243,12 @@ $tab_height: calc(var(--fs-sm) * 1.5 + var(--space-sm) * 2);
                 }
             }
         }
-
-        .logout {
-            cursor: pointer;
-            padding: 0 var(--space-sm);
-            svg, p {
-                transition: all .3s ease-in;
-            }
-            svg {
-                color: var(--text-secondary);
-            }
-            p {
-                font-size: var(--fs-sm);
-            }
-            &:hover, &:focus {
-                outline: none;
-                svg {
-                    // fill: var(--color-font-firts);
-                    color: var(--text-primary);
-                }
-                p {
-                    color: var(--text-primary);
-                }
-            }
-        }
     }
 
     //When the shrinks
 
     &.shrink {
-        width: 4.375rem;
+        width: 5.125rem;
         .hide {
             opacity: 0;
             pointer-events: none;

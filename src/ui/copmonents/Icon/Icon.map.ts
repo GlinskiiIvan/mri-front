@@ -19,5 +19,7 @@ export const IconMap = {
   IMAGE: 'tabler:photo-plus',
   MINUS: 'icon-park-outline:minus',
   LINK: 'akar-icons:link-out',
-  FILTER: 'ci:filter'
+  FILTER: 'ci:filter',
+  SETTINGS: 'material-symbols:settings',
+  LOGOUT: 'material-symbols:logout-rounded',
 } as const;

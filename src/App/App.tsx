@@ -8,7 +8,7 @@ const sidebatItems = [
     {
         links: [
             {
-                to: '#',
+                to: '#sdg',
                 label: 'about',
                 tooltip: 'about',
                 icon: 'INFO' as IconPath,
@@ -19,13 +19,13 @@ const sidebatItems = [
         section: 'journals',
         links: [
             {
-                to: '#',
+                to: '#dfg',
                 label: 'analysis results',
                 tooltip: 'analysis results',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#',
+                to: '#dfgdfg',
                 label: 'daily reagent consumption',
                 tooltip: 'daily reagent consumption',
                 icon: 'INFO' as IconPath,
@@ -36,37 +36,37 @@ const sidebatItems = [
         section: 'settings',
         links: [
             {
-                to: '#',
+                to: '#ghgh',
                 label: 'reagent consumption',
                 tooltip: 'reagent consumption',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#',
+                to: '#dfhh',
                 label: 'analysis standards',
                 tooltip: 'analysis standards',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#',
+                to: '#fgjh',
                 label: 'predefined results',
                 tooltip: 'predefined results',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#',
+                to: '#fgh',
                 label: 'analyses',
                 tooltip: 'analyses',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#',
+                to: '#fghj',
                 label: 'reagents',
                 tooltip: 'reagents',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#',
+                to: '#ghjk',
                 label: 'gost',
                 tooltip: 'gost',
                 icon: 'INFO' as IconPath,
@@ -80,12 +80,18 @@ function App() {
     <>
       <Sidebar 
         items={sidebatItems} 
-        logo={logo} 
-        orgName='Gl-CO' 
-        userName='Brodyga' 
-        userPhoto={userPhoto} 
-        userRole='Developer' 
-        logout={() => {console.log('LOGOUT')}} />
+        organization={{
+            logo: logo,
+            name: 'Gl-CO',
+            to: '/'
+        }}
+        profile={{
+            name: 'Brodyga',
+            photo: userPhoto,
+            role: 'Developer',
+            logout: () => {console.log('LOGOUT')},
+        }}
+        openSettings={() => alert('Settings!')} />
 
       <Stack direction='column' gap='xl' justify='center' align='center'>
           <BadgesPage />
