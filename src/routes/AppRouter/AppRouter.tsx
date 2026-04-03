@@ -7,72 +7,43 @@ import logo from '../../assets/images/logo-laba.png';
 import userPhoto from '../../assets/images/user.png';
 import type { IconPath } from '../../ui/copmonents';
 import {ExamplesPage} from '../../pages/examples';
-import App from '../../App';
+import { MainPage } from '../../pages';
 const sidebatItems = [
+    // {
+    //     links: [
+    //         {
+    //             to: '#sdg',
+    //             label: 'about',
+    //             tooltip: 'about',
+    //             icon: 'INFO' as IconPath,
+    //         }
+    //     ]
+    // },
     {
+        // section: 'journals',
         links: [
             {
-                to: '#sdg',
-                label: 'about',
-                tooltip: 'about',
-                icon: 'INFO' as IconPath,
-            }
-        ]
-    },
-    {
-        section: 'journals',
-        links: [
-            {
-                to: '#dfg',
-                label: 'analysis results',
-                tooltip: 'analysis results',
+                to: ROUTES.Main,
+                label: 'Главная',
+                tooltip: 'Главная',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#dfgdfg',
-                label: 'daily reagent consumption',
-                tooltip: 'daily reagent consumption',
-                icon: 'INFO' as IconPath,
-            }
-        ]
-    },
-    {
-        section: 'settings',
-        links: [
-            {
-                to: '#ghgh',
-                label: 'reagent consumption',
-                tooltip: 'reagent consumption',
+                to: ROUTES.Patients,
+                label: 'Пациенты',
+                tooltip: 'Пациенты',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#dfhh',
-                label: 'analysis standards',
-                tooltip: 'analysis standards',
+                to: ROUTES.Studies,
+                label: 'Исследования',
+                tooltip: 'Исследования',
                 icon: 'INFO' as IconPath,
             },
             {
-                to: '#fgjh',
-                label: 'predefined results',
-                tooltip: 'predefined results',
-                icon: 'INFO' as IconPath,
-            },
-            {
-                to: '#fgh',
-                label: 'analyses',
-                tooltip: 'analyses',
-                icon: 'INFO' as IconPath,
-            },
-            {
-                to: '#fghj',
-                label: 'reagents',
-                tooltip: 'reagents',
-                icon: 'INFO' as IconPath,
-            },
-            {
-                to: '#ghjk',
-                label: 'gost',
-                tooltip: 'gost',
+                to: ROUTES.Examples,
+                label: 'UI компоненты',
+                tooltip: 'UI компоненты',
                 icon: 'INFO' as IconPath,
             },
         ]
@@ -89,7 +60,7 @@ const AppRouter: React.FC = () => {
                     organization: {
                         logo: logo,
                         name: 'Gl-CO',
-                        to: '/'
+                        to: ROUTES.Main
                     },
                     profile: {
                         name: 'Brodyga',
@@ -100,7 +71,7 @@ const AppRouter: React.FC = () => {
                     openSettings: () => alert('Settings!')
                 }} />
             }>
-                <Route index element={<App />} />
+                <Route index element={<MainPage />} />
                 <Route path={ROUTES.Examples} element={ <ExamplesPage /> } />
             </Route>
             <Route path='*' element={ <Navigate to={ROUTES.Main}></Navigate> } />

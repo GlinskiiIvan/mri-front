@@ -6,6 +6,7 @@ import Stack from '../Stack';
 import Button from '../Button';
 
 import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
 
 export interface SidebarLinks {
     to: string;
@@ -58,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
 
     const changeLinkHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, linkNumber: number) => {
-        e.preventDefault();
+        // e.preventDefault();
         changeLink(linkNumber);
     }
 
@@ -125,28 +126,32 @@ const Sidebar: React.FC<SidebarProps> = ({
                                     const linkNumber = index + i;
                                     i++
                                     return (
-                                        // <li className={styles.tooltipWrapper}>
-                                        //     <NavLink className={({ isActive }) => (isActive ? styles.active : '')} to={el.to} onClick={() => changeLink(linkNumber)}>
-                                        //         {el.icon && el.icon}
-                                        //         <p className={styles.hide}>{el.text}</p>
-                                        //         <span className={styles.tooltip}>{el.tooltip}</span>
-                                        //     </NavLink>
-                                        // </li>
-                                        <li key={el.to} className={styles.tooltipWrapper}>
-                                            <a
-                                                href={el.to}
-                                                className={linkNumber === activeTab ? styles.active : ''}
-                                                onClick={(e) => changeLinkHandler(e, linkNumber)}
-                                            >
+                                        <li className={styles.tooltipWrapper}>
+                                            <NavLink className={({ isActive }) => (isActive ? styles.active : '')} to={el.to} onClick={() => changeLink(linkNumber)}>
                                                 {el.icon && (
                                                     <div className={styles.iconWrapper}>
                                                         <Icon name={el.icon} />
                                                     </div>
                                                 )}
                                                 <p className={styles.hide}>{el.label}</p>
-                                            </a>
-                                            {el.tooltip && (<span className={styles.tooltip}>{el.tooltip}</span>)}
+                                                {el.tooltip && (<span className={styles.tooltip}>{el.tooltip}</span>)}
+                                            </NavLink>
                                         </li>
+                                        // <li key={el.to} className={styles.tooltipWrapper}>
+                                        //     <a
+                                        //         href={el.to}
+                                        //         className={linkNumber === activeTab ? styles.active : ''}
+                                        //         onClick={(e) => changeLinkHandler(e, linkNumber)}
+                                        //     >
+                                        //         {el.icon && (
+                                        //             <div className={styles.iconWrapper}>
+                                        //                 <Icon name={el.icon} />
+                                        //             </div>
+                                        //         )}
+                                        //         <p className={styles.hide}>{el.label}</p>
+                                        //     </a>
+                                        //     {el.tooltip && (<span className={styles.tooltip}>{el.tooltip}</span>)}
+                                        // </li>
                                     )
                                 })}
                             </ul>
