@@ -1,6 +1,6 @@
-import {IQueryGetAll} from "../interfaces/query.interface";
+import type {QueryfindAll} from "../interfaces/query.interface";
 
-export const getQueryArgs = (body: IQueryGetAll) => {
+export const getQueryArgs = (body: QueryfindAll) => {
     const sorting = body.sorting ? `&sortBy=${body.sorting.by}&sortOrder=${body.sorting.order}` : '';
     const dateFilter = `${(body.dateFilter && body.dateFilter.dateFrom) ? `&dateFrom=${body.dateFilter.dateFrom}` : ''}${(body.dateFilter && body.dateFilter.dateTo) ? `&dateTo=${body.dateFilter.dateTo}` : ''}`;
     const search = body.search && body.search.field && body.search.value ? `&filterBy=${body.search.field}&filterValue=${body.search.value}` : '';

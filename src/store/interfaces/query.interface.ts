@@ -1,4 +1,4 @@
-export interface IQueryGetAll {
+export interface QueryfindAll {
     sorting?: {
         by: string;
         order: string;
@@ -16,3 +16,10 @@ export interface IQueryGetAll {
         page?: number;
     }
 }
+
+export interface ResponseFindAll<T> {
+    data: T;
+    totalPages: number;
+    totalItems: number;
+    currentPage: number;
+};

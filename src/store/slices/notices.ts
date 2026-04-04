@@ -1,15 +1,15 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "../store";
+import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
+import type {RootState} from "../store";
 
 type NoticeType = 'error' | 'info' | 'success';
 interface INotice {type: NoticeType, message: string};
 export type NoticeItemType = (INotice & {id: number});
 
-export interface IState {
+export interface State {
     notices: NoticeItemType[];
 }
 
-const initialState: IState = {
+const initialState: State = {
     notices: []
 };
 
