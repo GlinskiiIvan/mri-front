@@ -3,4 +3,5 @@ export const ROUTES = {
     Examples: '/examples',
     Patients: '/patients',
     Studies: '/studies',
+    Login: '/login',
 }

@@ -6,7 +6,7 @@ import Stack from '../Stack';
 import Icon from '../Icon';
 
 interface PageProps {
-    readonly title: string;
+    readonly title?: string;
     readonly description?: string;
     readonly decorativeIcon?: IconPath;
     readonly children: React.ReactNode;
@@ -33,7 +33,7 @@ const Page: React.FC<PageProps> = ({
                         className={styles.content} 
                         direction='column' justify='flex-start' 
                         align='flex-start' gap='xs' >
-                        <h1 className={styles.title}>{title}</h1>
+                        {title && (<h1 className={styles.title}>{title}</h1>)}
                         {description && (<p className={styles.desc}>{description}</p>)}
                     </Stack>
                 </Stack>

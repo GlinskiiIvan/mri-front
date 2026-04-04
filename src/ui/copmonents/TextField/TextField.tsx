@@ -13,15 +13,14 @@ interface ActionIcon {
     visible?: boolean
 }
 
-interface TextFieldProps extends React.ComponentProps<'div'> {
+interface TextFieldProps extends React.ComponentProps<'input'> {
+    value: string;
+    onChangeValue: (value: string) => void;
+
     label?: string;
     placeholder?: string;
     validation?: ValidationInfo;
     disabled?: boolean;
-
-    value: string;
-    onChangeValue: React.Dispatch<React.SetStateAction<string>>;
-
     decorativeIcon?: IconPath;
     actionIcon?: ActionIcon | React.ReactNode;
 } 
@@ -29,15 +28,18 @@ interface TextFieldProps extends React.ComponentProps<'div'> {
 const TextField: React.FC<TextFieldProps> = ({
     value,
     onChangeValue,
-    placeholder = '',
-    disabled = false,
+
     label,
+    placeholder = '',
     validation = {
         status: 'default',
         messages: []
     },
+    disabled = false,
     decorativeIcon,
     actionIcon,
+
+    type='text',
     className,
     ...props
 }) => {
@@ -46,7 +48,7 @@ const TextField: React.FC<TextFieldProps> = ({
 
     const isActionIcon = typeof actionIcon === 'object' && actionIcon !== null && 'name' in actionIcon;
 
-    const classesLayout = clsx(styles.fieldLayot, className);
+    const classesLayout = clsx(styles.fieldLayot);
     const classesWrapper = clsx(styles.wrapper);
     const actionIconClasses = clsx(styles.actionIcon, {[styles.visible]: isActionIcon && actionIcon.visible});
 
@@ -67,12 +69,13 @@ const TextField: React.FC<TextFieldProps> = ({
             className={classesLayout}
             label={label ? {text: label, direction: 'column'} : undefined} 
             validation={validation} disabled={disabled}
-            htmlFor={inputId} {...props} >
+            htmlFor={inputId} >
             <FieldTrigger status={validation?.status || 'default'} className={classesWrapper} disabled={disabled} >
                 {decorativeIcon && <Icon name={decorativeIcon} />}
                 <input 
+                    {...props}
                     ref={inputRef} id={inputId}
-                    type="text" placeholder={placeholder}
+                    type={type} placeholder={placeholder}
                     className={styles.input} disabled={disabled}
                     value={value} onChange={changeValueHandler} />
                 {React.isValidElement(actionIcon) && actionIcon}

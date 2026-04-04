@@ -28,8 +28,8 @@ export interface SidebarOrg {
 
 export interface SidebarProfile {
     photo: string;
-    name: string;
-    role: string;
+    name?: string;
+    role?: string;
     logout: () => void;
 };
 
@@ -101,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <Icon name='ARROWDOWN' color='primary' size='xl' />
                 </span>
                 
-                {organization.to && (<a href="" className={styles.logoLink}> { getOrg() } </a>)}
+                {organization.to && (<NavLink to={organization.to} className={styles.logoLink}> { getOrg() } </NavLink>)}
                 {!organization.to && (getOrg())}
             </Stack>
 
@@ -126,7 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                     const linkNumber = index + i;
                                     i++
                                     return (
-                                        <li className={styles.tooltipWrapper}>
+                                        <li key={el.to} className={styles.tooltipWrapper}>
                                             <NavLink className={({ isActive }) => (isActive ? styles.active : '')} to={el.to} onClick={() => changeLink(linkNumber)}>
                                                 {el.icon && (
                                                     <div className={styles.iconWrapper}>
@@ -170,8 +170,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                         <Stack 
                             className={`${styles.info} ${styles.hide}`}
                             direction='column' gap='sm' justify='flex-start' align='stretch' >
-                            <span className={styles.name}>{profile.name}</span>
-                            <span className={styles.role}>{profile.role}</span>
+                            <span className={styles.name}>{profile?.name || 'Пользователь'}</span>
+                            {profile.role && (<span className={styles.role}>{profile.role}</span>)}
                         </Stack>
                         <span className={styles.tooltip}>{profile.name}</span>
                     </Stack>
