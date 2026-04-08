@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {getQueryArgs} from "../utils/getQueryArgs";
+import {buildFindAllParams, type FindAllParams} from "../utils";
 import type { Gender } from '../../common/enums';
-import type { QueryfindAll, ResponseFindAll } from '../interfaces';
+import type { ResponseFindAll } from '../interfaces';
 
 export interface CreatePatientDto {
     readonly doctorId: number;
@@ -15,6 +15,7 @@ export interface CreatePatientDto {
 
 export interface UpdatePatientDto extends Partial<CreatePatientDto> {
     id: number;
+    reason?: string;
 }
 
 export type Patient = {
@@ -49,15 +50,26 @@ export const patientApi = createApi({
     tagTypes: ['Patients'],
 
     endpoints: (builder) => ({
-        findAll: builder.query<ResponseFindAll<Patient[]>, QueryfindAll>({
-            query: (body) => `patients${getQueryArgs(body)}`,
-            serializeQueryArgs: ({ endpointName }) => {
-                return endpointName;
+        findAll: builder.query<ResponseFindAll<Patient[]>, FindAllParams>({
+            query: (body) => `patients${buildFindAllParams(body)}`,
+            serializeQueryArgs: ({ endpointName, queryArgs }) => {
+                return `${endpointName}-${JSON.stringify({
+                    sorting: queryArgs?.sorting,
+                    search: queryArgs?.search,
+                    dateFilter: queryArgs?.dateFilter
+                })}`;
             },
             // Always merge incoming data to the cache entry
-            merge: (currentCache, newItems, otherArgs) => {
-                currentCache.data.push(...newItems.data);
-                return newItems
+            merge: (currentCache, newItems, {arg}) => {
+                if(arg.pagination?.page === 1) {
+                    currentCache.data = newItems.data;
+                    return;
+                } else {
+                    const existingIds = new Set(currentCache.data.map(i => i.id));
+                    const filtered = newItems.data.filter(i => !existingIds.has(i.id));
+
+                    currentCache.data.push(...filtered);
+                }
             },
             // Refetch when the page arg changes
             forceRefetch({ currentArg, previousArg }) {
@@ -97,11 +109,13 @@ export const patientApi = createApi({
             invalidatesTags: [{type: 'Patients', id: 'LIST'}],
         }),
 
-        remove: builder.mutation<boolean, number>({
-            query(id) {
+        remove: builder.mutation<boolean, {id: number, reason: string}>({
+            query(data) {
+                const { id, reason } = data;
                 return {
                     url: `patients/${id}`,
                     method: 'DELETE',
+                    body: {reason},
                 }
             },
             invalidatesTags: [{type: 'Patients', id: 'LIST'}],

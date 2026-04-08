@@ -14,7 +14,7 @@ interface ActionIcon {
 }
 
 interface TextFieldProps extends React.ComponentProps<'input'> {
-    value: string;
+    value: string | undefined;
     onChangeValue: (value: string) => void;
 
     label?: string;
