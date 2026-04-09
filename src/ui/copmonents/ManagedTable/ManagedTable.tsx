@@ -96,36 +96,36 @@ const ManagedTable = <T extends Record<string, unknown>,>({
     const [remove, {isSuccess: removeIsSuccess, isError: removeIsError, error: removeError}] = crudApiTable.removeMutation ?? [() => {}, {}];
 
     React.useEffect(() => {
-        allDataIsSuccess && dispatch(addNotice({type: 'success', message: t('kit:notice.success.read')}));
+        allDataIsSuccess && dispatch(addNotice({type: 'success', message: t('notification.success.fetched.default')}));
     }, [allDataIsSuccess]);
 
     // FILTERS START //////////////////////////////////////////////////////////////
     const sortedTypeOptions: SelectItem[] = [
         {
-            title: t('kit:filters.asc'),
+            title: t('enums.sortOrder.asc'),
             value: SortOrder.ASC,
         },
         {
-            title: t('kit:filters.desc'),
+            title: t('enums.sortOrder.desc'),
             value: SortOrder.DESC,
         }
     ];
 
     const periodTypeOptions: SelectItem[] = [
         {
-            title: t('kit:filters.periodTypes.day'),
+            title: t('enums.periodTypes.day'),
             value: 'day',
         },
         {
-            title: t('kit:filters.periodTypes.week'),
+            title: t('enums.periodTypes.week'),
             value: 'week',
         },
         {
-            title: t('kit:filters.periodTypes.month'),
+            title: t('enums.periodTypes.month'),
             value: 'month',
         },
         {
-            title: t('kit:filters.periodTypes.year'),
+            title: t('enums.periodTypes.year'),
             value: 'year',
         },
 
@@ -401,7 +401,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
         isSuccess: boolean;
         isError: boolean;
         error?: FetchBaseQueryError | SerializedError;
-        action: 'add' | 'edit' | 'remove' | 'findAll' | 'findOne';
+        action: 'created' | 'updated' | 'deleted' | 'fetched';
     };
 
     const statusDeps = [
@@ -413,19 +413,24 @@ const ManagedTable = <T extends Record<string, unknown>,>({
 
     React.useEffect(() => {
         const statuses: ResponseStatusType[] = [
-            { isSuccess: false, isError: allDataIsError, error: allDataError, action: 'findAll' },
-            { isSuccess: false, isError: recordIsError, error: recordError, action: 'findOne' },
-            { isSuccess: createIsSuccess, isError: createIsError, error: createError, action: 'add' },
-            { isSuccess: updateIsSuccess, isError: updateIsError, error: updateError, action: 'edit' },
-            { isSuccess: removeIsSuccess, isError: removeIsError, error: removeError, action: 'remove' },
+            { isSuccess: false, isError: allDataIsError, error: allDataError, action: 'fetched' },
+            { isSuccess: false, isError: recordIsError, error: recordError, action: 'fetched' },
+            { isSuccess: createIsSuccess, isError: createIsError, error: createError, action: 'created' },
+            { isSuccess: updateIsSuccess, isError: updateIsError, error: updateError, action: 'updated' },
+            { isSuccess: removeIsSuccess, isError: removeIsError, error: removeError, action: 'deleted' },
         ];
 
         for (const status of statuses) {
             if (status.isSuccess) {
-                // @ts-ignore
-                dispatch(addNotice({type: 'success', message: t(`kit:notice.success.${status.action}`)}));
+                if(status.action === 'fetched') {
+                    // @ts-ignore
+                    dispatch(addNotice({type: 'success', message: t(`notification.success.${status.action}.default`)}));
+                } else {
+                    // @ts-ignore
+                    dispatch(addNotice({type: 'success', message: t(`notification.success.${status.action}.default.singular`)}));
+                }
             } else if (status.isError) {
-                dispatch(addNotice({type: 'error', message: t(`kit:notice.sww`)}));
+                dispatch(addNotice({type: 'error', message: t(`notification.error.default`)}));
             }
         }
     }, statusDeps);
@@ -473,12 +478,12 @@ const ManagedTable = <T extends Record<string, unknown>,>({
             </Table>
 
             <Modal 
-                title={t(`kit:app.filters`)} 
+                title={t(`common.filters`)} 
                 decorativeIcon={'FILTER'}
                 options={filtersModal}
                 footer={
                     <Stack direction='row' gap='sm' justify='flex-end' align='center'>
-                        <Button variant='primary' icon="FILTER" onClick={filterHandler} disabled={!filtersIsNotEmpty()}>{t('kit:app.apply')}</Button>
+                        <Button variant='primary' icon="FILTER" onClick={filterHandler} disabled={!filtersIsNotEmpty()}>{t('actions.apply')}</Button>
                     </Stack>
                 }
             >
@@ -493,15 +498,14 @@ const ManagedTable = <T extends Record<string, unknown>,>({
                                 value={searchField} 
                                 onChangeValue={setSearchField} 
                                 options={filters.searchFieldOptions} 
-                                label={t('kit:filters.fieldSearch')}
+                                label={t('ui.filters.fieldSearch')}
                                 getKey={(item) => item.value}
                                 getValue={(item) => item.title} />
 
                             <TextField 
                                 value={filtersInputs.searchValue} 
                                 onChangeValue={(val: string) => setFiltersInputs((prev) => ({ ...prev, searchValue: val }))}
-                                placeholder={t('kit:filters.enterTheValue')} 
-                                label={t('kit:filters.valueSearch')} />
+                                label={t('ui.filters.valueSearch')} />
                             
                             {/* <Devider /> */}
                         </>
@@ -513,7 +517,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
                                 value={sortedField} 
                                 onChangeValue={setSortedField} 
                                 options={filters.sortedFieldOptions} 
-                                label={t('kit:filters.fieldSorting')} 
+                                label={t('ui.filters.fieldSorting')} 
                                 getKey={(item) => item.value}
                                 getValue={(item) => item.title} />
                             
@@ -521,7 +525,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
                                 value={sortedType} 
                                 onChangeValue={setSortedType} 
                                 options={sortedTypeOptions} 
-                                label={t('kit:filters.fieldSortingType')}  
+                                label={t('ui.filters.orderSorting')}  
                                 getKey={(item) => item.value}
                                 getValue={(item) => item.title} />
 
@@ -535,19 +539,19 @@ const ManagedTable = <T extends Record<string, unknown>,>({
                                 value={periodType} 
                                 onChangeValue={setPeriodType} 
                                 options={periodTypeOptions} 
-                                label={t('kit:filters.dateRanges')}  
+                                label={t('ui.filters.datePeriods')}  
                                 getKey={(item) => item.value}
                                 getValue={(item) => item.title} />
 
                             <TextField 
                                 value={filtersInputs.dateStart} 
                                 onChangeValue={(val: string) => setFiltersInputs((prev) => ({ ...prev, dateStart: val as string }))} 
-                                label={t('kit:filters.dateStart')}  
+                                label={t('ui.filters.dateStart')}  
                                 type="datetime-local" />
                             <TextField 
                                 value={filtersInputs.dateEnd} 
                                 onChangeValue={(val: string) => setFiltersInputs((prev) => ({ ...prev, dateEnd: val as string }))} 
-                                label={t('kit:filters.dateEnd')}  
+                                label={t('ui.filters.dateEnd')}  
                                 type="datetime-local" />
                         </>
                     )}
@@ -555,7 +559,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
             </Modal>
 
             <Modal 
-                title={t(`kit:app.action.${contextAction}`)} 
+                title={t(`enums.action.${contextAction}`)} 
                 decorativeIcon={'EYE'} 
                 options={actionsModal}
                 footer={
@@ -566,7 +570,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
                             icon={contextAction === 'add' ? 'ADD' : 'EDIT'} 
                             disabled={!record?.canSubmitRecord} 
                             onClick={actionHandler}>
-                            Сохранить
+                            {t('actions.save')}
                         </Button>
 
                         {record?.modalActions}
@@ -578,7 +582,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
                                 intent='destructive'
                                 icon={'REMOVE'} 
                                 onClick={removeModal.open}>
-                                Удалить
+                                {t('actions.remove')}
                             </Button>
                         )}
                     </Stack>                    
@@ -595,8 +599,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
                                 <TextField 
                                     value={reason} 
                                     onChangeValue={(value: string) => setReason(value)}
-                                    placeholder={t('lab:formData.enterTheValue')} 
-                                    label={t('kit:app.reason.update')} />
+                                    label={t('common.reason')} />
                             </div>
                         )}
                     </Stack>
@@ -604,19 +607,18 @@ const ManagedTable = <T extends Record<string, unknown>,>({
             </Modal>
 
             <Modal 
-                title={t(`kit:app.action.${contextAction}`)}
+                title={t(`common.confirmation`)}
                 options={removeModal}
                 footer={
                     <Stack direction='row' gap='sm' justify='flex-end' align='center'>
-                        <Button variant='primary' intent='destructive' icon='CHECK' onClick={removeHandler} >Подтвердить</Button>
-                        <Button variant='secondary' icon='CLOSE' onClick={() => removeModal.close()} >Отмена</Button>
+                        <Button variant='primary' intent='destructive' icon='CHECK' onClick={removeHandler} >{t('actions.confirm')}</Button>
+                        <Button variant='secondary' icon='CLOSE' onClick={() => removeModal.close()} >{t('actions.cancel')}</Button>
                     </Stack>
                 } >
                 <TextField 
                     value={reason} 
                     onChangeValue={(value: string) => setReason(value)} 
-                    placeholder={t('lab:formData.enterTheValue')} 
-                    label={t('kit:app.reason.delete')} />
+                    label={t('common.reason')} />
             </Modal>
         </Block>
     );

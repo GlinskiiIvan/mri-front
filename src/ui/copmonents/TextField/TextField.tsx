@@ -6,6 +6,7 @@ import Icon, { type IconPath } from '../Icon';
 import clsx from 'clsx';
 import IconButton from '../IconButton';
 import FieldTrigger from '../FieldTrigger';
+import { useTranslation } from 'react-i18next';
 
 interface ActionIcon {
     name: IconPath;
@@ -43,6 +44,8 @@ const TextField: React.FC<TextFieldProps> = ({
     className,
     ...props
 }) => {
+    const {t} = useTranslation();
+    
     const inputId = React.useId();
     const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -75,7 +78,7 @@ const TextField: React.FC<TextFieldProps> = ({
                 <input 
                     {...props}
                     ref={inputRef} id={inputId}
-                    type={type} placeholder={placeholder}
+                    type={type} placeholder={placeholder || t('ui.placeholder.textField.default')}
                     className={styles.input} disabled={disabled}
                     value={value} onChange={changeValueHandler} />
                 {React.isValidElement(actionIcon) && actionIcon}

@@ -7,6 +7,7 @@ import Button from '../Button';
 
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export interface SidebarLinks {
     to: string;
@@ -46,6 +47,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     profile,
     openSettings,
 }) => {
+    const {t} = useTranslation();
+    
     const [menuShrink, setMenuShrink] = React.useState(false);
     const [activeTab, setActiveTab] = React.useState(sessionStorage.getItem('activeTab') || 0);
 
@@ -181,8 +184,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                         className={styles.tooltipWrapper} size='sm'
                         variant={'secondary'} icon='SETTINGS'
                         onClick={openSettings} >
-                        <p className={styles.hide}>Настройки</p>
-                        <span className={styles.tooltip}>Настройки</span>
+                        <p className={styles.hide}>{t('common.settings')}</p>
+                        <span className={styles.tooltip}>{t('common.settings')}</span>
                     </Button>
                 )}
                 {profile && (
@@ -190,8 +193,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                         className={styles.tooltipWrapper} size='sm'
                         variant={'secondary'} intent='destructive' icon='LOGOUT'
                         onClick={logoutHandler} >
-                        <p className={styles.hide}>Выйти</p>
-                        <span className={styles.tooltip}>Выйти</span>
+                        <p className={styles.hide}>{t('actions.logout')}</p>
+                        <span className={styles.tooltip}>{t('actions.logout')}</span>
                     </Button>
                 )}
             </Stack>

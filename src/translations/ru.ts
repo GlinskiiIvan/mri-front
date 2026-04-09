@@ -3,6 +3,15 @@ export default {
     login: {
       title: 'Авторизация в системе',
       description: 'Пожалуйста, введите свои учетные данные для доступа к системе.',
+
+      fields: {
+        email: 'Email',
+        password: 'Пароль',
+      },
+      placeholders: {
+        email: 'Введите email...',
+        password: 'Введите пароль...',
+      },
     },
     patients: {
       title: 'Список всех пациентов',
@@ -60,24 +69,37 @@ export default {
         female: '{{entity}} успешно создана',
         neuter: '{{entity}} успешно создано',
         plural: '{{entity}} успешно созданы',
+        default: {
+          singular: 'Запись успешно создана',
+          plural: 'Записи успешно созданы',
+        },
       },
       updated: {
         male: '{{entity}} успешно обновлен',
         female: '{{entity}} успешно обновлена',
         neuter: '{{entity}} успешно обновлено',
         plural: '{{entity}} успешно обновлены',
+        default: {
+          singular: 'Запись успешно обновлена',
+          plural: 'Записи успешно обновлены',
+        }
       },
       deleted: {
         male: '{{entity}} успешно удален',
         female: '{{entity}} успешно удалена',
         neuter: '{{entity}} успешно удалено',
         plural: '{{entity}} успешно удалены',
+        default: {
+          singular: 'Запись успешно удалена',
+          plural: 'Записи успешно удалены',
+        }
       },
       fetched: {
         male: '{{entity}} успешно получен',
         female: '{{entity}} успешно получена',
         neuter: '{{entity}} успешно получено',
         plural: '{{entity}} успешно получены',
+        default: 'Данные успешно получены',
       },
       auth: 'Вы успешно авторизовались!',
     },
@@ -86,6 +108,7 @@ export default {
       updated: 'Ошибка при обновлении {{entity}}',
       deleted: 'Ошибка при удалении {{entity}}',
       fetched: 'Ошибка при получении {{entity}}',
+      default: 'Что то пошло не так...',
       auth: 'Ошибка при авторизации. Что то пошло не так...',
     }
   },
@@ -124,13 +147,22 @@ export default {
     hide: 'Скрыть',
     select: 'Выбрать',
     deselect: 'Снять выделение',
+
+    login: 'Войти',
+    logout: 'Выйти',
   },
 
   ui: {
     placeholder: {
-      default: 'Введите значение...',
-      entity: 'Введите {{entity}}...',
-      search: 'Поиск {{entity}}...',
+      select: {
+        default: 'Выберите значение...',
+        entity: 'Выберите {{entity}}...',
+      },
+      textField: {
+        default: 'Введите значение...',
+        entity: 'Введите {{entity}}...',
+        search: 'Поиск {{entity}}...',
+      },
     },
 
     status: {
@@ -166,6 +198,9 @@ export default {
     done: 'Готово',
     search: 'Поиск',
     filters: 'Фильтры',
+    reason: 'Причина',
+    confirmation: 'Подтверждение действия',
+    settings: 'Настройки',
   },
 
   enums: {
@@ -239,6 +274,13 @@ export default {
       month: 'Месяц',
       year: 'Год',
     },
-  }
+  },
+
+  sidebar: {
+    main: 'Главная',
+    patients: 'Пациенты',
+    studies: 'Исследования',
+    examples: 'UI компоненты',
+  },
 
 } as const

@@ -1,17 +1,10 @@
 import React from 'react';
-import { Block, IconButton, ManagedTable, Page, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type IconPath, type SelectItem, type SortedColumn } from '../ui/copmonents';
-import type { PageProps } from '../ui/copmonents/Page';
-import { patientApi, type CreatePatientDto } from '../store/services/patient';
+import { ManagedTable, Page, Select, Stack, TextField, type ColumnTable, type SelectItem } from '../ui/copmonents';
+import { patientApi } from '../store/services/patient';
 import { Gender } from '../common/enums';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../routes';
-
-const pageProps: Partial<PageProps> = {
-    title: 'Список всех пациентов' ,
-    description: 'На этой странице представлены все пациенты которых ведет доктор.' ,
-    decorativeIcon: 'INFO' as IconPath,
-}
 
 const PatientPage = () => {
     const {t} = useTranslation();
@@ -29,9 +22,9 @@ const PatientPage = () => {
 
     const columns: ColumnTable<typeof allData[number]>[] = [
         {key: 'id', label: 'ID', sortable: false}, 
-        {key: 'fullName', label: 'Имя', sortable: false}, 
-        {key: 'gender', label: 'Пол', sortable: false, render: (item) => (item.gender === Gender.Male ? 'Мужской' : 'Женский')}, 
-        {key: 'note', label: 'Примечание', sortable: false}, 
+        {key: 'fullName', label: t('entities.patient.fields.fullName'), sortable: false}, 
+        {key: 'gender', label: t('entities.patient.fields.gender'), sortable: false, render: (item) => (item.gender === Gender.Male ? 'Мужской' : 'Женский')}, 
+        {key: 'note', label: t('entities.patient.fields.note'), sortable: false}, 
     ];
 
     // FILTERS START //////////////////////////////////////////////////////////////
@@ -41,15 +34,15 @@ const PatientPage = () => {
             value: 'id',
         },
         {
-            title: 'Имя',
+            title: t('entities.patient.fields.fullName'),
             value: 'fullName',
         },
         {
-            title: 'Пол',
+            title: t('entities.patient.fields.gender'),
             value: 'gender',
         },
         {
-            title: 'Примечание',
+            title: t('entities.patient.fields.note'),
             value: 'note',
         },
     ];
@@ -57,12 +50,10 @@ const PatientPage = () => {
     const sortedFieldOptions: SelectItem[] = searchFieldOptions;
     // FILTERS END//////////////////////////////////////////////////////////////////////
 
-    const [sortedColumn, setSortedColumn] = React.useState<SortedColumn<typeof allData[number]>>();
-
     // ACTIONS START /////////////////////////////////////////////////////////////////
     const gendertOptions = [
-        {id: Gender.Male, name: 'Мужской'},
-        {id: Gender.Female, name: 'Женский'},
+        {id: Gender.Male, name: t('enums.gender.male')},
+        {id: Gender.Female, name: t('enums.gender.female')},
     ];
 
     type RecordData = {
@@ -115,10 +106,12 @@ const PatientPage = () => {
     
     return (
         <Page
-            {...pageProps} >
+            decorativeIcon='INFO'
+            title={t('pages.patients.title')}
+            description={t('pages.patients.description')} >
             <ManagedTable
                 blockPops={{
-                    title: 'Пациенты',
+                    title: t('entities.patient.plural'),
                     fullWidth: true,
                 }}
                 tableProps={{
@@ -160,35 +153,31 @@ const PatientPage = () => {
                             <TextField 
                                 value={recordFields.fullName} 
                                 onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, fullName: val }))}
-                                placeholder={'Введите имя пациента'} 
-                                label={'ФИО'} />
+                                label={t('entities.patient.fields.fullName')} />
                             <TextField 
                                 value={recordFields.birthDate} 
                                 onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, birthDate: val }))}
-                                label={'Дата рождения'}
+                                label={t('entities.patient.fields.birthDate')}
                                 type="date" />
                             <Select 
                                 value={recordFields.gender} 
                                 onChangeValue={(val) => setRecordFields((prev) => ({ ...prev, gender: val || gendertOptions[0] }))} 
                                 options={gendertOptions} 
-                                label={t('kit:filters.fieldSearch')}
+                                label={t('entities.patient.fields.gender')}
                                 getKey={(item) => item.id}
                                 getValue={(item) => item.name} />
                             <TextField 
                                 value={recordFields.phone} 
                                 onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, phone: val }))}
-                                placeholder={'Введите номер телефона'} 
-                                label={'Номер телефона'} />
+                                label={t('entities.patient.fields.phone')} />
                             <TextField 
                                 value={recordFields.email} 
                                 onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, email: val }))}
-                                placeholder={'Введите email пациента'} 
-                                label={'Email'} />
+                                label={t('entities.patient.fields.email')} />
                             <TextField 
                                 value={recordFields.note} 
                                 onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, note: val }))}
-                                placeholder={'Введите примечание к пациенту'} 
-                                label={'Примечание'} />
+                                label={t('entities.patient.fields.note')} />
                         </Stack>
                     ),
                     recordData,

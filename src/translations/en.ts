@@ -3,6 +3,15 @@ export default {
     login: {
       title: 'Log in to the system',
       description: 'Please enter your credentials to access the system.',
+
+      fields: {
+        email: 'Email',
+        password: 'Password',
+      },
+      placeholders: {
+        email: 'Enter email...',
+        password: 'Enter password...',
+      },
     },
     patients: {
       title: 'List of all patients',
@@ -37,7 +46,7 @@ export default {
       fields: {
         doctor: 'Doctor',
         public: 'Public',
-        fullName: 'FULL NAME',
+        fullName: 'Full name',
         birthDate: 'Date of birth',
         gender: 'Gender',
         phone: 'Phone',
@@ -60,24 +69,37 @@ export default {
         female: '{{entity}} successfully created',
         neuter: '{{entity}} successfully created',
         plural: '{{entity}} successfully created',
+        default: {
+          singular: 'Record successfully created',
+          plural: 'Records successfully created',
+        },
       },
       updated: {
         male: '{{entity}} successfully updated',
         female: '{{entity}} successfully updated',
         neuter: '{{entity}} successfully updated',
         plural: '{{entity}} successfully updated',
+        default: {
+          singular: 'Record successfully updated',
+          plural: 'Records successfully updated',
+        }
       },
       deleted: {
         male: '{{entity}} successfully deleted',
         female: '{{entity}} successfully deleted',
         neuter: '{{entity}} successfully deleted',
         plural: '{{entity}} successfully deleted',
+        default: {
+          singular: 'Record successfully deleted',
+          plural: 'Records successfully deleted',
+        }
       },
       fetched: {
         male: '{{entity}} successfully received',
         female: '{{entity}} successfully received',
         neuter: '{{entity}} successfully received',
         plural: '{{entity}} successfully received',
+        default: 'Data successfully received',
       },
       auth: 'You have successfully logged in!',
     },
@@ -86,6 +108,7 @@ export default {
       updated: 'Error updating {{entity}}',
       deleted: 'Error deleting {{entity}}',
       fetched: 'Error receiving {{entity}}',
+      default: 'Something went wrong...',
       auth: 'Authorization error. Something went wrong...',
     }
   },
@@ -124,13 +147,22 @@ export default {
     hide: 'Hide',
     select: 'Select',
     deselect: 'Deselect',
+
+    login: 'Login',
+    logout: 'Logout',
   },
 
   ui: {
     placeholder: {
-      default: 'Enter a value...',
-      entity: 'Enter {{entity}}...',
-      search: 'Search {{entity}}...',
+      select: {
+        default: 'Choose a value...',
+        entity: 'Choose {{entity}}...',
+      },
+      textField: {
+        default: 'Enter a value...',
+        entity: 'Enter {{entity}}...',
+        search: 'Search {{entity}}...',
+      },
     },
 
     status: {
@@ -144,7 +176,7 @@ export default {
       valueSearch: 'Search value',
       fieldSorting: 'Sort by...',
       orderSorting: 'Sort order',
-      DatePeriods: 'Preset periods',
+      datePeriods: 'Preset periods',
       dateStart: 'Beginning of the period',
       dateEnd: 'End of the period',
     },
@@ -162,6 +194,9 @@ export default {
     done: 'Done',
     search: 'Search',
     filters: 'Filters',
+    reason: 'Reason',
+    confirmation: 'Action confirmation',
+    settings: 'Settings',
   },
 
   enums: {
@@ -213,7 +248,7 @@ export default {
       delete: 'Deletion',
     },
 
-    SortOrder: {
+    sortOrder: {
       asc: 'Ascending',
       desc: 'Descending order',
     },
@@ -240,5 +275,12 @@ export default {
   form: {},
 
   validation: {},
+
+  sidebar: {
+    main: 'Main',
+    patients: 'Patients',
+    studies: 'Studies',
+    examples: 'UI components',
+  },
 
 } as const
