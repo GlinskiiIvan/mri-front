@@ -75,7 +75,7 @@ const AppRouter: React.FC = () => {
                     profile: {
                         name: userData?.email,
                         photo: userPhoto,
-                        role: userData?.roles?.join(', '),
+                        role: userData?.roles?.map(role => role.value).join(', '),
                         logout: logoutHandler,
                     },
                     openSettings: () => alert('Settings!')
