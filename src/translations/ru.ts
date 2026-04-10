@@ -17,6 +17,10 @@ export default {
       title: 'Список всех пациентов',
       description: 'На этой странице представлены все пациенты которых ведет доктор.',
     },
+    studies: {
+      title: 'Список всех исследований',
+      description: 'На этой странице представлены все исследования пациентов.',
+    },
   },
 
   entities: {
@@ -51,6 +55,47 @@ export default {
         gender: 'Пол',
         phone: 'Телефон',
         email: 'Email',
+        note: 'Примечание',
+      },
+    },
+    study: {
+      singular: 'Исследование',
+      plural: 'Исследования',
+      gender: 'neuter',
+
+      singularCases: {
+        nominative: 'Исследование',
+        genitive: 'Исследования',
+        dative: 'Исследованию',
+        accusative: 'Исследование',
+        instrumental: 'Исследованием',
+        prepositional: 'Исследовании',
+      },
+
+      pluralCases: {
+        nominative: 'Исследования',
+        genitive: 'Исследований',
+        dative: 'Исследованиям',
+        accusative: 'Исследования',
+        instrumental: 'Исследованиями',
+        prepositional: 'Исследованиях',
+      },
+
+      fields: {
+        studyInstanceUID: 'UID исследования',
+        studyId: 'ID исследования',
+        specificCharacterSet: 'Кодировка символов',
+        studyDateTime: 'Дата и время исследования',
+        modality: 'Модальность',
+        description: 'Описание',
+        institutionName: 'Название учреждения',
+        manufacturer: 'Производитель оборудования',
+        manufacturersModelName: 'Модель производителя оборудования',
+        stationName: 'Название станции',
+        status: 'Статус',
+        path: 'Путь до директории с сериями исследования',
+        seriesCount: 'Количество серий',
+        imagesCount: 'Количество изображений',
         note: 'Примечание',
       },
     },
@@ -201,6 +246,8 @@ export default {
     reason: 'Причина',
     confirmation: 'Подтверждение действия',
     settings: 'Настройки',
+    file: 'Файл',
+    dicomZip: 'DICOM архив (.zip)',
   },
 
   enums: {

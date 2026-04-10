@@ -17,6 +17,10 @@ export default {
       title: 'List of all patients',
       description: 'This page contains all the patients managed by the doctor.',
     },
+    studies: {
+      title: 'List of all studies',
+      description: 'This page contains all the patient studies.',
+    },
   },
 
   entities: {
@@ -51,6 +55,47 @@ export default {
         gender: 'Gender',
         phone: 'Phone',
         email: 'Email',
+        note: 'Note',
+      },
+    },
+    study: {
+      singular: 'Study',
+      plural: 'Research',
+      gender: 'neuter',
+
+      singularCases: {
+        nominative: 'Research',
+        genitive: 'Research',
+        dative: 'Research',
+        accusative: 'Research',
+        instrumental: 'Research',
+        prepositional: 'Research',
+      },
+
+      pluralCases: {
+        nominative: 'Research',
+        genitive: 'Research',
+        dative: 'Research',
+        accusative: 'Research',
+        instrumental: 'Research',
+        prepositional: 'Research',
+      },
+
+      fields: {
+        studyInstanceUID: 'UID of the study',
+        studyID: 'Study ID',
+        specificCharacterSet: 'Character encoding',
+        studyDateTime: 'Date and time of the study',
+        modality: 'Modality',
+        description: 'Description',
+        institutionName: 'Name of the institution',
+        manufacturer: 'Equipment manufacturer',
+        manufacturersModelName: 'The model of the equipment manufacturer',
+        stationName: 'Station name',
+        status: 'Status',
+        path: 'The path to the directory with the research series',
+        seriesCount: 'Number of episodes',
+        imagesCount: 'Number of images',
         note: 'Note',
       },
     },
@@ -197,6 +242,8 @@ export default {
     reason: 'Reason',
     confirmation: 'Action confirmation',
     settings: 'Settings',
+    file: 'File',
+    dicomZip: 'DICOM archive (.zip)',
   },
 
   enums: {
