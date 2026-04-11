@@ -17,6 +17,10 @@ export default {
       title: 'List of all patients',
       description: 'This page contains all the patients managed by the doctor.',
     },
+    patientCard: {
+      title: 'Patient card',
+      description: "This page contains the patient's data, as well as a list of all his studies. From this page, you can create a new study for this patient, and also go to the study by clicking on it.",
+    },
     studies: {
       title: 'List of all studies',
       description: 'This page contains all the patient studies.',
@@ -49,7 +53,7 @@ export default {
 
       fields: {
         doctor: 'Doctor',
-        public: 'Public',
+        public: 'Publicity',
         fullName: 'Full name',
         birthDate: 'Date of birth',
         gender: 'Gender',
@@ -195,6 +199,8 @@ export default {
 
     login: 'Login',
     logout: 'Logout',
+
+    createStudy: 'Add study',
   },
 
   ui: {

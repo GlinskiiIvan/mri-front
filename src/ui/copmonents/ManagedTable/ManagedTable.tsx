@@ -43,6 +43,7 @@ type ManagedTableProps<T> = {
         updateMutation?: any;
         removeMutation?: any;
         limit?: number;
+        entityId?: number;
     };
     auxiliaryData?: {
         fetchAuxiliaryData: () => void;
@@ -172,6 +173,7 @@ const ManagedTable = <T extends Record<string, unknown>,>({
             pageSize: limit
         };
 
+        if(crudApiTable.entityId) result.id = crudApiTable.entityId;
         if(sortedField?.value && sortedType?.value) result.sorting = sorting;
         if(searchField && filtersInputs) result.search = search;
         if(filtersInputs.dateStart && filtersInputs.dateEnd) result.dateFilter = dateFilter;

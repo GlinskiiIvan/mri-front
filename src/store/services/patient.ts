@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {buildFindAllParams, type FindAllParams} from "../utils";
 import type { Gender } from '../../common/enums';
 import type { ResponseFindAll } from '../interfaces';
+import type { Study } from './study';
 
 export interface CreatePatientDto {
     readonly doctorId: number;
@@ -51,7 +52,41 @@ export const patientApi = createApi({
 
     endpoints: (builder) => ({
         findAll: builder.query<ResponseFindAll<Patient[]>, FindAllParams>({
-            query: (body) => `patients${buildFindAllParams(body)}`,
+            query: (params) => `patients${buildFindAllParams(params)}`,
+            serializeQueryArgs: ({ endpointName, queryArgs }) => {
+                return `${endpointName}-${JSON.stringify({
+                    sorting: queryArgs?.sorting,
+                    search: queryArgs?.search,
+                    dateFilter: queryArgs?.dateFilter
+                })}`;
+            },
+            // Always merge incoming data to the cache entry
+            merge: (currentCache, newItems, {arg}) => {
+                if(arg.pagination?.page === 1) {
+                    currentCache.data = newItems.data;
+                    return;
+                } else {
+                    const existingIds = new Set(currentCache.data.map(i => i.id));
+                    const filtered = newItems.data.filter(i => !existingIds.has(i.id));
+
+                    currentCache.data.push(...filtered);
+                }
+            },
+            // Refetch when the page arg changes
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg;
+            },
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.data.map(({ id }) => ({ type: 'Patients' as const, id })),
+                        { type: 'Patients', id: 'LIST' },
+                    ]
+                    : [{ type: 'Patients', id: 'LIST' }],
+        }),
+
+        findAllStudies: builder.query<ResponseFindAll<Study[]>, FindAllParams & {id: number}>({
+            query: ({id, ...params}) => `patients/${id}/studies${buildFindAllParams(params)}`,
             serializeQueryArgs: ({ endpointName, queryArgs }) => {
                 return `${endpointName}-${JSON.stringify({
                     sorting: queryArgs?.sorting,
