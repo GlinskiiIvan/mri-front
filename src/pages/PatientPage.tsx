@@ -1,21 +1,22 @@
 import React from 'react';
 import { ManagedTable, Page, Select, Stack, TextField, type ColumnTable, type SelectItem } from '../ui/copmonents';
-import { patientApi } from '../store/services/patient';
 import { Gender } from '../common/enums';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../routes';
 
+import { patientApi } from '../store/services/patient';
+
 const PatientPage = () => {
     const {t} = useTranslation();
     const navigate = useNavigate();
     
-    const allDataQuery = patientApi.useLazyFindAllQuery();
-    const oneDataQuery = patientApi.useLazyFindOneQuery();
+    const allDataQuery = patientApi.useLazyFindAllPatientsQuery();
+    const oneDataQuery = patientApi.useLazyFindOnePatientQuery();
 
-    const createMutation = patientApi.useCreateMutation();
-    const updateMutation = patientApi.useUpdateMutation();
-    const removeMutation = patientApi.useRemoveMutation();
+    const createMutation = patientApi.useCreatePatientMutation();
+    const updateMutation = patientApi.useUpdatePatientMutation();
+    const removeMutation = patientApi.useRemovePatientMutation();
 
     const allData = allDataQuery[1]?.data?.data || [];
     const oneData = oneDataQuery[1]?.data;

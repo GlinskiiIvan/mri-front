@@ -1,8 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {buildFindAllParams, type FindAllParams} from "../utils";
 import type { Gender } from '../../common/enums';
 import type { ResponseFindAll } from '../interfaces';
 import type { Study } from './study';
+import { api } from '../api/api';
 
 export interface CreatePatientDto {
     readonly doctorId: number;
@@ -34,24 +34,9 @@ export type Patient = {
     deletedAt: Date | null,
 }
 
-export const patientApi = createApi({
-    reducerPath: 'patientApi',
-
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_URI,
-        prepareHeaders: (headers ) => {
-            const token = JSON.parse(sessionStorage.getItem('access_token') || '');
-            if (token) {
-                headers.set('authorization', `Bearer ${token}`)
-            }
-            return headers
-        },
-    }),
-
-    tagTypes: ['Patients'],
-
+export const patientApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        findAll: builder.query<ResponseFindAll<Patient[]>, FindAllParams>({
+        findAllPatients: builder.query<ResponseFindAll<Patient[]>, FindAllParams>({
             query: (params) => `patients${buildFindAllParams(params)}`,
             serializeQueryArgs: ({ endpointName, queryArgs }) => {
                 return `${endpointName}-${JSON.stringify({
@@ -60,7 +45,6 @@ export const patientApi = createApi({
                     dateFilter: queryArgs?.dateFilter
                 })}`;
             },
-            // Always merge incoming data to the cache entry
             merge: (currentCache, newItems, {arg}) => {
                 if(arg.pagination?.page === 1) {
                     currentCache.data = newItems.data;
@@ -72,20 +56,19 @@ export const patientApi = createApi({
                     currentCache.data.push(...filtered);
                 }
             },
-            // Refetch when the page arg changes
             forceRefetch({ currentArg, previousArg }) {
                 return currentArg !== previousArg;
             },
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.data.map(({ id }) => ({ type: 'Patients' as const, id })),
-                        { type: 'Patients', id: 'LIST' },
+                        ...result.data.map(({ id }) => ({ type: 'patients' as const, id })),
+                        { type: 'patients', id: 'LIST' },
                     ]
-                    : [{ type: 'Patients', id: 'LIST' }],
+                    : [{ type: 'patients', id: 'LIST' }],
         }),
 
-        findAllStudies: builder.query<ResponseFindAll<Study[]>, FindAllParams & {id: number}>({
+        findAllPatientStudies: builder.query<ResponseFindAll<Study[]>, FindAllParams & {id: number}>({
             query: ({id, ...params}) => `patients/${id}/studies${buildFindAllParams(params)}`,
             serializeQueryArgs: ({ endpointName, queryArgs }) => {
                 return `${endpointName}-${JSON.stringify({
@@ -94,7 +77,6 @@ export const patientApi = createApi({
                     dateFilter: queryArgs?.dateFilter
                 })}`;
             },
-            // Always merge incoming data to the cache entry
             merge: (currentCache, newItems, {arg}) => {
                 if(arg.pagination?.page === 1) {
                     currentCache.data = newItems.data;
@@ -106,33 +88,32 @@ export const patientApi = createApi({
                     currentCache.data.push(...filtered);
                 }
             },
-            // Refetch when the page arg changes
             forceRefetch({ currentArg, previousArg }) {
                 return currentArg !== previousArg;
             },
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.data.map(({ id }) => ({ type: 'Patients' as const, id })),
-                        { type: 'Patients', id: 'LIST' },
+                        ...result.data.map(({ id }) => ({ type: 'patients' as const, id })),
+                        { type: 'patients', id: 'LIST' },
                     ]
-                    : [{ type: 'Patients', id: 'LIST' }],
+                    : [{ type: 'patients', id: 'LIST' }],
         }),
 
-        findOne: builder.query<Patient, number>({
+        findOnePatient: builder.query<Patient, number>({
             query: (id: number) => `patients/${id}`,
         }),
 
-        create: builder.mutation<Patient, CreatePatientDto>({
+        createPatient: builder.mutation<Patient, CreatePatientDto>({
             query: (body) => ({
                 url: 'patients',
                 method: 'POST',
                 body
             }),
-            invalidatesTags: [{type: 'Patients', id: 'LIST'}],
+            invalidatesTags: [{type: 'patients', id: 'LIST'}],
         }),
 
-        update: builder.mutation<Patient, UpdatePatientDto>({
+        updatePatient: builder.mutation<Patient, UpdatePatientDto>({
             query(data) {
                 const { id, ...body } = data
                 return {
@@ -141,10 +122,10 @@ export const patientApi = createApi({
                     body,
                 }
             },
-            invalidatesTags: [{type: 'Patients', id: 'LIST'}],
+            invalidatesTags: [{type: 'patients', id: 'LIST'}],
         }),
 
-        remove: builder.mutation<boolean, {id: number, reason: string}>({
+        removePatient: builder.mutation<boolean, {id: number, reason: string}>({
             query(data) {
                 const { id, reason } = data;
                 return {
@@ -153,7 +134,19 @@ export const patientApi = createApi({
                     body: {reason},
                 }
             },
-            invalidatesTags: [{type: 'Patients', id: 'LIST'}],
+            invalidatesTags: [{type: 'patients', id: 'LIST'}],
         }),
     }),
-})
+});
+
+export const {
+    useFindAllPatientsQuery,
+    useFindAllPatientStudiesQuery,
+    useFindOnePatientQuery,
+    useLazyFindAllPatientsQuery,
+    useLazyFindAllPatientStudiesQuery,
+    useLazyFindOnePatientQuery,
+    useCreatePatientMutation,
+    useUpdatePatientMutation,
+    useRemovePatientMutation,
+} = patientApi; 

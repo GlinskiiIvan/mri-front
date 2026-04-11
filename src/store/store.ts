@@ -1,26 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import {unauthorizedErrorMiddleware, authReducer} from "./slices/auth";
+import {authReducer} from "./slices/auth";
 import {noticesReducer} from "./slices/notices";
-import { patientApi } from './services/patient';
-import { studyApi } from './services/study';
-import { ingestionApi } from './services/ingestion';
+import { api } from './api/api';
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         notices: noticesReducer,
-        [patientApi.reducerPath]: patientApi.reducer,
-        [studyApi.reducerPath]: studyApi.reducer,
-        [ingestionApi.reducerPath]: ingestionApi.reducer,
+        [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([
-            unauthorizedErrorMiddleware,
-            patientApi.middleware,
-            studyApi.middleware,
-            ingestionApi.middleware,
-        ]),
+        getDefaultMiddleware().concat(api.middleware),
 })
 
 setupListeners(store.dispatch);

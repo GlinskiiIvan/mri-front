@@ -9,11 +9,12 @@ import type { IconPath } from '../../ui/copmonents';
 import {ExamplesPage} from '../../pages/examples';
 import { MainPage, PatientCardPage, PatientPage, StudyPage } from '../../pages';
 import RequireAuth from '../../ui/app/RequireAuth';
-import { checkThunk, logoutThunk, selectUserData } from '../../store/slices/auth';
+import { checkThunk, logout, logoutThunk, selectUserData } from '../../store/slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch } from '../../store/store';
+import { store, type AppDispatch } from '../../store/store';
 import {LoginPage} from '../../pages';
 import { useTranslation } from 'react-i18next';
+import { setLogoutHandler } from '../../store/http';
 
 const AppRouter: React.FC = () => {
     const {t} = useTranslation();
@@ -28,6 +29,10 @@ const AppRouter: React.FC = () => {
     React.useEffect(() => {        
         dispatch(checkThunk());
     }, []);
+
+    setLogoutHandler(() => {
+        store.dispatch(logout()); 
+    });
 
     const sidebatItems = [
         {

@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {buildFindAllParams, type FindAllParams} from "../utils";
 import type { ResponseFindAll } from '../interfaces';
 import type { Modality, Status } from '../../common/enums';
+import { api } from '../api/api';
 
 export type Study = {
     id: number;
@@ -32,24 +32,9 @@ export interface UpdateStudyDto extends Partial<Omit<Study, 'id' | 'patientId' |
     reason?: string;
 }
 
-export const studyApi = createApi({
-    reducerPath: 'studyApi',
-
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_URI,
-        prepareHeaders: (headers ) => {
-            const token = JSON.parse(sessionStorage.getItem('access_token') || '');
-            if (token) {
-                headers.set('authorization', `Bearer ${token}`)
-            }
-            return headers
-        },
-    }),
-
-    tagTypes: ['Studies'],
-
+export const studyApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        findAll: builder.query<ResponseFindAll<Study[]>, FindAllParams>({
+        findAllStudies: builder.query<ResponseFindAll<Study[]>, FindAllParams>({
             query: (body) => `study${buildFindAllParams(body)}`,
             serializeQueryArgs: ({ endpointName, queryArgs }) => {
                 return `${endpointName}-${JSON.stringify({
@@ -58,7 +43,6 @@ export const studyApi = createApi({
                     dateFilter: queryArgs?.dateFilter
                 })}`;
             },
-            // Always merge incoming data to the cache entry
             merge: (currentCache, newItems, {arg}) => {
                 if(arg.pagination?.page === 1) {
                     currentCache.data = newItems.data;
@@ -70,54 +54,53 @@ export const studyApi = createApi({
                     currentCache.data.push(...filtered);
                 }
             },
-            // Refetch when the page arg changes
             forceRefetch({ currentArg, previousArg }) {
                 return currentArg !== previousArg;
             },
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.data.map(({ id }) => ({ type: 'Studies' as const, id })),
-                        { type: 'Studies', id: 'LIST' },
+                        ...result.data.map(({ id }) => ({ type: 'studies' as const, id })),
+                        { type: 'studies', id: 'LIST' },
                     ]
-                    : [{ type: 'Studies', id: 'LIST' }],
+                    : [{ type: 'studies', id: 'LIST' }],
         }),
 
-        findOne: builder.query<Study, number>({
-            query: (id: number) => `studies/${id}`,
+        findOneStudy: builder.query<Study, number>({
+            query: (id: number) => `study/${id}`,
         }),
 
-        // create: builder.mutation<Study, CreateStudyDto>({
-        //     query: (body) => ({
-        //         url: 'studies',
-        //         method: 'POST',
-        //         body
-        //     }),
-        //     invalidatesTags: [{type: 'Studies', id: 'LIST'}],
-        // }),
-
-        update: builder.mutation<Study, UpdateStudyDto>({
+        updateStudy: builder.mutation<Study, UpdateStudyDto>({
             query(data) {
                 const { id, ...body } = data
                 return {
-                    url: `studies/${id}`,
+                    url: `study/${id}`,
                     method: 'PATCH',
                     body,
                 }
             },
-            invalidatesTags: [{type: 'Studies', id: 'LIST'}],
+            invalidatesTags: [{type: 'studies', id: 'LIST'}],
         }),
 
-        remove: builder.mutation<boolean, {id: number, reason: string}>({
+        removeStudy: builder.mutation<boolean, {id: number, reason: string}>({
             query(data) {
                 const { id, reason } = data;
                 return {
-                    url: `studies/${id}`,
+                    url: `study/${id}`,
                     method: 'DELETE',
                     body: {reason},
                 }
             },
-            invalidatesTags: [{type: 'Studies', id: 'LIST'}],
+            invalidatesTags: [{type: 'studies', id: 'LIST'}],
         }),
     }),
-})
+});
+
+export const {
+    useFindAllStudiesQuery,
+    useFindOneStudyQuery,
+    useLazyFindAllStudiesQuery,
+    useLazyFindOneStudyQuery,
+    useUpdateStudyMutation,
+    useRemoveStudyMutation,
+} = studyApi;

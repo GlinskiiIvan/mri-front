@@ -1,22 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { api } from '../api/api';
 
-
-export const ingestionApi = createApi({
-    reducerPath: 'ingestionApi',
-
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_URI,
-        prepareHeaders: (headers ) => {
-            const token = JSON.parse(sessionStorage.getItem('access_token') || '');
-            if (token) {
-                headers.set('authorization', `Bearer ${token}`)
-            }
-            return headers
-        },
-    }),
-
-    tagTypes: ['Ingestion'],
-
+export const ingestionApi = api.injectEndpoints({
     endpoints: (builder) => ({
         uploadStudy: builder.mutation<Boolean, FormData>({
             query: (body) => ({
@@ -24,7 +8,11 @@ export const ingestionApi = createApi({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: [{type: 'Ingestion', id: 'LIST'}],
+            invalidatesTags: [{type: 'ingestion', id: 'LIST'}],
         }),
     }),
-})
+});
+
+export const {
+    useUploadStudyMutation,
+} = ingestionApi;

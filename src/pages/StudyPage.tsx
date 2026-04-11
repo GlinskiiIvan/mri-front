@@ -1,19 +1,21 @@
 import React from 'react';
 import { Button, ManagedTable, Page, Select, Stack, TextField, type ColumnTable, type SelectItem } from '../ui/copmonents';
-import { studyApi } from '../store/services/study';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../routes';
+
 import { patientApi, type Patient } from '../store/services/patient';
 import { ingestionApi } from '../store/services/ingestion';
+import { studyApi } from '../store/services/study';
+
 import { formatedDate } from '../utils';
 
 const StudyPage = () => {
     const {t} = useTranslation();
     const navigate = useNavigate();
     
-    const allDataQuery = studyApi.useLazyFindAllQuery();
-    const [triggerPatients, {data: allPatientsData, isLoading: patientsIsLoading}] = patientApi.useLazyFindAllQuery();
+    const allDataQuery = studyApi.useLazyFindAllStudiesQuery();
+    const [triggerPatients, {data: allPatientsData, isLoading: patientsIsLoading}] = patientApi.useLazyFindAllPatientsQuery();
 
     const uploadStudyMutation = ingestionApi.useUploadStudyMutation();
 

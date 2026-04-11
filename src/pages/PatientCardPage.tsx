@@ -2,16 +2,18 @@ import React from 'react';
 import { Block, Button, Icon, IconButton, InfoList, ManagedTable, Modal, Page, Select, Stack, TextField, type ColumnTable, type SelectItem } from '../ui/copmonents';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { patientApi, type Patient } from '../store/services/patient';
 import type { InfoListOption } from '../ui/copmonents/InfoList/InfoList';
 import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../store/store';
-import { addNotice } from '../store/slices/notices';
+
 import { Gender } from '../common/enums';
 import { useModal } from '../ui/copmonents/Modal/useModal';
-import { ingestionApi } from '../store/services/ingestion';
 import { formatedDate } from '../utils';
 import { ROUTES } from '../routes';
+
+import type { AppDispatch } from '../store/store';
+import { addNotice } from '../store/slices/notices';
+import { ingestionApi } from '../store/services/ingestion';
+import { patientApi, type Patient } from '../store/services/patient';
 
 const PatientCardPage = () => {
     const {t} = useTranslation();
@@ -20,9 +22,9 @@ const PatientCardPage = () => {
     
     const { id } = useParams();
 
-    const {data: patient, refetch, isSuccess: patientIsSuccess, fulfilledTimeStamp: patientFulfilledTimeStamp} = patientApi.useFindOneQuery(Number(id));
-    const [remove, {isSuccess: removeIsSuccess, isError: removeIsError, error: removeError, fulfilledTimeStamp: removeFulfilledTimeStamp}] = patientApi.useRemoveMutation();
-    const [update, {isSuccess: updateIsSuccess, isError: updateIsError, error: updateError, fulfilledTimeStamp: updateFulfilledTimeStamp}] = patientApi.useUpdateMutation();
+    const {data: patient, refetch, isSuccess: patientIsSuccess, fulfilledTimeStamp: patientFulfilledTimeStamp} = patientApi.useFindOnePatientQuery(Number(id));
+    const [remove, {isSuccess: removeIsSuccess, isError: removeIsError, error: removeError, fulfilledTimeStamp: removeFulfilledTimeStamp}] = patientApi.useRemovePatientMutation();
+    const [update, {isSuccess: updateIsSuccess, isError: updateIsError, error: updateError, fulfilledTimeStamp: updateFulfilledTimeStamp}] = patientApi.useUpdatePatientMutation();
 
     const patientInfoList: InfoListOption[] = [
         {key: t('entities.patient.fields.doctor'), value: patient?.doctorId},
@@ -152,7 +154,7 @@ const PatientCardPage = () => {
     // ACTIONS END ///////////////////////////////////////////////////////////////////
 
     // STUDY
-    const allStudiesDataQuery = patientApi.useLazyFindAllStudiesQuery();
+    const allStudiesDataQuery = patientApi.useLazyFindAllPatientStudiesQuery();
     const uploadStudyMutation = ingestionApi.useUploadStudyMutation();
 
     const allStudiesData = allStudiesDataQuery[1]?.data?.data || [];
