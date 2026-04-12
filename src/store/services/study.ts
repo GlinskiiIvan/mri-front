@@ -2,6 +2,7 @@ import {buildFindAllParams, type FindAllParams} from "../utils";
 import type { ResponseFindAll } from '../interfaces';
 import type { Modality, Status } from '../../common/enums';
 import { api } from '../api/api';
+import type { PredictionRun } from "../types/predictionRun";
 
 export type Study = {
     id: number;
@@ -66,6 +67,38 @@ export const studyApi = api.injectEndpoints({
                     : [{ type: 'studies', id: 'LIST' }],
         }),
 
+        findAllStudyRuns: builder.query<ResponseFindAll<PredictionRun[]>, FindAllParams & {id: number}>({
+            query: ({id, ...body}) => `study/${id}/runs${buildFindAllParams(body)}`,
+            serializeQueryArgs: ({ endpointName, queryArgs }) => {
+                return `${endpointName}-${JSON.stringify({
+                    sorting: queryArgs?.sorting,
+                    search: queryArgs?.search,
+                    dateFilter: queryArgs?.dateFilter
+                })}`;
+            },
+            merge: (currentCache, newItems, {arg}) => {
+                if(arg.pagination?.page === 1) {
+                    currentCache.data = newItems.data;
+                    return;
+                } else {
+                    const existingIds = new Set(currentCache.data.map(i => i.id));
+                    const filtered = newItems.data.filter(i => !existingIds.has(i.id));
+
+                    currentCache.data.push(...filtered);
+                }
+            },
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg;
+            },
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.data.map(({ id }) => ({ type: 'studies' as const, id })),
+                        { type: 'studies', id: 'LIST' },
+                    ]
+                    : [{ type: 'studies', id: 'LIST' }],
+        }),
+
         findOneStudy: builder.query<Study, number>({
             query: (id: number) => `study/${id}`,
         }),
@@ -99,8 +132,10 @@ export const studyApi = api.injectEndpoints({
 export const {
     useFindAllStudiesQuery,
     useFindOneStudyQuery,
+    useFindAllStudyRunsQuery,
     useLazyFindAllStudiesQuery,
     useLazyFindOneStudyQuery,
+    useLazyFindAllStudyRunsQuery,
     useUpdateStudyMutation,
     useRemoveStudyMutation,
 } = studyApi;

@@ -7,7 +7,7 @@ import logo from '../../assets/images/logo-laba.png';
 import userPhoto from '../../assets/images/user.png';
 import type { IconPath } from '../../ui/copmonents';
 import {ExamplesPage} from '../../pages/examples';
-import { MainPage, PatientCardPage, PatientPage, StudyPage } from '../../pages';
+import { MainPage, PatientCardPage, PatientPage, StudyCardPage, StudyPage } from '../../pages';
 import RequireAuth from '../../ui/app/RequireAuth';
 import { checkThunk, logout, logoutThunk, selectUserData } from '../../store/slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -92,6 +92,7 @@ const AppRouter: React.FC = () => {
                 <Route path={ROUTES.Patients} element={ <PatientPage /> } />
                 <Route path={ROUTES.Patient} element={ <PatientCardPage /> } />
                 <Route path={ROUTES.Studies} element={ <StudyPage /> } />
+                <Route path={ROUTES.Study} element={ <StudyCardPage /> } />
                 <Route path={ROUTES.Examples} element={ <ExamplesPage /> } />
             </Route>
             <Route path='*' element={ <Navigate to={ROUTES.Main}></Navigate> } />

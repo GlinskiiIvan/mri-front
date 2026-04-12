@@ -1,3 +1,5 @@
+import { version } from "react";
+
 export default {
   pages: {
     login: {
@@ -24,6 +26,14 @@ export default {
     studies: {
       title: 'Список всех исследований',
       description: 'На этой странице представлены все исследования пациентов.',
+    },
+    studyCard: {
+      title: 'Карточка исследования',
+      description: 'На этой странице представленные данные исследования, а также список всех предсказаний. С этой странице можно создать новое исследование для данного пациента, перейти к пациенту, запустить новое предсказание и просмотреть результаты выбранного предсказания.',
+
+      common: {
+
+      }
     },
   },
 
@@ -96,11 +106,42 @@ export default {
         manufacturer: 'Производитель оборудования',
         manufacturersModelName: 'Модель производителя оборудования',
         stationName: 'Название станции',
+        referringPhysiciansName: 'Направивший врач',
         status: 'Статус',
         path: 'Путь до директории с сериями исследования',
         seriesCount: 'Количество серий',
         imagesCount: 'Количество изображений',
         note: 'Примечание',
+      },
+    },
+    predictionRun: {
+      singular: 'Запуск предсказания',
+      plural: 'Запуски предсказаний',
+      gender: 'male',
+
+      singularCases: {
+        nominative: 'Запуск предсказания',
+        genitive: 'Запуска предсказания',
+        dative: 'Запуску предсказания',
+        accusative: 'Запуск предсказания',
+        instrumental: 'Запуском предсказания',
+        prepositional: 'Запуске предсказания',
+      },
+
+      pluralCases: {
+        nominative: 'Запуски предсказаний',
+        genitive: 'Запусков предсказаний',
+        dative: 'Запускам предсказаний',
+        accusative: 'Запуски предсказаний',
+        instrumental: 'Запусками предсказаний',
+        prepositional: 'Запусках предсказаний',
+      },
+
+      fields: {
+        model: 'Модель',
+        version: 'Версия',
+        status: 'Статус',
+        runnedAt: 'Дата запуска',
       },
     },
   },
@@ -201,6 +242,8 @@ export default {
     logout: 'Выйти',
 
     createStudy: 'Добавить исследование',
+    runPrediction: "Запустить предсказание",
+    goToPatient: "Перейти к пациенту",
   },
 
   ui: {
@@ -254,6 +297,7 @@ export default {
     settings: 'Настройки',
     file: 'Файл',
     dicomZip: 'DICOM архив (.zip)',
+    predictionRunning: "Запуск предсказания",
   },
 
   enums: {

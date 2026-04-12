@@ -25,6 +25,10 @@ export default {
       title: 'List of all studies',
       description: 'This page contains all the patient studies.',
     },
+    studyCard: {
+      title: 'Study card',
+      description: 'This page contains the research data, as well as a list of all predictions. On this page, you can create a new study for this patient, navigate to the patient, run a new prediction, and view the results of the selected prediction.',
+    },
   },
 
   entities: {
@@ -87,7 +91,7 @@ export default {
 
       fields: {
         studyInstanceUID: 'UID of the study',
-        studyID: 'Study ID',
+        studyId: 'Study ID',
         specificCharacterSet: 'Character encoding',
         studyDateTime: 'Date and time of the study',
         modality: 'Modality',
@@ -96,11 +100,42 @@ export default {
         manufacturer: 'Equipment manufacturer',
         manufacturersModelName: 'The model of the equipment manufacturer',
         stationName: 'Station name',
+        referringPhysiciansName: 'Referring physician',
         status: 'Status',
         path: 'The path to the directory with the research series',
         seriesCount: 'Number of episodes',
         imagesCount: 'Number of images',
         note: 'Note',
+      },
+    },
+    predictionRun: {
+      singular: 'Prediction run',
+      plural: 'Prediction runs',
+      gender: 'male',
+
+      singularCases: {
+        nominative: 'Prediction run',
+        genitive: 'Prediction run',
+        dative: 'Prediction run',
+        accusative: 'Prediction run',
+        instrumental: 'Prediction run',
+        prepositional: 'Prediction run',
+      },
+
+      pluralCases: {
+        nominative: 'Prediction runs',
+        genitive: 'Prediction runs',
+        dative: 'Prediction runs',
+        accusative: 'Prediction runs',
+        instrumental: 'Prediction runs',
+        prepositional: 'Prediction runs',
+      },
+
+      fields: {
+        model: 'Model',
+        version: 'Version',
+        status: 'Status',
+        runnedAt: 'Run date',
       },
     },
   },
@@ -201,6 +236,8 @@ export default {
     logout: 'Logout',
 
     createStudy: 'Add study',
+    runPrediction: "Run prediction",
+    goToPatient: "Go to patient",
   },
 
   ui: {
@@ -250,6 +287,7 @@ export default {
     settings: 'Settings',
     file: 'File',
     dicomZip: 'DICOM archive (.zip)',
+    predictionRunning: "Starting prediction",
   },
 
   enums: {
