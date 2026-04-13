@@ -175,7 +175,7 @@ export const TBody = <T extends Record<string, unknown>,>({
 // Table
 
 export interface TableProps<T> extends React.HTMLAttributes<HTMLTableElement> {
-    readonly maxHeight?: number;
+    readonly maxHeight?: number | string;
     readonly fixedColumnWidth?: boolean;
     readonly error?: boolean;
     readonly fetching?: boolean;

@@ -1,18 +1,23 @@
 import React, { version } from 'react';
-import { Block, Button, IconButton, InfoList, ManagedTable, Modal, Page, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SelectItem } from '../ui/copmonents';
+import { Block, Button, Icon, IconButton, InfoList, ManagedTable, Modal, Page, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SelectItem } from '../../ui/copmonents';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import type { AppDispatch } from '../store/store';
-import { addNotice } from '../store/slices/notices';
-import { studyApi, type UpdateStudyDto } from '../store/services/study';
-import { inferenceApi } from '../store/services/inference';
+import type { AppDispatch } from '../../store/store';
+import { addNotice } from '../../store/slices/notices';
+import { studyApi, type InstanceImage, type UpdateStudyDto } from '../../store/services/study';
+import { inferenceApi } from '../../store/services/inference';
 
-import type { InfoListOption } from '../ui/copmonents/InfoList/InfoList';
-import { formatedDate } from '../utils';
-import { useModal } from '../ui/copmonents/Modal/useModal';
-import { ROUTES } from '../routes';
+import type { InfoListOption } from '../../ui/copmonents/InfoList/InfoList';
+import { formatedDate } from '../../utils';
+import { useModal } from '../../ui/copmonents/Modal/useModal';
+import { ROUTES } from '../../routes';
+import { predictionRunApi } from '../../store/services/predictionRun';
+
+import styles from './StudyCardPage.module.scss';
+import clsx from 'clsx';
+import type { CSSVars } from '../../ui/copmonents/types';
 
 const StudyCardPage = () => {
     const {t} = useTranslation();
@@ -196,6 +201,8 @@ const StudyCardPage = () => {
 
     const [selectedRun, setSelectedRun] = React.useState<typeof allpredictionRunsData[number]>();
 
+    const isRunCompleted = selectedRun?.status === 'completed';
+
     const searchFieldOptions: SelectItem[] = [
         {
             title: t('entities.predictionRun.fields.model'),
@@ -212,7 +219,163 @@ const StudyCardPage = () => {
     ];
 
     const sortedFieldOptions: SelectItem[] = searchFieldOptions;
+
+    React.useEffect(() => {
+        if(predictionRunsQuery[1].isSuccess && allpredictionRunsData) {
+            setSelectedRun(allpredictionRunsData[0]);
+        }
+    }, [predictionRunsQuery[1].fulfilledTimeStamp]);
+    
     // PREDICTION RUN TABLE END /////////////////////////////////////////////////////////////////
+
+    // VIEWER START /////////////////////////////////////////////////////////////////
+
+    const [imagesTrigger, imagesData] = studyApi.useLazyFindAllStudyImagesQuery();
+
+    const [activeImage, setActiveImage] = React.useState<InstanceImage>();
+    const activeImageSidebarRef = React.useRef<HTMLImageElement>(null);
+    const activeImageContentRef = React.useRef<HTMLImageElement>(null);
+
+    const isActiveImage = (id: number) => id === activeImage?.id;
+
+    React.useEffect(() => {
+        if(studyIsSuccess) {
+            imagesTrigger({id: Number(id)});
+        }
+    }, [studyFulfilledTimeStamp]);
+
+    React.useEffect(() => {
+        if(imagesData.isSuccess) {
+            setActiveImage(imagesData.data.data[0]);
+        }
+    }, [imagesData.fulfilledTimeStamp]);
+
+    const changeActiveImage = (image: InstanceImage) => {
+        setActiveImage(image);
+    }
+
+    const prevImage = () => {
+        if(imagesData.isSuccess && activeImage !== undefined) {
+            const currentImageIdx = imagesData.data.data.findIndex(image => image.id === activeImage?.id);
+            if(currentImageIdx > 0) {
+                setActiveImage(imagesData.data.data[currentImageIdx-1]);
+            } else {
+                setActiveImage(imagesData.data.data[imagesData.data.data.length-1]);
+            }
+        }
+    }
+
+    const nextImage = () => {
+        if(imagesData.isSuccess && activeImage !== undefined) {
+            const currentImageIdx = imagesData.data.data.findIndex(image => image.id === activeImage?.id);
+            if(currentImageIdx < imagesData.data.data.length-1) {
+                setActiveImage(imagesData.data.data[currentImageIdx+1]);
+            } else {
+                setActiveImage(imagesData.data.data[0]);
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        if(activeImage !== undefined && activeImageSidebarRef.current) {
+            activeImageSidebarRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            });
+        }
+    }, [activeImage]);
+
+    // VIEWER END /////////////////////////////////////////////////////////////////
+
+    // PREDICTION START /////////////////////////////////////////////////////////////////
+
+    const [predictionsTrigger, predictionsData] = predictionRunApi.useLazyFindAllPredictionsByRunQuery();
+
+    React.useEffect(() => {
+        if(selectedRun !== undefined) {
+            predictionsTrigger({runId: selectedRun.id});
+        }
+    }, [selectedRun]);
+
+    type ResultBbox = {
+        class: string;
+        confidence: number;
+        bbox: [number, number, number, number];
+    }
+
+    type ResultBboxOverlay = ResultBbox & {
+        inlineStyleOverlay: CSSVars;
+    }
+
+    type NormalizedBbox = {
+        x1: number;
+        y1: number;
+        x2: number;
+        y2: number;
+    }
+
+    type ImageSizes = {
+        naturalWidth: number;
+        naturalHeight: number;
+        clientWidth: number;
+        clientHeight: number;
+    }
+
+    const getNormalizeBbox = (bbox: number[], naturalWidth: number, naturalHeight: number): NormalizedBbox => {
+        return {
+            x1: bbox[0] / naturalWidth,
+            y1: bbox[1] / naturalHeight,
+            x2: bbox[2] / naturalWidth,
+            y2: bbox[3] / naturalHeight,
+        };
+    }
+
+    const getBbox = (bbox: number[], imageSizes: ImageSizes) => {
+        const normalized = getNormalizeBbox(bbox, imageSizes.naturalWidth, imageSizes.naturalHeight)
+
+        const position = {
+            left: normalized.x1 * imageSizes.clientWidth,
+            top: normalized.y1 * imageSizes.clientHeight,
+            width: (normalized.x2 * imageSizes.clientWidth) - (normalized.x1 * imageSizes.clientWidth),
+            height: (normalized.y2 * imageSizes.clientHeight) - (normalized.y1 * imageSizes.clientHeight),
+        }
+
+        return position;
+    }
+
+    const [overlays, setOverlays] = React.useState<ResultBboxOverlay[]>([]);
+
+    React.useEffect(() => {
+        console.log('activeImageContentRef.current');
+        
+        const img = activeImageContentRef.current;
+        if(predictionsData.isSuccess && img) {
+            const results = (predictionsData.data.data
+                .find(item => item.imageId === activeImage?.id)
+                ?.rawOutput) as ResultBbox[];                
+
+            setOverlays(results.map(item => {
+                const overlay = getBbox(item?.bbox || [], {
+                    naturalWidth: img.naturalWidth,
+                    naturalHeight: img.naturalHeight,
+                    clientWidth: img.clientWidth,
+                    clientHeight: img.clientHeight,
+                });
+                return {
+                    ...item, 
+                    inlineStyleOverlay: {
+                        '--top-overlay': `${overlay.top}px`,
+                        '--left-overlay': `${overlay.left}px`,
+                        '--width-overlay': `${overlay.width}px`,
+                        '--height-overlay':`${overlay.height}px`,
+                        '--color-overlay': item.class === 'normal' ? 'var(--border-success)' : item.class === 'tear' ? 'var(--border-danger)' : 'var(--border-primary)',
+                    }
+                }
+            }));
+        }
+    }, [predictionsData.fulfilledTimeStamp, activeImage]);
+
+    // PREDICTION END /////////////////////////////////////////////////////////////////
 
     return (
         <Page
@@ -244,17 +407,17 @@ const StudyCardPage = () => {
             </Block>
 
             <Stack
-                style={{width: '100%'}} 
+                className={styles.predictionWorkspace}
                 direction='row' gap='xl' justify='center' align='flex-start'>
                 <ManagedTable
                     blockPops={{
                         title: t('entities.predictionRun.plural'),
                         fullWidth: true,
-                        style: {maxWidth: '30%'}
+                        className: styles.runs
                     }}
                     tableProps={{
                         table: {
-                            maxHeight: 400,
+                            maxHeight: 500,
                             fixedColumnWidth: true,
                         },
                         thead: {
@@ -282,11 +445,60 @@ const StudyCardPage = () => {
                         getAllQuery: predictionRunsQuery,
                         limit: 15,
                         entityId: Number(id),
-                    }} />
+                    }}>
+                </ManagedTable>
 
-                    <Block fullWidth style={{maxWidth: '70%'}} >
-                        типа слайдер
-                    </Block>
+                <Block 
+                    fullWidth 
+                    className={styles.viewer} >
+                    <Stack 
+                        className={styles.wrapper}
+                        direction='row' gap='md' justify='center' align='flex-start' >
+                        <Stack 
+                            className={styles.sidebar}
+                            direction='column' gap='sm' justify='flex-start' align='stretch' >
+                            {imagesData.isSuccess && imagesData.data.data.map(image => (
+                                <button 
+                                    key={image.id}
+                                    className={styles.imageBtn}
+                                    onClick={() => changeActiveImage(image)} >
+                                    <img
+                                        className={clsx(styles.image, {[styles.active]: isActiveImage(image.id)})}
+                                        ref={isActiveImage(image.id) ? activeImageSidebarRef : null}
+                                        src={`${import.meta.env.VITE_API_URI}/${image.imagePath}`} 
+                                        alt={image.imageName || undefined} />
+                                </button>
+                            ))}
+                        </Stack>
+                        <Stack 
+                            className={styles.content} >
+                            <div className={styles.btnPrev}>
+                                <IconButton 
+                                    icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
+                                    onClick={prevImage} 
+                                    className={styles.arrow} />
+                            </div>
+                            {activeImage && (
+                                <img
+                                    ref={activeImageContentRef}
+                                    src={`${import.meta.env.VITE_API_URI}/${activeImage.imagePath}`} 
+                                    alt={activeImage.imagePath || undefined} />
+                            )}
+                            {(activeImage && selectedRun) && overlays.map(item => (
+                                <div className={styles.overlay} style={item.inlineStyleOverlay}>
+                                    <span>{item.class} {item.confidence}</span>
+                                </div>
+                            ))}
+                            <div className={styles.btnNext}>
+                                <IconButton 
+                                    icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
+                                    onClick={nextImage} 
+                                    className={styles.arrow} />
+                            </div>
+                        </Stack>
+                    </Stack>
+                </Block>
+                    
             </Stack>
 
             <Modal 

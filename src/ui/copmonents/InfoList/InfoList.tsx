@@ -17,7 +17,7 @@ const InfoList: React.FC<InfoListProps> = ({
     return (
         <ul className={styles.wrapper} {...props}>
             {oprions.map((item) => (
-                <li className={styles.option}>
+                <li key={item.key} className={styles.option}>
                     <span className={styles.key}>{item.key}:</span>
                     <span className={styles.divider} />
                     <span className={styles.value}>{item.value}</span>
