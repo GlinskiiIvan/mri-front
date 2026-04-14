@@ -29,25 +29,32 @@ const StudyCardPage = () => {
     const [remove, {isSuccess: studyRemoveIsSuccess, isError: studyRemoveIsError, error: studyRemoveError, fulfilledTimeStamp: studyRemoveFulfilledTimeStamp}] = studyApi.useRemoveStudyMutation();
     const [update, {isSuccess: studyUpdateIsSuccess, isError: studyUpdateIsError, error: studyUpdateError, fulfilledTimeStamp: studyUpdateFulfilledTimeStamp}] = studyApi.useUpdateStudyMutation();
 
-    const studyInfoList1: InfoListOption[] = [
-        {key: t('entities.study.fields.status'), value: study?.status},
-        {key: t('entities.study.fields.studyInstanceUID'), value: study?.studyInstanceUID},
-        {key: t('entities.study.fields.studyId'), value: study?.studyId},
-        {key: t('entities.study.fields.specificCharacterSet'), value: study?.specificCharacterSet},
-        {key: t('entities.study.fields.studyDateTime'), value: formatedDate(study?.studyDateTime || null)},
-        {key: t('entities.study.fields.modality'), value: study?.modality},
-        {key: t('entities.study.fields.institutionName'), value: study?.institutionName},
-    ];
+    const [studyInfoList, setStudyInfoList] = React.useState<InfoListOption[][]>([]);
 
-    const studyInfoList2: InfoListOption[] = [
-        {key: t('entities.study.fields.manufacturer'), value: study?.manufacturer},
-        {key: t('entities.study.fields.manufacturersModelName'), value: study?.manufacturersModelName},
-        {key: t('entities.study.fields.stationName'), value: study?.stationName},
-        {key: t('entities.study.fields.seriesCount'), value: study?.seriesCount},
-        {key: t('entities.study.fields.imagesCount'), value: study?.imagesCount},
-        {key: t('entities.study.fields.description'), value: study?.description},
-        {key: t('entities.study.fields.note'), value: study?.note},
-    ];
+    React.useEffect(() => {
+        if(studyIsSuccess && study.status === 'completed') {
+            setStudyInfoList([
+                [
+                    {key: t('entities.study.fields.status'), value: study?.status},
+                    {key: t('entities.study.fields.studyInstanceUID'), value: study?.studyInstanceUID},
+                    {key: t('entities.study.fields.studyId'), value: study?.studyId},
+                    {key: t('entities.study.fields.specificCharacterSet'), value: study?.specificCharacterSet},
+                    {key: t('entities.study.fields.studyDateTime'), value: formatedDate(study?.studyDateTime || null)},
+                    {key: t('entities.study.fields.modality'), value: study?.modality},
+                    {key: t('entities.study.fields.institutionName'), value: study?.institutionName},
+                ],
+                [
+                    {key: t('entities.study.fields.manufacturer'), value: study?.manufacturer},
+                    {key: t('entities.study.fields.manufacturersModelName'), value: study?.manufacturersModelName},
+                    {key: t('entities.study.fields.stationName'), value: study?.stationName},
+                    {key: t('entities.study.fields.seriesCount'), value: study?.seriesCount},
+                    {key: t('entities.study.fields.imagesCount'), value: study?.imagesCount},
+                    {key: t('entities.study.fields.description'), value: study?.description},
+                    {key: t('entities.study.fields.note'), value: study?.note},
+                ]
+            ]);
+        }
+    }, [studyFulfilledTimeStamp]);
 
     const navigatePatientHandler = () => {
         if(study?.patientId) {
@@ -92,7 +99,8 @@ const StudyCardPage = () => {
         }
     }, [updateModal.show]);
 
-    const canSubmitUpdateRecord = recordFields.id !== undefined;
+    const canSubmitUpdateRecord = id !== undefined;
+    const canSubmitRemoveRecord = id !== undefined;
 
     const clearRecordFieldsHandler = () => {
         setRecordFields(initialRecordFields);
@@ -106,10 +114,12 @@ const StudyCardPage = () => {
     }
 
     const removeHandler = () => {
-        remove({
-            id: Number(id),
-            reason: recordFields.reason || '',
-        });
+        if(canSubmitRemoveRecord) {
+            remove({
+                id: Number(id),
+                reason: recordFields.reason || '',
+            });
+        }
     }
 
     React.useEffect(() => {
@@ -140,10 +150,6 @@ const StudyCardPage = () => {
         version: string,
     };
 
-    const [predict, {isSuccess: predictIsSuccess, isError: predictIsError, error: predictError, fulfilledTimeStamp: predictFulfilledTimeStamp}] = inferenceApi.usePredictMutation();
-    const predictionModal = useModal('predictionModal');
-    const [model, setModel] = React.useState<ModelsOptions | undefined>(undefined);
-
     const modelsOptions: ModelsOptions[] = [
         {
             label: 'YOLOv8x',
@@ -157,7 +163,12 @@ const StudyCardPage = () => {
         },
     ];
 
-    const canSubmitPredictionRun = (model !== undefined) && (id !== undefined);
+    const predictionModal = useModal('predictionModal');
+
+    const [predict, {isSuccess: predictIsSuccess, isError: predictIsError, error: predictError, fulfilledTimeStamp: predictFulfilledTimeStamp}] = inferenceApi.usePredictMutation();
+    const [model, setModel] = React.useState<ModelsOptions | undefined>(undefined);
+
+    const canSubmitPredictionRun = (study?.status === 'completed') && (model !== undefined) && (id !== undefined);
 
     const predictionRunHandler = () => {
         if(canSubmitPredictionRun) {
@@ -189,7 +200,6 @@ const StudyCardPage = () => {
 
     // PREDICTION RUN TABLE START /////////////////////////////////////////////////////////////////
     const predictionRunsQuery = studyApi.useLazyFindAllStudyRunsQuery();
-
     const allpredictionRunsData = predictionRunsQuery[1]?.data?.data || [];
 
     const columns: ColumnTable<typeof allpredictionRunsData[number]>[] = [
@@ -198,10 +208,6 @@ const StudyCardPage = () => {
       {key: 'status', label: t('entities.predictionRun.fields.status'), sortable: false, width: '100px', },
       {key: 'createdAt', label: t('entities.predictionRun.fields.runnedAt'), sortable: false, render: (run) => formatedDate(run.createdAt), width: '200px', },
     ];
-
-    const [selectedRun, setSelectedRun] = React.useState<typeof allpredictionRunsData[number]>();
-
-    const isRunCompleted = selectedRun?.status === 'completed';
 
     const searchFieldOptions: SelectItem[] = [
         {
@@ -219,6 +225,10 @@ const StudyCardPage = () => {
     ];
 
     const sortedFieldOptions: SelectItem[] = searchFieldOptions;
+
+    const [selectedRun, setSelectedRun] = React.useState<typeof allpredictionRunsData[number]>();
+
+    const isRunCompleted = selectedRun?.status === 'completed';
 
     React.useEffect(() => {
         if(predictionRunsQuery[1].isSuccess && allpredictionRunsData) {
@@ -239,20 +249,16 @@ const StudyCardPage = () => {
     const isActiveImage = (id: number) => id === activeImage?.id;
 
     React.useEffect(() => {
-        if(studyIsSuccess) {
+        if(studyIsSuccess && study.status === 'completed') {
             imagesTrigger({id: Number(id)});
         }
     }, [studyFulfilledTimeStamp]);
 
     React.useEffect(() => {
-        if(imagesData.isSuccess) {
+        if(imagesData.isSuccess && study?.status === 'completed') {
             setActiveImage(imagesData.data.data[0]);
         }
     }, [imagesData.fulfilledTimeStamp]);
-
-    const changeActiveImage = (image: InstanceImage) => {
-        setActiveImage(image);
-    }
 
     const prevImage = () => {
         if(imagesData.isSuccess && activeImage !== undefined) {
@@ -292,7 +298,7 @@ const StudyCardPage = () => {
     const [predictionsTrigger, predictionsData] = predictionRunApi.useLazyFindAllPredictionsByRunQuery();
 
     React.useEffect(() => {
-        if(selectedRun !== undefined) {
+        if(selectedRun !== undefined && selectedRun.status === 'completed') {
             predictionsTrigger({runId: selectedRun.id});
         }
     }, [selectedRun]);
@@ -346,13 +352,11 @@ const StudyCardPage = () => {
     const [overlays, setOverlays] = React.useState<ResultBboxOverlay[]>([]);
 
     React.useEffect(() => {
-        console.log('activeImageContentRef.current');
-        
         const img = activeImageContentRef.current;
-        if(predictionsData.isSuccess && img) {
+        if(predictionsData.isSuccess && img && activeImage) {
             const results = (predictionsData.data.data
-                .find(item => item.imageId === activeImage?.id)
-                ?.rawOutput) as ResultBbox[];                
+                .find(item => item.imageId === activeImage.id)
+                ?.rawOutput) as ResultBbox[] || [];
 
             setOverlays(results.map(item => {
                 const overlay = getBbox(item?.bbox || [], {
@@ -377,225 +381,243 @@ const StudyCardPage = () => {
 
     // PREDICTION END /////////////////////////////////////////////////////////////////
 
+    if (!studyIsSuccess) {
+        return <h1>Загрузка...</h1>
+    }
+
     return (
-        <Page
-            decorativeIcon='INFO'
-            title={t('pages.studyCard.title')}
-            description={t('pages.studyCard.description')} >
-            <Block 
-                title={study?.studyInstanceUID || ''} 
-                decorativeIcon='INFO'
-                fullWidth
-                actions={
-                    <Stack direction='row' gap='xs' justify='center' align='center'>
-                        <IconButton icon={{name: 'RELOAD', color: 'tertiary', size: 'lg'}} onClick={refetch} />
-                        <IconButton icon={{name: 'EDIT', color: 'tertiary', size: 'lg'}} onClick={updateModal.open} />
-                        <IconButton icon={{name: 'REMOVE', color: 'tertiary', size: 'lg'}} onClick={removeModal.open} />
-                    </Stack>
-                }
-                footer={
-                    <Stack direction='row' gap='md' justify='center' align='center'>
-                        <Button variant='primary' icon='ADD' onClick={predictionModal.open}>{t('actions.runPrediction')}</Button>
-                        <Button variant='secondary' icon='LINK' onClick={navigatePatientHandler}>{t('actions.goToPatient')}</Button>
-                    </Stack>
-                } 
-                >
-                <Stack direction='row' gap='xl' justify='stretch' align='center'>
-                    <InfoList oprions={studyInfoList1} />
-                    <InfoList oprions={studyInfoList2} />                    
-                </Stack>
-            </Block>
-
-            <Stack
-                className={styles.predictionWorkspace}
-                direction='row' gap='xl' justify='center' align='flex-start'>
-                <ManagedTable
-                    blockPops={{
-                        title: t('entities.predictionRun.plural'),
-                        fullWidth: true,
-                        className: styles.runs
-                    }}
-                    tableProps={{
-                        table: {
-                            maxHeight: 500,
-                            fixedColumnWidth: true,
-                        },
-                        thead: {
-                            columns,
-                        },
-                        tbody: {
-                            rowKey: 'id',
-                            columns,
-                            data: allpredictionRunsData,
-                            select: {selectedRow: selectedRun, onChange: setSelectedRun}
-                        },
-                    }}
-                    filters={{
-                        period: true,
-                        searchFieldOptions,
-                        sortedFieldOptions,
-                    }}
-                    hasPermissions={{
-                        read: true,
-                        create: true,
-                        update: true,
-                        delete: true,
-                    }}
-                    crudApiTable={{
-                        getAllQuery: predictionRunsQuery,
-                        limit: 15,
-                        entityId: Number(id),
-                    }}>
-                </ManagedTable>
-
-                <Block 
-                    fullWidth 
-                    className={styles.viewer} >
-                    <Stack 
-                        className={styles.wrapper}
-                        direction='row' gap='md' justify='center' align='flex-start' >
-                        <Stack 
-                            className={styles.sidebar}
-                            direction='column' gap='sm' justify='flex-start' align='stretch' >
-                            {imagesData.isSuccess && imagesData.data.data.map(image => (
-                                <button 
-                                    key={image.id}
-                                    className={styles.imageBtn}
-                                    onClick={() => changeActiveImage(image)} >
-                                    <img
-                                        className={clsx(styles.image, {[styles.active]: isActiveImage(image.id)})}
-                                        ref={isActiveImage(image.id) ? activeImageSidebarRef : null}
-                                        src={`${import.meta.env.VITE_API_URI}/${image.imagePath}`} 
-                                        alt={image.imageName || undefined} />
-                                </button>
-                            ))}
+        <>
+            {(studyIsSuccess && study.status === 'pending') && (
+                <h1>Исследование загружено, следующий этап обработка...</h1>
+            )}
+            {(studyIsSuccess && study.status === 'processing') && (
+                <h1>Исследование ещё обрабатывается...</h1>
+            )}
+            {(studyIsSuccess && study.status === 'failed') && (
+                <h1>В процессе обработки исследования что то пошло не так...</h1>
+            )}
+            {(studyIsSuccess && study.status === 'completed') && (
+                <Page
+                    decorativeIcon='INFO'
+                    title={t('pages.studyCard.title')}
+                    description={t('pages.studyCard.description')} >
+                    <Block 
+                        title={study?.studyInstanceUID || ''} 
+                        decorativeIcon='INFO'
+                        fullWidth
+                        actions={
+                            <Stack direction='row' gap='xs' justify='center' align='center'>
+                                <IconButton icon={{name: 'RELOAD', color: 'tertiary', size: 'lg'}} onClick={refetch} />
+                                <IconButton icon={{name: 'EDIT', color: 'tertiary', size: 'lg'}} onClick={updateModal.open} />
+                                <IconButton icon={{name: 'REMOVE', color: 'tertiary', size: 'lg'}} onClick={removeModal.open} />
+                            </Stack>
+                        }
+                        footer={
+                            <Stack direction='row' gap='md' justify='center' align='center'>
+                                <Button variant='primary' icon='ADD' onClick={predictionModal.open}>{t('actions.runPrediction')}</Button>
+                                <Button variant='secondary' icon='LINK' onClick={navigatePatientHandler}>{t('actions.goToPatient')}</Button>
+                            </Stack>
+                        } 
+                        >
+                        <Stack direction='row' gap='xl' justify='stretch' align='center'>
+                            {studyInfoList.map((list, idx) => (
+                                <InfoList key={idx} oprions={list} />
+                            ))}          
                         </Stack>
-                        <Stack 
-                            className={styles.content} >
-                            <div className={styles.btnPrev}>
-                                <IconButton 
-                                    icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
-                                    onClick={prevImage} 
-                                    className={styles.arrow} />
-                            </div>
-                            {activeImage && (
-                                <img
-                                    ref={activeImageContentRef}
-                                    src={`${import.meta.env.VITE_API_URI}/${activeImage.imagePath}`} 
-                                    alt={activeImage.imagePath || undefined} />
-                            )}
-                            {(activeImage && selectedRun) && overlays.map(item => (
-                                <div className={styles.overlay} style={item.inlineStyleOverlay}>
-                                    <span>{item.class} {item.confidence}</span>
-                                </div>
-                            ))}
-                            <div className={styles.btnNext}>
-                                <IconButton 
-                                    icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
-                                    onClick={nextImage} 
-                                    className={styles.arrow} />
-                            </div>
+                    </Block>
+
+                    <Stack
+                        className={styles.predictionWorkspace}
+                        direction='row' gap='xl' justify='center' align='flex-start'>
+                        <ManagedTable
+                            blockPops={{
+                                title: t('entities.predictionRun.plural'),
+                                fullWidth: true,
+                                className: styles.runs
+                            }}
+                            tableProps={{
+                                table: {
+                                    maxHeight: 500,
+                                    fixedColumnWidth: true,
+                                },
+                                thead: {
+                                    columns,
+                                },
+                                tbody: {
+                                    rowKey: 'id',
+                                    columns,
+                                    data: allpredictionRunsData,
+                                    select: {selectedRow: selectedRun, onChange: setSelectedRun}
+                                },
+                            }}
+                            filters={{
+                                period: true,
+                                searchFieldOptions,
+                                sortedFieldOptions,
+                            }}
+                            hasPermissions={{
+                                read: true,
+                                create: true,
+                                update: true,
+                                delete: true,
+                            }}
+                            crudApiTable={{
+                                getAllQuery: predictionRunsQuery,
+                                limit: 15,
+                                entityId: Number(id),
+                            }}>
+                        </ManagedTable>
+
+                        <Block 
+                            fullWidth 
+                            className={styles.viewer} >
+                            <Stack 
+                                className={styles.wrapper}
+                                direction='row' gap='md' justify='center' align='flex-start' >
+                                <Stack 
+                                    className={styles.sidebar}
+                                    direction='column' gap='sm' justify='flex-start' align='stretch' >
+                                    {imagesData.isSuccess && imagesData.data.data.map(image => (
+                                        <button 
+                                            key={image.id}
+                                            className={styles.imageBtn}
+                                            onClick={() => setActiveImage(image)} >
+                                            <img
+                                                className={clsx(styles.image, {[styles.active]: isActiveImage(image.id)})}
+                                                ref={isActiveImage(image.id) ? activeImageSidebarRef : null}
+                                                src={`${import.meta.env.VITE_API_URI}/${image.imagePath}`} 
+                                                alt={image.imageName || undefined} />
+                                        </button>
+                                    ))}
+                                </Stack>
+                                <Stack 
+                                    className={styles.content} >
+                                    <div className={styles.btnPrev}>
+                                        <IconButton 
+                                            icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
+                                            onClick={prevImage} 
+                                            className={styles.arrow} />
+                                    </div>
+                                    {activeImage && (
+                                        <img
+                                            ref={activeImageContentRef}
+                                            src={`${import.meta.env.VITE_API_URI}/${activeImage.imagePath}`} 
+                                            alt={activeImage.imagePath || undefined} />
+                                    )}
+                                    {(activeImage && selectedRun && selectedRun.status === 'completed') && overlays.map(item => (
+                                        <div key={`${item.class}-${item.bbox.join('-')}`} className={styles.overlay} style={item.inlineStyleOverlay}>
+                                            <span>{item.class} {item.confidence}</span>
+                                        </div>
+                                    ))}
+                                    <div className={styles.btnNext}>
+                                        <IconButton 
+                                            icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
+                                            onClick={nextImage} 
+                                            className={styles.arrow} />
+                                    </div>
+                                </Stack>
+                            </Stack>
+                        </Block>
+                            
+                    </Stack>
+
+                    <Modal 
+                        title={t(`enums.action.edit`)} 
+                        decorativeIcon={'EYE'} 
+                        options={updateModal}
+                        footer={
+                            <Stack 
+                                direction='row' gap='sm' justify='flex-end' align='center'>
+                                <Button
+                                    variant='primary'
+                                    icon={'EDIT'} 
+                                    disabled={!canSubmitUpdateRecord} 
+                                    onClick={actionHandler}>
+                                    {t('actions.save')}
+                                </Button>
+                            </Stack>                    
+                        }
+                    >
+                        {/* {(auxiliaryData?.isLoading ? auxiliaryData.isLoading : false) && (
+                            <Screen type='loading' />
+                        )} */}
+                        <Stack direction='column' gap='md' justify='flex-start' align='stretch'>
+                            <TextField 
+                                value={recordFields.description || ''} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, description: val }))}
+                                label={t('entities.study.fields.description')} />
+
+                            <TextField 
+                                value={recordFields.institutionName || ''} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, institutionName: val }))}
+                                label={t('entities.study.fields.institutionName')} />
+
+                            <TextField 
+                                value={recordFields.manufacturer || ''} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, manufacturer: val }))}
+                                label={t('entities.study.fields.manufacturer')} />
+
+                            <TextField 
+                                value={recordFields.manufacturersModelName || ''} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, manufacturersModelName: val }))}
+                                label={t('entities.study.fields.manufacturersModelName')} />
+
+                            <TextField 
+                                value={recordFields.note || ''} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, note: val }))}
+                                label={t('entities.study.fields.note')} />
+
+                            <TextField 
+                                value={recordFields.referringPhysiciansName || ''} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, referringPhysiciansName: val }))}
+                                label={t('entities.study.fields.referringPhysiciansName')} />
+
+                            <TextField 
+                                value={recordFields.stationName || ''} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, stationName: val }))}
+                                label={t('entities.study.fields.stationName')} />
+                                
+                            <TextField 
+                                value={recordFields.reason} 
+                                onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, reason: val }))}
+                                label={t('common.reason')} />
                         </Stack>
-                    </Stack>
-                </Block>
-                    
-            </Stack>
+                    </Modal>
 
-            <Modal 
-                title={t(`enums.action.edit`)} 
-                decorativeIcon={'EYE'} 
-                options={updateModal}
-                footer={
-                    <Stack 
-                        direction='row' gap='sm' justify='flex-end' align='center'>
-                        <Button
-                            variant='primary'
-                            icon={'EDIT'} 
-                            disabled={!canSubmitUpdateRecord} 
-                            onClick={actionHandler}>
-                            {t('actions.save')}
-                        </Button>
-                    </Stack>                    
-                }
-            >
-                {/* {(auxiliaryData?.isLoading ? auxiliaryData.isLoading : false) && (
-                    <Screen type='loading' />
-                )} */}
-                <Stack direction='column' gap='md' justify='flex-start' align='stretch'>
-                    <TextField 
-                        value={recordFields.description || ''} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, description: val }))}
-                        label={t('entities.study.fields.description')} />
+                    <Modal 
+                        title={t(`common.confirmation`)}
+                        options={removeModal}
+                        footer={
+                            <Stack direction='row' gap='sm' justify='flex-end' align='center'>
+                                <Button variant='primary' intent='destructive' icon='CHECK' onClick={removeHandler} >{t('actions.confirm')}</Button>
+                                <Button variant='secondary' icon='CLOSE' onClick={() => removeModal.close()} >{t('actions.cancel')}</Button>
+                            </Stack>
+                        } >
+                        <TextField 
+                            value={recordFields.reason} 
+                            onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, reason: val }))} 
+                            label={t('common.reason')} />
+                    </Modal>
 
-                    <TextField 
-                        value={recordFields.institutionName || ''} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, institutionName: val }))}
-                        label={t('entities.study.fields.institutionName')} />
-
-                    <TextField 
-                        value={recordFields.manufacturer || ''} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, manufacturer: val }))}
-                        label={t('entities.study.fields.manufacturer')} />
-
-                    <TextField 
-                        value={recordFields.manufacturersModelName || ''} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, manufacturersModelName: val }))}
-                        label={t('entities.study.fields.manufacturersModelName')} />
-
-                    <TextField 
-                        value={recordFields.note || ''} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, note: val }))}
-                        label={t('entities.study.fields.note')} />
-
-                    <TextField 
-                        value={recordFields.referringPhysiciansName || ''} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, referringPhysiciansName: val }))}
-                        label={t('entities.study.fields.referringPhysiciansName')} />
-
-                    <TextField 
-                        value={recordFields.stationName || ''} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, stationName: val }))}
-                        label={t('entities.study.fields.stationName')} />
-                        
-                    <TextField 
-                        value={recordFields.reason} 
-                        onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, reason: val }))}
-                        label={t('common.reason')} />
-                </Stack>
-            </Modal>
-
-            <Modal 
-                title={t(`common.confirmation`)}
-                options={removeModal}
-                footer={
-                    <Stack direction='row' gap='sm' justify='flex-end' align='center'>
-                        <Button variant='primary' intent='destructive' icon='CHECK' onClick={removeHandler} >{t('actions.confirm')}</Button>
-                        <Button variant='secondary' icon='CLOSE' onClick={() => removeModal.close()} >{t('actions.cancel')}</Button>
-                    </Stack>
-                } >
-                <TextField 
-                    value={recordFields.reason} 
-                    onChangeValue={(val: string) => setRecordFields((prev) => ({ ...prev, reason: val }))} 
-                    label={t('common.reason')} />
-            </Modal>
-
-            <Modal 
-                title={t(`common.predictionRunning`)}
-                options={predictionModal}
-                footer={
-                    <Stack direction='row' gap='sm' justify='flex-end' align='center'>
-                        <Button variant='primary' icon='ADD' onClick={predictionRunHandler}>{t('actions.runPrediction')}</Button>
-                    </Stack>
-                } >
-                <Select 
-                    value={model} 
-                    onChangeValue={(val) => setModel(val)} 
-                    options={modelsOptions} 
-                    label={t('entities.patient.fields.gender')}
-                    getKey={(item) => item.label}
-                    getValue={(item) => item.label} />
-            </Modal>
-        </Page>
+                    <Modal 
+                        title={t(`common.predictionRunning`)}
+                        options={predictionModal}
+                        footer={
+                            <Stack direction='row' gap='sm' justify='flex-end' align='center'>
+                                <Button variant='primary' icon='ADD' onClick={predictionRunHandler}>{t('actions.runPrediction')}</Button>
+                            </Stack>
+                        } >
+                        <Select 
+                            value={model} 
+                            onChangeValue={(val) => setModel(val)} 
+                            options={modelsOptions} 
+                            label={t('entities.patient.fields.gender')}
+                            getKey={(item) => item.label}
+                            getValue={(item) => item.label} />
+                    </Modal>
+                </Page>
+            )} 
+        </>
     );
 };
 
