@@ -6,6 +6,7 @@ import type { ValidationInfo } from '../types';
 import type { IconPath } from '../Icon';
 import clsx from 'clsx';
 import Icon from '../Icon';
+import { useTranslation } from 'react-i18next';
 
 interface SelectProps<T> extends React.ComponentProps<'div'> {
     label?: string;
@@ -40,6 +41,8 @@ const Select = <T,>({
     className,
     ...props
 }: SelectProps<T>) => {
+    const {t} = useTranslation();
+    
     const selectRef = React.useRef<HTMLDivElement>(null);
 
     const [isOpen, setIsOpen] = React.useState(false);
@@ -102,7 +105,7 @@ const Select = <T,>({
                     {decorativeIcon && <Icon name={decorativeIcon} />}
                     <button className={styles.trigger} onClick={onClickTrigger} >
                         {value === undefined
-                            ? (<span className={styles.placeholder}>{placeholder}</span>)
+                            ? (<span className={styles.placeholder}>{placeholder || t('ui.placeholder.select.default')}</span>)
                             : valueIsObject
                             ? getValue(value as T)
                             : (value as React.ReactNode) }

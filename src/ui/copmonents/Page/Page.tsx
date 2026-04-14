@@ -5,7 +5,7 @@ import PageLayout from '../PageLayout';
 import Stack from '../Stack';
 import Icon from '../Icon';
 
-interface PageProps {
+export interface PageProps {
     readonly title?: string;
     readonly description?: string;
     readonly decorativeIcon?: IconPath;

@@ -1,6 +1,2 @@
-export interface IResponseData<T> {
-    data: T;
-    totalPages: number;
-    totalItems: number;
-    currentPage: number;
-};
+export type { User, AuthResponse, AuthRequest } from './auth.interface';
+export type { ResponseFindAll } from './query.interface';

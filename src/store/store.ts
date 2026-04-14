@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import {unauthorizedErrorMiddleware, authReducer} from "./slices/auth";
+import {authReducer} from "./slices/auth";
 import {noticesReducer} from "./slices/notices";
+import { api } from './api/api';
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         notices: noticesReducer,
+        [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([
-            unauthorizedErrorMiddleware,
-        ]),
+        getDefaultMiddleware().concat(api.middleware),
 })
 
 setupListeners(store.dispatch);

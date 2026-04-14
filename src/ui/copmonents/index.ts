@@ -3,7 +3,8 @@ export type {ComponentStatus, ComponentSize} from './types';
 export {default as Icon} from './Icon'
 export type { IconProps, IconSize, IconPath } from './Icon';
 export type {BlockProps} from './Block';
-export type {ColumnTable, SortedColumn, Sorting} from './Table';
+export type {ColumnTable, SortedColumn, Sorting, THeadProps, TBodyProps} from './Table';
+export type {SelectItem} from './ManagedTable';
 export type {SidebarOrg, SidebarProfile, SidebarLinks, SidebarSections, SidebarProps} from './Sidebar';
 
 export {default as IconButton} from './IconButton'
@@ -20,6 +21,7 @@ export {default as Block} from './Block'
 export {default as InfoList} from './InfoList'
 export {default as Modal} from './Modal'
 export {default as Table, THead, TBody} from './Table'
+export {default as ManagedTable} from './ManagedTable'
 export {default as Stack} from './Stack'
 export {default as PageLayout} from './PageLayout'
 export {default as Page} from './Page'

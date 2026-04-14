@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Table.module.scss';
 import clsx from 'clsx';
 import type { CSSVars } from '../types';
+import type { ResponseFindAll } from '../../../store/interfaces';
 
 //Shared
 export interface ColumnTable<T, K extends keyof T = keyof T> {
@@ -63,7 +64,7 @@ export const Th = <T,>({
 }
 
 // THead
-interface THeadProps<T> {
+export interface THeadProps<T> {
     readonly columns: ColumnTable<T>[];
     readonly sorting?: Sorting<T>;
 }
@@ -96,18 +97,17 @@ type RowClick<T> = {
     readonly rowClick?: (row: T) => void;
 };
 
-type TBodyProps<T> = {
+export type TBodyProps<T> = {
     readonly data: T[];
     readonly columns: ColumnTable<T>[];
-    readonly rowKey: keyof T;
-    
+    readonly rowKey: keyof T;    
 } & (RowSelect<T> | RowClick<T>);
 export const TBody = <T extends Record<string, unknown>,>({
     columns,
     data,
     rowKey,
     select,
-    rowClick
+    rowClick,
 }: TBodyProps<T>) => {
     
     const isSelectable = select !== undefined;
@@ -174,27 +174,72 @@ export const TBody = <T extends Record<string, unknown>,>({
 
 // Table
 
-interface IProps extends React.HTMLAttributes<HTMLTableElement> {
-    readonly maxHeight?: number;
+export interface TableProps<T> extends React.HTMLAttributes<HTMLTableElement> {
+    readonly maxHeight?: number | string;
     readonly fixedColumnWidth?: boolean;
+    readonly error?: boolean;
+    readonly fetching?: boolean;
+    readonly onChangePage?: () => void;
+    readonly response?: ResponseFindAll<T[]>;
+    readonly limit?: number;
 }
 
-const Table: React.FC<IProps> = ({
+const Table = <T,>({
     maxHeight,
     fixedColumnWidth = false,
     className = '',
     style,
     children,
+    error,
+    fetching,
+    onChangePage,
+    response,
+    limit,
     ...props
-}) => {
+}: TableProps<T>) => {
     const classesTable = clsx(styles.wrapper, className);
     const styleTable: React.CSSProperties = {
         ...style,
         tableLayout: fixedColumnWidth ? 'fixed' : 'auto',
     };
 
+    // SCROLL TABLE //////////////
+    const bodyRef = React.useRef<HTMLDivElement>(null);
+    const canFetchRef = React.useRef(true);
+    React.useEffect(() => {
+        if(!response || !limit) return;
+        if(fetching || error || response?.data?.length <= 0) return;
+        if(response?.data?.length === response.totalItems) return;
+
+        const scrollHandler = () => {
+            if(!bodyRef.current || !canFetchRef.current) return;
+
+            const {scrollHeight, scrollTop, clientHeight} = bodyRef.current;
+
+            if(!scrollHeight || !scrollTop || !clientHeight) return;
+
+            if((scrollTop + clientHeight >= scrollHeight * 0.9) && !fetching) {
+                canFetchRef.current = false;
+
+                if(onChangePage) {
+                    onChangePage();
+                }
+            }
+        }
+
+        bodyRef.current?.addEventListener('scroll', scrollHandler);
+        return () => bodyRef.current?.removeEventListener('scroll', scrollHandler);
+    }, [fetching, error, response?.data?.length]);
+
+    React.useEffect(() => {
+        if (!fetching) {
+            canFetchRef.current = true;
+        }
+    }, [fetching, response?.data?.length]);
+    // SCROLL TABLE //////////////
+
     return (
-        <div style={{maxHeight: maxHeight || 'auto', overflow: 'auto'}}>
+        <div ref={bodyRef} style={{maxHeight: maxHeight || 'auto', overflow: 'auto'}}>
             <table className={classesTable} style={styleTable} border={0} {...props}>
                 {children}
             </table>

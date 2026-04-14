@@ -36,7 +36,7 @@ const Block: React.FC<BlockProps> = ({
         <Stack 
             className={classesWrapper} style={inlineStyle} {...props}
             direction='column' gap='xl'
-            justify='center' align='stretch' >
+            justify='flex-start' align='stretch' >
             {(title || decorativeIcon || actions) && (
                 <Stack 
                     className={styles.header}
