@@ -6,44 +6,34 @@ import IconButton from '../IconButton';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 
+export type ModalOptions = {
+  readonly show: boolean;
+  readonly active: boolean;
+  readonly hash: string;
+  readonly open: () => void;
+  readonly close: (fallbackHash?: string) => void;
+}
+
 interface ModalProps extends BlockProps {
-    visible: boolean;
-    setVisible: (s: boolean) => void;
+    options: ModalOptions;
 }
 
 const Modal: React.FC<ModalProps> = ({
-    visible,
-    setVisible,
+    options,
     children,
     ...props
 }) => {
 
     const wrapperRef = React.useRef<HTMLDivElement>(null);
 
-    const classesWrapper = clsx(styles.wrapper, {[styles.open]: visible});
+    const classesWrapper = clsx(styles.wrapper, {[styles.open]: options.show});
 
     const onCloseHandler = React.useCallback(() => {
-        setVisible(false);
-    }, [setVisible]);
+        options.close();
+    }, [options.close]);
 
     React.useEffect(() => {
-        if (!visible) return;
-
-        const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-        const currentPaddingRight = (getComputedStyle(document.body).paddingRight).replace('px', '');
-        
-
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = `${Number(currentPaddingRight) + scrollBarWidth}px`;
-
-        return () => {
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-        };
-    }, [visible]);
-
-    React.useEffect(() => {
-        if(!visible) return;
+        if(!options.show) return;
 
         const handleClickOutside = (e: MouseEvent) => {
             if(e.target === wrapperRef.current) {
@@ -53,10 +43,10 @@ const Modal: React.FC<ModalProps> = ({
 
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [onCloseHandler, visible]);
+    }, [onCloseHandler, options.show]);
 
     React.useEffect(() => {
-        if(!visible) return;
+        if(!options.show) return;
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -66,7 +56,7 @@ const Modal: React.FC<ModalProps> = ({
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [onCloseHandler, visible]);
+    }, [onCloseHandler, options.show]);
 
     return createPortal(
         <div ref={wrapperRef} className={classesWrapper}>
