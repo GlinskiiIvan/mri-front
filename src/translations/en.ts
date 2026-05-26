@@ -13,6 +13,10 @@ export default {
         password: 'Enter password...',
       },
     },
+    admin: {
+      title: 'Admin panel',
+      description: 'This page provides user and role management.'
+    },
     patients: {
       title: 'List of all patients',
       description: 'This page contains all the patients managed by the doctor.',
@@ -32,6 +36,36 @@ export default {
   },
 
   entities: {
+    user: {
+      singular: 'User',
+        plural: 'Users',
+        gender: 'male',
+
+        singularCases: {
+      nominative: 'User',
+          genitive: 'The User',
+          dative: 'To the user',
+          accusative: 'The user',
+          instrumental: 'By the user',
+          prepositional: 'User',
+      },
+
+        pluralCases: {
+      nominative: 'Users',
+          genitive: 'Users',
+          dative: 'To users',
+          accusative: 'Users',
+          instrumental: 'By users',
+          prepositional: 'Users',
+      },
+
+        fields: {
+          email: 'Email',
+          password: 'Password',
+          banned: 'Blocked',
+          banReason: 'Reason for blocking',
+      },
+    },
     patient: {
       singular: 'Patient',
       plural: 'Patients',
@@ -368,6 +402,7 @@ export default {
   validation: {},
 
   sidebar: {
+    admin: 'Admin panel',
     main: 'Main',
     patients: 'Patients',
     studies: 'Studies',
