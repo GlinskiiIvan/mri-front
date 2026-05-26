@@ -13,6 +13,10 @@ export default {
         password: 'Введите пароль...',
       },
     },
+    admin: {
+      title: 'Админ панель',
+      description: 'На этой странице ощуществляется управление пользователями и ролями.'
+    },
     patients: {
       title: 'Список всех пациентов',
       description: 'На этой странице представлены все пациенты которых ведет доктор.',
@@ -36,6 +40,36 @@ export default {
   },
 
   entities: {
+    user: {
+      singular: 'Пользователь',
+      plural: 'Пользователи',
+      gender: 'male',
+
+      singularCases: {
+        nominative: 'Пользователь',
+        genitive: 'Пользователя',
+        dative: 'Пользователю',
+        accusative: 'Пользователя',
+        instrumental: 'Пользователем',
+        prepositional: 'Пользователе',
+      },
+
+      pluralCases: {
+        nominative: 'Пользователи',
+        genitive: 'Пользователей',
+        dative: 'Пользователям',
+        accusative: 'Пользователей',
+        instrumental: 'Пользователями',
+        prepositional: 'Пользователях',
+      },
+
+      fields: {
+        email: 'Email',
+        password: 'Пароль',
+        banned: 'Заблокирован',
+        banReason: 'Причина блокировки',
+      },
+    },
     patient: {
       singular: 'Пациент',
       plural: 'Пациенты',
@@ -372,6 +406,7 @@ export default {
   },
 
   sidebar: {
+    admin: 'Админ панель',
     main: 'Главная',
     patients: 'Пациенты',
     studies: 'Исследования',

@@ -1,5 +1,5 @@
 import React, { version } from 'react';
-import { Block, Button, Icon, IconButton, InfoList, ManagedTable, Modal, Page, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SelectItem } from '../../ui/copmonents';
+import { Block, Button, FullScreenImage, Icon, IconButton, InfoList, ManagedTable, Modal, Page, Select, Stack, Table, TBody, TextField, THead, type ColumnTable, type SelectItem } from '../../ui/copmonents';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -18,6 +18,7 @@ import { predictionRunApi } from '../../store/services/predictionRun';
 import styles from './StudyCardPage.module.scss';
 import clsx from 'clsx';
 import type { CSSVars } from '../../ui/copmonents/types';
+import { useFullScreenImage } from '../../ui/copmonents/FullScreenImage/useFullScreenImage';
 
 const StudyCardPage = () => {
     const {t} = useTranslation();
@@ -244,7 +245,9 @@ const StudyCardPage = () => {
 
     const [activeImage, setActiveImage] = React.useState<InstanceImage>();
     const activeImageSidebarRef = React.useRef<HTMLImageElement>(null);
+
     const activeImageContentRef = React.useRef<HTMLImageElement>(null);
+    const fullScreenImageRef = React.useRef<HTMLImageElement>(null);
 
     const isActiveImage = (id: number) => id === activeImage?.id;
 
@@ -290,6 +293,15 @@ const StudyCardPage = () => {
             });
         }
     }, [activeImage]);
+
+    // const fullScreenImageModal = useModal('fullScreenImageModal');
+    const fullScreenImageModal = useFullScreenImage('fullScreenImageModal');
+
+    const getCurrentImageRef = () => {
+        return fullScreenImageModal.show
+            ? fullScreenImageRef.current
+            : activeImageContentRef.current;
+    };
 
     // VIEWER END /////////////////////////////////////////////////////////////////
 
@@ -351,33 +363,37 @@ const StudyCardPage = () => {
 
     const [overlays, setOverlays] = React.useState<ResultBboxOverlay[]>([]);
 
+    const buildOverlays = (img: HTMLImageElement, results: ResultBbox[]) => {
+        return results.map(item => {
+            const overlay = getBbox(item?.bbox || [], {
+                naturalWidth: img.naturalWidth,
+                naturalHeight: img.naturalHeight,
+                clientWidth: img.clientWidth,
+                clientHeight: img.clientHeight,
+            });
+            return {
+                ...item, 
+                inlineStyleOverlay: {
+                    '--top-overlay': `${overlay.top}px`,
+                    '--left-overlay': `${overlay.left}px`,
+                    '--width-overlay': `${overlay.width}px`,
+                    '--height-overlay':`${overlay.height}px`,
+                    '--color-overlay': item.class === 'normal' ? 'var(--border-success)' : item.class === 'tear' ? 'var(--border-danger)' : 'var(--border-primary)',
+                }
+            }
+        })
+    }
+
     React.useEffect(() => {
-        const img = activeImageContentRef.current;
+        const img = getCurrentImageRef();
         if(predictionsData.isSuccess && img && activeImage) {
             const results = (predictionsData.data.data
                 .find(item => item.imageId === activeImage.id)
                 ?.rawOutput) as ResultBbox[] || [];
 
-            setOverlays(results.map(item => {
-                const overlay = getBbox(item?.bbox || [], {
-                    naturalWidth: img.naturalWidth,
-                    naturalHeight: img.naturalHeight,
-                    clientWidth: img.clientWidth,
-                    clientHeight: img.clientHeight,
-                });
-                return {
-                    ...item, 
-                    inlineStyleOverlay: {
-                        '--top-overlay': `${overlay.top}px`,
-                        '--left-overlay': `${overlay.left}px`,
-                        '--width-overlay': `${overlay.width}px`,
-                        '--height-overlay':`${overlay.height}px`,
-                        '--color-overlay': item.class === 'normal' ? 'var(--border-success)' : item.class === 'tear' ? 'var(--border-danger)' : 'var(--border-primary)',
-                    }
-                }
-            }));
+            setOverlays(buildOverlays(img, results));
         }
-    }, [predictionsData.fulfilledTimeStamp, activeImage]);
+    }, [predictionsData.fulfilledTimeStamp, activeImage, fullScreenImageModal.show]);
 
     // PREDICTION END /////////////////////////////////////////////////////////////////
 
@@ -501,6 +517,8 @@ const StudyCardPage = () => {
                                     {activeImage && (
                                         <img
                                             ref={activeImageContentRef}
+                                            role='button'
+                                            onClick={fullScreenImageModal.open}
                                             src={`${import.meta.env.VITE_API_URI}/${activeImage.imagePath}`} 
                                             alt={activeImage.imagePath || undefined} />
                                     )}
@@ -520,6 +538,71 @@ const StudyCardPage = () => {
                         </Block>
                             
                     </Stack>
+
+                    <FullScreenImage
+                        title={activeImage?.imageName}
+                        options={fullScreenImageModal} >
+                            <Stack
+                                className={styles.predictionWorkspace}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    maxHeight: 'none'
+                                }}
+                                direction='row' gap='xl' justify='center' align='flex-start'>
+                                <div 
+                                    className={styles.viewer}
+                                        style={{
+                                            maxHeight: 'none',
+                                            maxWidth: 'none'
+                                        }} >
+                                    <Stack 
+                                        className={styles.wrapper}
+                                        direction='row' gap='md' justify='center' align='flex-start' >
+                                        <Stack 
+                                            className={styles.content}
+                                                style={{
+                                                    maxHeight: 'none',
+                                                    maxWidth: 'none'
+                                                }} >
+                                            <div className={styles.btnPrev}>
+                                                <IconButton 
+                                                    icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
+                                                    onClick={prevImage} 
+                                                    className={styles.arrow} />
+                                            </div>
+                                            {activeImage && (
+                                                <img
+                                                    ref={fullScreenImageRef}
+                                                    role='button'
+                                                    onClick={fullScreenImageModal.open}
+                                                    style={{
+                                                        maxWidth: '100%',
+                                                        maxHeight: '100%',
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        objectFit: 'contain'
+                                                    }}
+                                                    src={`${import.meta.env.VITE_API_URI}/${activeImage.imagePath}`} 
+                                                    alt={activeImage.imagePath || undefined} />
+                                            )}
+                                            {(activeImage && selectedRun && selectedRun.status === 'completed') && overlays.map(item => (
+                                                <div key={`${item.class}-${item.bbox.join('-')}`} className={styles.overlay} style={item.inlineStyleOverlay}>
+                                                    <span>{item.class} {item.confidence}</span>
+                                                </div>
+                                            ))}
+                                            <div className={styles.btnNext}>
+                                                <IconButton 
+                                                    icon={{name: 'ARROWDOWN', color: 'inverse', size: 'xl'}}
+                                                    onClick={nextImage} 
+                                                    className={styles.arrow} />
+                                            </div>
+                                        </Stack>
+                                    </Stack>
+                                </div>
+                                    
+                            </Stack>
+                    </FullScreenImage>
 
                     <Modal 
                         title={t(`enums.action.edit`)} 

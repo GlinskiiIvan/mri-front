@@ -6,4 +6,5 @@ export const ROUTES = {
     Studies: '/studies',
     Study: '/studies/:id',
     Login: '/login',
+    Admin: '/admin',
 }

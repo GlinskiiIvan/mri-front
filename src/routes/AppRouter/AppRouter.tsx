@@ -15,6 +15,7 @@ import { store, type AppDispatch } from '../../store/store';
 import {LoginPage} from '../../pages';
 import { useTranslation } from 'react-i18next';
 import { setLogoutHandler } from '../../store/http';
+import AdminPage from '../../pages/AdminPage';
 
 const AppRouter: React.FC = () => {
     const {t} = useTranslation();
@@ -37,6 +38,12 @@ const AppRouter: React.FC = () => {
     const sidebatItems = [
         {
             links: [
+                {
+                    to: ROUTES.Admin,
+                    label: t('sidebar.admin'),
+                    tooltip: t('sidebar.admin'),
+                    icon: 'INFO' as IconPath,
+                },
                 {
                     to: ROUTES.Main,
                     label: t('sidebar.main'),
@@ -94,6 +101,8 @@ const AppRouter: React.FC = () => {
                 <Route path={ROUTES.Studies} element={ <StudyPage /> } />
                 <Route path={ROUTES.Study} element={ <StudyCardPage /> } />
                 <Route path={ROUTES.Examples} element={ <ExamplesPage /> } />
+                <Route path={ROUTES.Admin} element={ <AdminPage /> } />
+
             </Route>
             <Route path='*' element={ <Navigate to={ROUTES.Main}></Navigate> } />
         </Routes>        
